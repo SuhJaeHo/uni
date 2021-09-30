@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "913377494399",
+    "project_id": "uni-auth-35622",
+    "storage_bucket": "uni-auth-35622.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913377494399:android:b3af71e5c2f8793679464a",
+        "android_client_info": {
+          "package_name": "com.loof"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913377494399-59dc5ke2ojitstblng1hso9tvecbqemc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.loof",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "913377494399-3utpu41533gamaa6fgqtui5ajcu54pt6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdAYsxWtCtdtl22hlOJCcg8A-WmSMJsLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913377494399-3utpu41533gamaa6fgqtui5ajcu54pt6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "913377494399-6pd7a9jptuo6htrgc8olfun1b98tj8il.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.uni"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
