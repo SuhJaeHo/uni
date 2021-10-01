@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Pressable, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { View, Pressable, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -36,26 +36,13 @@ export default class MyMapView extends Component {
             check: 0,            
 
             dragCount: 0,
+            pressedCurrentBtn: false,
         }
     }
 
     componentDidMount = async() => {                        
         this.removeStorage();       
     }
-
-    /*
-    componentDidUpdate = (prevProps) => {
-        const { region } = prevProps.region;
-        //console.log(this.state.region);
-        //console.log(prevProps.region);
-        //console.log(this.props.region);
-        if(this.state.region !== prevProps.region) {
-            this.setState({region: this.props.region});
-            console.log(this.state.region);
-            console.log(prevProps.region);            
-        }
-    }
-    */
 
     removeStorage = async() => {
         await AsyncStorage.removeItem('check');
@@ -277,8 +264,9 @@ export default class MyMapView extends Component {
                         <MapView
                             style={{width: '100%', height: '100%'}}                    
                             showsUserLocation={true}                                                                                               
-                            region={region}                            
-                            onRegionChangeComplete={(reg) => {                            
+                            region={this.state.pressedCurrentBtn === true ? this.props.region : region}                            
+                            onRegionChangeComplete={(reg) => {   
+                            this.setState({pressedCurrentBtn: false})                            
                             this.props.onRegionChange(reg);
                             region = reg;
 
@@ -292,7 +280,18 @@ export default class MyMapView extends Component {
                         >                    
                             {this.createMarker()}                                                                                  
                         </MapView>                
-                        {marker}                            
+                        {marker}
+                        <TouchableOpacity
+                            style={styles.locationBtn}
+                            onPress={() => {
+                                this.props.getLocation();
+                                this.state.pressedCurrentBtn = true;
+                            }}
+                        >
+                            <Text>
+                                <Ionicons name="ios-locate" color="grey" size={30} /> 
+                            </Text>
+                        </TouchableOpacity>                            
                     </View>                
                 }                                
             </View>

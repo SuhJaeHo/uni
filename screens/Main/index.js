@@ -145,7 +145,7 @@ export default class Main extends Component {
           .then(responseData => {
                this.setState({
                     roomData: responseData[0],
-                    userData: responseData[1],
+                    userData: responseData[1]
                })
           })
      }       
@@ -322,7 +322,7 @@ export default class Main extends Component {
                               editable={false}
                          />
                     </View>           
-                    {this.state.id !== this.state.roomInfo.id ?
+                    {this.state.id === this.state.roomInfo.id ?
                     <Pressable
                          onPress={() => this.props.navigation.push('Hosting', 
                               {
@@ -377,6 +377,7 @@ export default class Main extends Component {
                     <MyMapView
                          region={this.state.region}
                          onRegionChange={(reg) => this.onMapRegionChange(reg)}  
+                         getLocation={() => this.getCurrentLocation()}
                          //connect={this.connect}                       
                          connect={this.state.onFilter ? this.connectFilter : this.connect}
                          connectFilter={this.connectFilter}
