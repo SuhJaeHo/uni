@@ -86,15 +86,7 @@ export default class Hosting extends Component {
         } catch(e) {
             console.log(e);
         }
-    }
-
-    removeStorage = async() => {
-        await AsyncStorage.removeItem('check');
-        await AsyncStorage.removeItem('category');
-        await AsyncStorage.removeItem('title');
-        await AsyncStorage.removeItem('time');
-        await AsyncStorage.removeItem('timeInfo');
-    }
+    }    
 
     //수정필요
     onChangeText = async(text) => {
@@ -155,7 +147,7 @@ export default class Hosting extends Component {
     }
 
     hosting = async() => {
-        if(this.state.room.address === null) {
+        if(this.state.room.address === null) {            
             Alert.alert('지역을 설정하세요');
         }else if(this.state.room.category === null) {
             Alert.alert('카테고리를 설정하세요');
@@ -165,7 +157,8 @@ export default class Hosting extends Component {
             Alert.alert('시간을 설정하세요');
         }else {
             this.createRoom();  
-            this.props.navigation.push('DrawerNav', {lat: this.state.room.lat, lng: this.state.room.lng})          
+            this.props.navigation.navigate('DrawerNav');
+            //this.props.navigation.push('DrawerNav', {lat: this.state.room.lat, lng: this.state.room.lng})          
         }        
     }  
     
@@ -214,7 +207,7 @@ export default class Hosting extends Component {
                     <View style={styles.headerConatiner}>
                         <View style={styles.backIcon}>
                             <Pressable
-                                onPress={() => {this.removeStorage(); this.props.navigation.navigate('DrawerNav');}}
+                                onPress={() => this.props.navigation.navigate('DrawerNav')}
                                 style={styles.backIcon}
                             >
                             <MaterialIcons name={"arrow-back-ios"} 

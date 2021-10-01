@@ -51,18 +51,25 @@ PushNotification.configure({
 
 export default class App extends Component {
   componentDidMount = () => {         
-    this.foreground();             
+    this.foreground();   
+    this.background();          
   }
 
   componentWillUnmount = () => {
     this.foreground();
+    this.background();
   }
 
   foreground = () => {
-    messaging().onMessage(payload => { 
-      console.log(payload);            
+    messaging().onMessage(payload => {                  
       this.showNotification(payload.data.title, payload.data.body);
     });    
+  }
+
+  background = () => {
+    messaging().setBackgroundMessageHandler(payload => {
+      this.showNotification(payload.data.title, payload.data.body);
+    })
   }
 
   showNotification = (title, message) => {

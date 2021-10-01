@@ -101,9 +101,10 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap', 
     },
     actionButtonIcon: {
+        zIndex: 1,
         fontSize: 20,
         position: 'absolute',
-        top: -20,
+        top: -25,
         right: -10     
     },
     actionButtonIconClose:{

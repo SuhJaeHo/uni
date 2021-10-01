@@ -296,7 +296,8 @@ export default class EditProfile extends Component {
 
     render() {
         return (
-            <View style={styles.editContainer}>                                   
+            <View style={styles.editContainer}>                  
+                <TouchableOpacity activeOpacity={1} onPress={() => this.bs.current.snapTo(1)}>                 
                 <ImageBackground
                     source={require("../../assets/imgs/3.png")} resizeMode="cover" 
                     style={{ width: "100%", height: '110%' }}                    
@@ -336,7 +337,7 @@ export default class EditProfile extends Component {
                         </View>   
                         <BottomSheet
                             ref={this.bs}
-                            snapPoints={[250, 0]}
+                            snapPoints={[400, 0]}
                             initialSnap={1}
                             renderContent={this.renderContent}                   
                             enabledContentTapInteraction={false}
@@ -344,6 +345,7 @@ export default class EditProfile extends Component {
                         />                                                                                                      
                     </View>
                 </ImageBackground>               
+                </TouchableOpacity>
             </View> 
         )
     }

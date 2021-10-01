@@ -39,7 +39,7 @@ export default class MyMapView extends Component {
         }
     }
 
-    componentDidMount = () => {                          
+    componentDidMount = async() => {                        
         this.removeStorage();       
     }
 
@@ -67,7 +67,7 @@ export default class MyMapView extends Component {
 
     createMarker = () => {        
         let marker = []
-        var key = 0;
+        var key = 0;        
 
         for(let index = 0; index < this.props.roomData.length; index++) {
             this.props.roomData.map(roomInfo => marker.push (                  

@@ -50,8 +50,7 @@ export default class Main extends Component {
           }
      }
 
-     componentDidMount = async() => {                 
-          this.permissions();
+     componentDidMount = async() => {                                              
           if(this.state.firstLoading) {
                console.log(this.state.firstLoading);
                this.state.firstLoading = false;               
@@ -61,37 +60,18 @@ export default class Main extends Component {
           }
 
           this.props.navigation.addListener('focus', async () => {
-               this.connect();
+               this.removeStorage();             
+               console.log(this.state.onFilter);
           })               
      }
 
-     permissions = async() => {       
-          /*
-          if(Platform.OS === 'android') {
-               console.log('안드로이드');
-               PermissionsAndroid.request (                    
-                    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-                    {
-                         title: 'TEST',
-                         message: 'TEST', 
-                         buttonPositive: 'OK',
-                         buttonNegative: 'Cancel',                        
-                    }
-               );               
-          }
-          */
-          
-          /*
-          const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-          console.log(granted);
-          if (granted) {
-               console.log('OK');
-          }else {
-               console.log('NO');
-          }
-          */
-          
-     }
+     removeStorage = async() => {
+          await AsyncStorage.removeItem('check');
+          await AsyncStorage.removeItem('category');
+          await AsyncStorage.removeItem('title');
+          await AsyncStorage.removeItem('time');
+          await AsyncStorage.removeItem('timeInfo');
+     }    
      
      connect = async() => {
           const id = await AsyncStorage.getItem('id');
@@ -125,7 +105,14 @@ export default class Main extends Component {
           .then(() => {
                Interest.map((hobby, index) => {
                     hobbyList.push (                                   
-                         <ActionButton.Item key={index} buttonColor='#49ffbd' onPress={() => {this.connectFilter(hobby); this.state.hobby = hobby;}}>
+                         <ActionButton.Item 
+                              key={index} buttonColor='#49ffbd' 
+                              onPress={() => 
+                                   {
+                                        this.connectFilter(hobby); 
+                                        this.state.hobby = hobby;
+                                   }}
+                         >
                               <Text>{hobby}</Text>
                          </ActionButton.Item>                                                       
                     )                              
@@ -139,7 +126,8 @@ export default class Main extends Component {
      }
 
      connectFilter = async(hobby) => {
-          this.state.onFilter = true;
+          const id = await AsyncStorage.getItem('id');
+          this.state.onFilter = true;                   
   
           const URL = "http://localhost:3000/main";
           fetch(URL, {
@@ -149,13 +137,15 @@ export default class Main extends Component {
                },
                body: JSON.stringify({
                     onFilter: this.state.onFilter,
-                    category: hobby,
+                    id: id,
+                    category: hobby,                    
                })
           })
           .then(response => response.json())
           .then(responseData => {
                this.setState({
                     roomData: responseData[0],
+                    userData: responseData[1],
                })
           })
      }       
@@ -245,28 +235,7 @@ export default class Main extends Component {
                }),
           })              
      }
-
-     /*
-     joinSuccess = async(hostId, roomId, responseData) => {
-          if(responseData.recipients !== 0) {
-               const URL = "http://10.0.2.2:3000/joinRoom";
-               fetch(URL, {
-                    method: 'POST',
-                    headers: {
-                         'Content-Type' : 'application/json',                         
-                    },
-                    body: JSON.stringify({
-                         requestId: this.state.id,
-                         hostId: hostId,
-                         roomId: roomId,
-                    }),
-               })                            
-          }else {
-               Alert.alert('다시 시도해주세요');
-          }
-     }
-     */
-
+     
      checkJoin = async() => {
           const URL = "http://localhost:3000/checkJoin";
           fetch(URL, {
@@ -380,7 +349,7 @@ export default class Main extends Component {
 
      //메인버튼 3개
      navigate = async(screen) => {
-          if(screen === 'Hosting') {
+          if(screen === 'Hosting') {               
                this.props.navigation.push('Hosting', {address: this.state.address, lat: this.state.region.latitude, lng: this.state.region.longitude, Info: 'place'})
           }else if(screen === 'Room') {
                this.props.navigation.navigate('RoomList');
@@ -404,27 +373,29 @@ export default class Main extends Component {
 
      render() {
           return (
-               <View style={{width: '100%', height: Dimensions.get('window').height}}>                    
+               <View style={{width: '100%', height: Dimensions.get('window').height}}>                                        
                     <MyMapView
                          region={this.state.region}
-                         onRegionChange={(reg) => this.onMapRegionChange(reg)}                         
-                         connect={this.connect}
+                         onRegionChange={(reg) => this.onMapRegionChange(reg)}  
+                         //connect={this.connect}                       
+                         connect={this.state.onFilter ? this.connectFilter : this.connect}
                          connectFilter={this.connectFilter}
                          sendData={this.getRoomData}
                          onFilter={this.state.onFilter}
-                         roomData={this.state.roomData}
+                         roomData={this.state.roomData}                         
                          hobby={this.state.hobby}
                     >
-                    </MyMapView>
+                    </MyMapView>                    
                     <ActionButton 
                          size={48}
                          buttonColor="#fb009e" 
                          verticalOrientation="down"
-                         renderIcon={active => active ?(<Ionicons name="ios-funnel-sharp" style={styles.actionButtonIconOpen}/>) : (<Ionicons name="ios-funnel-sharp" style={styles.actionButtonIconClose}/>)}
+                         renderIcon={active => active ? 
+                              (<Ionicons name="ios-funnel-sharp" style={styles.actionButtonIconOpen}/>) : (<Ionicons name="ios-funnel-sharp" style={styles.actionButtonIconClose}/>)}
                          style={styles.actionButtonIcon} 
                     >
                         {this.state.hobbyList}  
-                    </ActionButton>  
+                    </ActionButton>                                     
                     <MainButton                         
                          navigate={this.navigate}   
                          push={this.state.push}                      
