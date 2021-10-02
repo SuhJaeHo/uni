@@ -9,6 +9,8 @@ import {
   Pressable,
 } from 'react-native';
 
+import {Navigation} from '@react-navigation/native';
+
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -26,8 +28,10 @@ const CustomSidebarMenu = (props) => {
     const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
 
-    useEffect(() => {
-      getUserInfo();
+    useEffect(() => {   
+      props.navigation.addListener('focus', () => {
+        getUserInfo();
+      })      
     }, []);
 
     const getUserInfo = async() => {

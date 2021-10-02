@@ -21,6 +21,8 @@ import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import styles from './styles';
 
@@ -60,8 +62,8 @@ export default class Main extends Component {
           }
 
           this.props.navigation.addListener('focus', async () => {
-               this.removeStorage();             
-               console.log(this.state.onFilter);
+               this.removeStorage();     
+               this.connect();                       
           })               
      }
 
@@ -88,7 +90,8 @@ export default class Main extends Component {
                },
                body: JSON.stringify({
                     id: id,
-                    onFilter: false,
+                    onFilter: this.state.onFilter,
+                    category: this.state.hobby,
                })            
           })
           .then(response => response.json())
@@ -113,7 +116,89 @@ export default class Main extends Component {
                                         this.state.hobby = hobby;
                                    }}
                          >
-                              <Text>{hobby}</Text>
+                              {
+                                   hobby === '축구' ?                   
+                                        <MaterialCommunityIcons
+                                             name={"soccer"}
+                                             size={37}
+                                             color={'black'}
+                                             style={{ zIndex:10,  }}   
+                                        />
+                                   : hobby === '농구' ?
+                                        <Ionicons
+                                             name={"basketball"}
+                                             size={37}    
+                                             style={{ zIndex:10, }}                                        
+                                        /> 
+                                   : hobby === '볼링' ?
+                                        <FontAwesome5 
+                                             name={"bowling-ball"}
+                                             size={37}   
+                                             color={'#bc2b62'}
+                                        />
+                                   : hobby === '야구' ?
+                                        <Ionicons 
+                                             name={"baseball-outline"}
+                                             size={37}                                           
+                                        />
+                                   : hobby === '배드민턴' ?
+                                        <MaterialCommunityIcons 
+                                             name={"badminton"}
+                                             size={37}                                           
+                                        />
+                                   : hobby === '요가' ?
+                                        <FontAwesome5 
+                                             name={"baseball-outline"}
+                                             size={37}                                                
+                                        />
+                                   : hobby === '웨이트' ?
+                                        <MaterialCommunityIcons 
+                                             name={"weight-lifter"}
+                                             size={37}                                                
+                                        />
+                                   : hobby === '등산' ?
+                                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../../assets/pin/ping.png')}/>
+                                   : hobby === '자전거' ?
+                                        <Ionicons 
+                                             name={"bicycle"}
+                                             size={37}   
+                                             color={'#000'}
+                                        />
+                                   : hobby === '런닝' ?
+                                        <FontAwesome5 
+                                             name={"running"}
+                                             size={37}   
+                                             color={'#000'}
+                                        />
+                                   : hobby === '골프' ?                                  
+                                        <MaterialCommunityIcons 
+                                             name={"golf"}
+                                             size={37}   
+                                             color={'#000'}
+                                        />
+                                   : hobby === '당구' ?                                  
+                                        <Image style={{ width:38,height:38, zIndex:10,  borderRadius:19 ,  }} source={require('../../assets/cateicon/pool.png')}/>                                  
+                                   : hobby === '탁구' ?                                  
+                                        <FontAwesome5 
+
+                                             name={"table-tennis"}
+                                             size={37}   
+                                             color={'#000'}
+                                        />                                  
+                                   : hobby === '스케이트 보드' ?                                  
+                                        <Image style={{ width:38,height:38, zIndex:10, borderRadius:19}} source={require('../../assets/cateicon/skateboard.png')}/>         
+                                   : hobby === '커피 한잔' ?                                  
+                                        <MaterialCommunityIcons 
+                                             name={"coffee"}
+                                             size={37}   
+                                             color={'#000'}
+                                        />                               
+                                   : hobby === '밥 한끼!' ?                               
+                                        <Image style={{ width:38,height:38, zIndex:10, marginBottom:8, borderRadius:19}} source={require('../../assets/cateicon/dish.png')}/>                                                                      
+                                   : hobby === '클럽' ?                                                                 
+                                        <Image style={{width:38, height:38, borderRadius:19}} source={require('../../assets/cateicon/disco-ball.png')}/>                                                                         
+                                   : <Text>{hobby}</Text>
+                              }
                          </ActionButton.Item>                                                       
                     )                              
                })
@@ -136,8 +221,8 @@ export default class Main extends Component {
                     'Content-Type': 'application/json',
                },
                body: JSON.stringify({
-                    onFilter: this.state.onFilter,
                     id: id,
+                    onFilter: this.state.onFilter,                    
                     category: hobby,                    
                })
           })
@@ -160,7 +245,7 @@ export default class Main extends Component {
                               latitudeDelta: 0.015,
                               longitudeDelta: 0.0121,
                          },                         
-                    });                                        
+                    });        
                     Geocoder.init('AIzaSyCTml8KmT7QuXIgxDNwTkrnJcuAV_35PY8', { language: 'ko' });
                     Geocoder.from(position.coords.latitude, position.coords.longitude)
                          .then(json => {
@@ -322,7 +407,7 @@ export default class Main extends Component {
                               editable={false}
                          />
                     </View>           
-                    {this.state.id === this.state.roomInfo.id ?
+                    {this.state.id !== this.state.roomInfo.id ?
                     <Pressable
                          onPress={() => this.props.navigation.push('Hosting', 
                               {
@@ -378,8 +463,7 @@ export default class Main extends Component {
                          region={this.state.region}
                          onRegionChange={(reg) => this.onMapRegionChange(reg)}  
                          getLocation={() => this.getCurrentLocation()}
-                         //connect={this.connect}                       
-                         connect={this.state.onFilter ? this.connectFilter : this.connect}
+                         connect={this.connect}                       
                          connectFilter={this.connectFilter}
                          sendData={this.getRoomData}
                          onFilter={this.state.onFilter}

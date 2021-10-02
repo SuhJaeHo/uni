@@ -45,7 +45,7 @@ const LoginScreen = ({ navigation }) => {
   const passwordInputRef = createRef();
 
   //chatting
-  const appID = '192332ba9a7ee10b';
+  const appID = '194886ce53b70b4a';
   const region = 'us';
   const appSetting = new CometChat.AppSettingsBuilder()
     .subscribePresenceForAllUsers()
@@ -108,7 +108,7 @@ const LoginScreen = ({ navigation }) => {
           const url = 'https://api-us.cometchat.io/v3.0/users/118277362616323123439';
           fetch(url, {
             method: 'DELETE',
-            headers: {Accept: 'application/json', 'Content-Type': 'application/json', appId: '192332ba9a7ee10b', apiKey: 'e545675a7e11466d096a79bc9c5270838d6d633d'},
+            headers: {Accept: 'application/json', 'Content-Type': 'application/json', appId: '194886ce53b70b4a', apiKey: '6197c8db5c52ec9d249c77762f78d6843fc42d24'},
             body: JSON.stringify({permanent: true})
           })
           .then(response => response.json())
@@ -121,17 +121,17 @@ const LoginScreen = ({ navigation }) => {
             },
             (error) => {
               console.log('Initialization failed with error:', error);
-            },
-          );
-
-          CometChat.login(id, '92a48b2397822aea1cbebd8c615115bd3a14d4fa').then (
-            User => {
-              console.log("Login Successful:", { User });
-            },
-            error => {
-              console.log("Login failed with exception:", { error });
-            }
-          )                
+            }            
+          ).then(
+            CometChat.login(id, 'a16d0c1f33bd96ff2246dd8259206eb96009aac3').then (
+              User => {
+                console.log("Login Successful:", { User });
+              },
+              error => {
+                console.log("Login failed with exception:", { error });
+              }
+            )  
+          )                        
 
           navigation.navigate('DrawerNav');             
         }else {         

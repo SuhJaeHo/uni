@@ -267,7 +267,7 @@ export default class NewProfileImg extends Component {
         .setRegion('us')
         .build();
 
-        CometChat.init('192332ba9a7ee10b', appSetting).then(
+        CometChat.init('194886ce53b70b4a', appSetting).then(
             () => {
                 console.log('Initialization completed successfully');
             },
@@ -286,8 +286,8 @@ export default class NewProfileImg extends Component {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    appId: '192332ba9a7ee10b',
-                    apiKey: 'e545675a7e11466d096a79bc9c5270838d6d633d',
+                    appId: '194886ce53b70b4a',
+                    apiKey: '6197c8db5c52ec9d249c77762f78d6843fc42d24',
                 },
                 body: JSON.stringify({
                     uid: this.state.id,
@@ -298,7 +298,7 @@ export default class NewProfileImg extends Component {
             .then(response => response.json())
             .then(responseData => console.log(responseData))   
             .then(() => {
-                CometChat.login(this.state.id, '92a48b2397822aea1cbebd8c615115bd3a14d4fa').then (
+                CometChat.login(this.state.id, 'a16d0c1f33bd96ff2246dd8259206eb96009aac3').then (
                     User => {
                       console.log("Login Successful:", { User });
                     },
