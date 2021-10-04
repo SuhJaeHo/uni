@@ -76,10 +76,10 @@ const LoginScreen = ({ navigation }) => {
     const enabled = authStatus === messaging.AuthorizationStatus.AUTHORIZED || authStatus === messaging.AuthorizationStatus.PROVISIONAL;
     if (enabled) {
       const token = await messaging().getToken();   
-      setFcmToken(token); 
+      setFcmToken(token);             
     } else {
       console.log('fcm auth fail');    
-    }
+    }    
   }
 
   const connect = async(id, email) => {
@@ -90,6 +90,7 @@ const LoginScreen = ({ navigation }) => {
     }  
 
     const URL = "http://localhost:3000/signIn";
+    //const URL = "http://10.0.2.2:3000/signIn";
     await fetch(URL, {
         method: 'POST',
         headers: {
@@ -131,6 +132,15 @@ const LoginScreen = ({ navigation }) => {
                 console.log("Login failed with exception:", { error });
               }
             )  
+          ).then(
+            CometChat.registerTokenForPushNotification(fcmToken).then(
+              () => {
+                console.log('OK');
+              },
+              (error) => {
+                console.log('Fail: ', error);
+              }
+            )
           )                        
 
           navigation.navigate('DrawerNav');             

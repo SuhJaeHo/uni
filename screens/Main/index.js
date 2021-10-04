@@ -83,6 +83,7 @@ export default class Main extends Component {
           var hobbyList = new Array();
 
           const URL = "http://localhost:3000/main";
+          //const URL = "http://10.0.2.2:3000/main";
           fetch(URL, {
                method: 'POST',
                headers: {
@@ -215,6 +216,7 @@ export default class Main extends Component {
           this.state.onFilter = true;                   
   
           const URL = "http://localhost:3000/main";
+          //const URL = "http://10.0.2.2:3000/main";
           fetch(URL, {
                method: 'POST',
                headers: {
@@ -281,6 +283,7 @@ export default class Main extends Component {
                
                for(let i = 0; i < data.hostUser.length; i++) {
                     fetch("http://localhost:3000/firstProfile/?id=" + data.hostUser[i] + "&time=" + new Date())
+                    //fetch("http:/10.0.2.2/:3000/firstProfile/?id=" + data.hostUser[i] + "&time=" + new Date())
                     .then(responseData => {
                          if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {
                               hostsProfile.push(responseData.url);
@@ -291,6 +294,7 @@ export default class Main extends Component {
 
                for(let i = 0; i < data.joinUser.length; i++) {
                     fetch("http://localhost:3000/firstProfile/?id=" + data.joinUser[i]  + "&time=" + new Date())
+                    //fetch("http://10.0.2.2:3000/firstProfile/?id=" + data.joinUser[i]  + "&time=" + new Date())
                     .then(responseData => {
                          if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
                               usersProfile.push(responseData.url);    
@@ -308,6 +312,7 @@ export default class Main extends Component {
 
      joinRoom = async(hostId, roomId) => {
           const URL = "http://localhost:3000/joinRoom";
+          //const URL = "http:/10.0.2.2/:3000/joinRoom";
           fetch(URL, {
                method: 'POST',
                headers: {
@@ -323,6 +328,7 @@ export default class Main extends Component {
      
      checkJoin = async() => {
           const URL = "http://localhost:3000/checkJoin";
+          //const URL = "http://10.0.2.2:3000/checkJoin";
           fetch(URL, {
                method: 'POST',
                headers: {

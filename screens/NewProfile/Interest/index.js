@@ -41,7 +41,8 @@ export default class Interest extends Component {
     }
     
     get_Interest = async () => {
-        const URL = "http://localhost:3000/setInterest";
+        //const URL = "http://localhost:3000/setInterest";
+        const URL = "http://10.0.2.2:3000/setInterest";
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -59,7 +60,8 @@ export default class Interest extends Component {
     }
 
     send_Interest = async () => {
-        const URL = "http://localhost:3000/setInterest";
+        //const URL = "http://localhost:3000/setInterest";
+        const URL = "http://10.0.2.2:3000/setInterest";
         fetch(URL, {
             method: 'POST',
             headers: {

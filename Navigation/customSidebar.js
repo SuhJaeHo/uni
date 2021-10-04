@@ -38,11 +38,13 @@ const CustomSidebarMenu = (props) => {
       var id = await AsyncStorage.getItem('id');
 
       fetch("http://localhost:3000/firstProfile/?id=" + id + "&time=" + new Date())
+      //fetch("http://10.0.2.2:3000/firstProfile/?id=" + id + "&time=" + new Date())
       .then(responseData => {
         setUrl(responseData.url);
       })
       .then(
         fetch("http://localhost:3000/userInfo", {
+        //fetch("http://10.0.2.2:3000/userInfo", {
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json',
@@ -63,24 +65,26 @@ const CustomSidebarMenu = (props) => {
 
     return (
       <SafeAreaView style={{flex: 1}}>
-        <View style={{flexDirection: 'row', alignItems:'center', justifyContent:'center', marginVertical:40}}>
-          <View style={{paddingHorizontal: 10}}>            
-            <Text style={{fontWeight:'bold', fontSize:20, marginVertical:5, marginLeft: 10}}>
-              {nickname}
-            </Text> 
-            <Text style={{fontWeight:'bold', fontSize:15, marginVertical:5, marginLeft: 10}}>
-              {email}
-            </Text>           
-          </View>
-          <View style={{marginHorizontal:18}}>
-            <Avatar.Image size={100} source={{uri: url}} />
+        <View style={{marginTop: 30}}>
+          <View style={{flexDirection: 'row',  alignItems: 'center', justifyContent: 'center', height: 100}}>
+            <View style={{flex: 1, paddingHorizontal: 10}} >
+              <Text style={{fontWeight: 'bold', fontSize: 23, marginVertical: 5}}>
+                {nickname}
+              </Text>
+              <Text numberOfLines={1} style={{fontWeight: 'bold', fontSize: 15, marginVertical: 5}}>
+                {email}
+              </Text> 
+            </View>
+            <View style={{flex: 1, paddingHorizontal: 10}}>
+              <Avatar.Image size={120} source={{uri: url}} />
+            </View>
           </View>
         </View>
           <Pressable 
-            style={{justifyContent:'center', alignItems:'center',  flexDirection:'row', marginBottom:15, marginTop:-20}}
+            style={{justifyContent: 'center', alignItems: 'center',  flexDirection: 'row', marginBottom: 15, marginTop: 15}}
             onPress={()=> props.navigation.navigate('EditProfile')}
           >
-            <Text style={{color:'grey', fontSize:13}}>
+            <Text style={{color: 'grey', fontSize: 13}}>
               Edit Profile
             </Text>
             <Icon name="keyboard-arrow-right" color="grey" size={30} /> 

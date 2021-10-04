@@ -55,20 +55,26 @@ export default class App extends Component {
     this.background();          
   }
 
+  /*
   componentWillUnmount = () => {
     this.foreground();
     this.background();
   }
+  */  
 
   foreground = () => {
-    messaging().onMessage(payload => {                  
-      this.showNotification(payload.data.title, payload.data.body);
+    messaging().onMessage(remoteMessage => {                  
+      //this.showNotification(payload.data.title, payload.data.body);
+      console.log(remoteMessage);
+      this.showNotification(remoteMessage.data.title, remoteMessage.data.body);
     });    
   }
 
   background = () => {
-    messaging().setBackgroundMessageHandler(payload => {
-      this.showNotification(payload.data.title, payload.data.body);
+    messaging().setBackgroundMessageHandler(remoteMessage => {
+      //this.showNotification(remoteMessage.data.title, remoteMessage.data.body);
+      console.log(remoteMessage);
+      this.showNotification(remoteMessage.data.title, remoteMessage.data.body);
     })
   }
 
@@ -79,7 +85,7 @@ export default class App extends Component {
       playSound: true,
       vibrate: true,
       channelId: 'TEST',      
-    })
+    })    
   }
 
   render() {

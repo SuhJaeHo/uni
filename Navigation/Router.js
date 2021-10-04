@@ -234,7 +234,7 @@ const Router = ({navigation}) => {
                     options={{
                         headerShown: false,    
                     }}
-                />
+                />                
                 <Stack.Screen
                     name={"LogoutBtn"}
                     component={LogoutBtn}

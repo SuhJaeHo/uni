@@ -90,7 +90,7 @@ export default class MyMapView extends Component {
                     </View>
                     : roomInfo.category === '농구' ? 
                     <View style={{ justifyContent: 'center', alignItems: 'center', height: 100, width: 55 }}>
-                        <Image style={{resizeMode: 'contain', width: 50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode: 'contain', width: 50, position: 'absolute'}} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
                         <Ionicons
                             name={"basketball"}
                             size={37}   
@@ -100,7 +100,7 @@ export default class MyMapView extends Component {
                     </View>
                     : roomInfo.category === '볼링' ?
                     <View style={{ justifyContent: 'center', alignItems: 'center', height: 100, width: 55 }}>
-                        <Image style={{resizeMode:'contain', width: 50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode: 'contain', width: 50, position: 'absolute'}} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
                         <FontAwesome5 
                             name={"bowling-ball"}
                             size={37}
@@ -111,7 +111,7 @@ export default class MyMapView extends Component {
                     : roomInfo.category === '야구' ?
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
                         <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                        <FontAwesome5 
+                        <Ionicons 
                             name={"baseball-outline"}
                             size={37}   
                             color={'#bc2b62'}
@@ -193,7 +193,7 @@ export default class MyMapView extends Component {
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
                         <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
                         <FontAwesome5 
-                            name={"gotable-tennislf"}
+                            name={"table-tennis"}
                             size={37}   
                             color={'#000'}
                         />

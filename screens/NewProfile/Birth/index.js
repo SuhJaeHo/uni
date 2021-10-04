@@ -57,7 +57,8 @@ export default class Birth extends Component {
     }   
 
     connect = async () => {
-        const URL = "http://localhost:3000/setBirth";
+        //const URL = "http://localhost:3000/setBirth";
+        const URL = "http://10.0.2.2:3000/setBirth";
         fetch(URL, {
             method: 'POST',
             headers: {
