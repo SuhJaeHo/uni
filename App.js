@@ -52,7 +52,7 @@ PushNotification.configure({
 export default class App extends Component {
   componentDidMount = () => {         
     this.foreground();   
-    this.background();          
+    this.background();              
   }
 
   /*
@@ -60,7 +60,7 @@ export default class App extends Component {
     this.foreground();
     this.background();
   }
-  */  
+  */    
 
   foreground = () => {
     messaging().onMessage(remoteMessage => {                  
