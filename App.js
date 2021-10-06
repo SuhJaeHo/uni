@@ -49,6 +49,19 @@ PushNotification.configure({
     (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
   );
 
+  PushNotification.createChannel(
+  {
+    channelId: "Default Channel", // (required)
+    channelName: "Default Channel", // (required)
+    channelDescription: "Default Channel", // (optional) default: undefined.
+    playSound: true, // (optional) default: true
+    soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+    importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+    vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+  },
+    (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+  );
+
 export default class App extends Component {
   componentDidMount = () => {         
     this.foreground();   
@@ -85,6 +98,7 @@ export default class App extends Component {
       playSound: true,
       vibrate: true,
       channelId: 'TEST',      
+      //channelId: 'Default Channel',      
     })    
   }
 

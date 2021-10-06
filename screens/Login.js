@@ -116,6 +116,9 @@ const LoginScreen = ({ navigation }) => {
           .then(responseData => console.log(responseData))
           */
 
+          console.log(id);
+          console.log(fcmToken);
+
           CometChat.init(appID, appSetting).then(
             () => {
               console.log('Initialization completed successfully');

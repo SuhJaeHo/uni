@@ -37,6 +37,7 @@ export default class UserList extends Component {
         var usersId = new Array();
         var usersNick = new Array();
         const URL = "http://localhost:3000/userList";
+        //const URL = "http:/10.0.2.2:3000/userList";
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -67,6 +68,7 @@ export default class UserList extends Component {
 
         for(let i = 0; i < this.state.usersId.length; i++) {               
              fetch("http://localhost:3000/firstProfile/?id=" + this.state.usersId[i] + "&time=" + new Date())
+             //fetch("http://10.0.2.2:3000/firstProfile/?id=" + this.state.usersId[i] + "&time=" + new Date())
              .then(responseData => {
                   if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
                        usersProfile.push(responseData.url);
@@ -127,6 +129,7 @@ export default class UserList extends Component {
         var usersNick = new Array();
 
         const URL = "http://localhost:3000/allowUser";
+        //const URL = "http://10.0.0.2:3000/allowUser";
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -135,6 +138,7 @@ export default class UserList extends Component {
             body: JSON.stringify({
                 _id: this.props.route.params.sendd._id,
                 id: userId,
+                hostId: this.state.id,
             })
         })
         .then(response => response.json())

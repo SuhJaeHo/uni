@@ -35,6 +35,7 @@ export default class RoomList extends Component {
           }
 
           const URL = "http://localhost:3000/roomList";
+          //const URL = "http:/10.0.2.2:3000/roomList";
           fetch(URL, {
                method: 'POST',
                headers: {
@@ -124,14 +125,14 @@ export default class RoomList extends Component {
      render() {
           return (
                <ScrollView style={{backgroundColor:'#fff'}}>
-                    {/* <View style={styles.headerConatiner}>
-                         <AntDesign
-                              name={"arrowleft"}
-                              style={styles.backIcon}
-                              onPress={() => {this.props.navigation.navigate('Main');}}
-                         />  
-                         <Text>Room List</Text> 
-                    </View>  */} 
+                         {/* <View style={styles.headerConatiner}>
+                              <AntDesign
+                                   name={"arrowleft"}
+                                   style={styles.backIcon}
+                                   onPress={() => {this.props.navigation.navigate('Main');}}
+                              />  
+                              <Text>Room List</Text> 
+                         </View>  */} 
                          <Text style={styles.sectionText}>
                               Host Rooms
                          </Text>                     

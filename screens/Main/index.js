@@ -5,7 +5,7 @@ import { Platform, PermissionsAndroid } from 'react-native';
 import BottomSheet from 'reanimated-bottom-sheet';
 import ActionButton from 'react-native-action-button';
 import Animated from 'react-native-reanimated';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -283,7 +283,7 @@ export default class Main extends Component {
                
                for(let i = 0; i < data.hostUser.length; i++) {
                     fetch("http://localhost:3000/firstProfile/?id=" + data.hostUser[i] + "&time=" + new Date())
-                    //fetch("http:/10.0.2.2/:3000/firstProfile/?id=" + data.hostUser[i] + "&time=" + new Date())
+                    //fetch("http:/10.0.2.2:3000/firstProfile/?id=" + data.hostUser[i] + "&time=" + new Date())
                     .then(responseData => {
                          if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {
                               hostsProfile.push(responseData.url);
@@ -312,7 +312,7 @@ export default class Main extends Component {
 
      joinRoom = async(hostId, roomId) => {
           const URL = "http://localhost:3000/joinRoom";
-          //const URL = "http:/10.0.2.2/:3000/joinRoom";
+          //const URL = "http:/10.0.2.2:3000/joinRoom";
           fetch(URL, {
                method: 'POST',
                headers: {
@@ -413,7 +413,7 @@ export default class Main extends Component {
                               editable={false}
                          />
                     </View>           
-                    {this.state.id !== this.state.roomInfo.id ?
+                    {this.state.id === this.state.roomInfo.id ?
                     <Pressable
                          onPress={() => this.props.navigation.push('Hosting', 
                               {
@@ -426,12 +426,14 @@ export default class Main extends Component {
                          <Text>modify</Text>
                     </Pressable>                   
                     :
-                    <Pressable
-                         onPress={() => this.joinRoom(this.state.roomInfo.id, this.state.roomInfo._id)}
-                         style={styles.joinButton}
-                    >
-                         <Text>join</Text>
-                    </Pressable>  
+                    <TouchableOpacity>
+                         <Pressable
+                              onPress={() => this.joinRoom(this.state.roomInfo.id, this.state.roomInfo._id)}
+                              style={styles.joinButton}
+                         >
+                              <Text>join</Text>
+                         </Pressable>  
+                    </TouchableOpacity>
                     }                             
                </View>                                           
                : null}

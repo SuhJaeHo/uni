@@ -100,8 +100,8 @@ export default class Hosting extends Component {
         const {id, address, lat, lng, category, title, time, timeInfo} = this.state.room;
         var GUID = Moment(new Date()).format('MMDD_HHmmss');
 
-        //const URL = "http://localhost:3000/createRoom";
-        const URL = "http://10.0.2.2:3000/createRoom";
+        const URL = "http://localhost:3000/createRoom";
+        //const URL = "http://10.0.2.2:3000/createRoom";
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -126,8 +126,8 @@ export default class Hosting extends Component {
         const {_id} = this.state;
         const {address, lat, lng, category, title, time, timeInfo} = this.state.room;
         
-        //const URL = "http://localhost:3000/modifyRoom";
-        const URL = "http://10.0.2.2:3000/modifyRoom";
+        const URL = "http://localhost:3000/modifyRoom";
+        //const URL = "http://10.0.2.2:3000/modifyRoom";
         fetch(URL, {
             method: 'POST',
             headers: {
