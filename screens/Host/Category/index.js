@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, TextInput, Pressable, FlatList} from 'react-native';
+import {View, Text, TextInput, Pressable, FlatList, BackHandler} from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -24,6 +24,17 @@ export default class Category extends Component {
 
     componentDidMount = () => {
         this.connect();
+
+        BackHandler.addEventListener('hardwareBackPress', this.backButtonClick); 
+    }
+
+    componentWillUnmount = async() => {
+        BackHandler.removeEventListener('hardwareBackPress', this.backButtonClick);
+    }
+
+    backButtonClick = () => {
+        this.props.navigation.goBack();
+        return true;
     }
 
     connect = async() => {

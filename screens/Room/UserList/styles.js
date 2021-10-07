@@ -34,11 +34,15 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
     },
     allowIcon: {
-        fontSize: 28,
+        fontSize: 30,
         marginRight: 5,
+        color: 'green',
+        fontWeight: 'bold',
     },
     refuseIcon: {
         fontSize: 28,
+        color: 'red',
+        marginLeft: 5,
     }
 });
 

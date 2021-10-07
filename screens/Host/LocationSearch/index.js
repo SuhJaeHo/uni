@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, Text, SafeAreaView, BackHandler} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -10,6 +10,19 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import styles from './styles';
 
 export default class LocationSearch extends Component {
+    componentDidMount = () => {
+        BackHandler.addEventListener('hardwareBackPress', this.backButtonClick)
+    }
+
+    componentWillUnmount = async() => {
+        BackHandler.removeEventListener('hardwareBackPress', this.backButtonClick);
+    }
+
+    backButtonClick = () => {
+        this.props.navigation.goBack();
+        return true;
+    }
+
     render() {
         return (
             <SafeAreaView style={{width: '100%', height: '100%', backgroundColor:'#fff'}}>

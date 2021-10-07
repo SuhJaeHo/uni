@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Text, View, SafeAreaView, TextInput, Pressable, Alert, ImageBackground} from 'react-native';
+import {Text, View, SafeAreaView, TextInput, Pressable, Alert, ImageBackground, BackHandler} from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Moment from 'moment';
@@ -26,6 +26,19 @@ export default class Hosting extends Component {
 
     componentDidMount = async() => {
         this.asyncStorage();
+
+        this.props.navigation.addListener('focus', async () => {
+            BackHandler.addEventListener('hardwareBackPress', this.backButtonClick);  
+        });     
+    }
+
+    componentWillUnmount = async() => {
+        BackHandler.removeEventListener('hardwareBackPress', this.backButtonClick);
+    }
+
+    backButtonClick = () => {
+        this.props.navigation.navigate('DrawerNav');
+        return true;
     }
 
     asyncStorage = async() => {

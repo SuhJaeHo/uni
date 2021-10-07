@@ -75,7 +75,7 @@ const CustomSidebarMenu = (props) => {
                 {email}
               </Text> 
             </View>
-            <View style={{flex: 1, paddingHorizontal: 10}}>
+            <View style={{flex: 1, paddingHorizontal: 10, marginLeft: 25}}>
               <Avatar.Image size={120} source={{uri: url}} />
             </View>
           </View>
