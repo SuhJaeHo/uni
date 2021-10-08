@@ -53,8 +53,8 @@ export default class Gender extends Component {
     }
 
     connect = async () => {
-        //const URL = "http://localhost:3000/setGender";
-        const URL = "http://10.0.2.2:3000/setGender";
+        const URL = "http://localhost:3000/setGender";
+        //const URL = "http://10.0.2.2:3000/setGender";
         fetch(URL, {
             method: 'POST',
             headers: {

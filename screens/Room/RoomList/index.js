@@ -76,7 +76,7 @@ export default class RoomList extends Component {
                                    </View>
                                    <View style={styles.infoContainer}>                              
                                         <View style={styles.titleContainer}>
-                                             <Text numberOfLines={1}  style={styles.titleText}>{data.title}</Text>
+                                             <Text numberOfLines={1} style={styles.titleText}>{data.title}</Text>
                                         </View>
                                         <Text style={styles.timeText}>{data.timeInfo}~</Text> 
                                         <Text numberOfLines={2} style={styles.locationText}>{data.address}</Text>                                                      

@@ -19,7 +19,7 @@ import Announce from '../screens/sideDrawer/announce/Announce';
 import History from '../screens/sideDrawer/history/History';
 import Rank from '../screens/sideDrawer/rank/Rank';
 import Cs from '../screens/sideDrawer/cs/Cs';
-import Setting from '../screens/sideDrawer/history/History';
+import Setting from '../screens/sideDrawer/setting/Setting';
 
 import CustomSidebarMenu from './customSidebar';
 import EditProfile from '../screens/EditProfile';
@@ -109,6 +109,7 @@ export default function DrawerNav({ navigation }) {
                 }}
                 component={Announce} 
             />
+            {/*
             <Drawer.Screen
                 name="SecondPage"
                 options={{ 
@@ -124,8 +125,9 @@ export default function DrawerNav({ navigation }) {
                 }}
                 component={Rank} 
             />  
+            */}
             <Drawer.Screen
-                name="fourthPage"
+                name="고객지원"
                 options={{ 
                     drawerLabel: '고객지원 👩🏻‍💻',
                     headerShown: false,        

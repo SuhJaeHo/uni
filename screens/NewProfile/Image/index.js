@@ -53,16 +53,16 @@ export default class NewProfileImg extends Component {
         }
         console.log(this.state.id);
 
-        //fetch("http://localhost:3000/firstProfile/?id=" + this.state.id  + "&time=" + new Date())
-        fetch("http://10.0.2.2:3000/firstProfile/?id=" + this.state.id  + "&time=" + new Date())
+        fetch("http://localhost:3000/firstProfile/?id=" + this.state.id  + "&time=" + new Date())
+        //fetch("http://10.0.2.2:3000/firstProfile/?id=" + this.state.id  + "&time=" + new Date())
         .then(responseData => {
             if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
                 this.state.image[0].uri = responseData.url;     
             }
         })
         .then(() =>
-            //fetch("http://localhost:3000/secondProfile/?id=" + this.state.id + "&time=" + new Date())
-            fetch("http://10.0.2.2:3000/secondProfile/?id=" + this.state.id + "&time=" + new Date())
+            fetch("http://localhost:3000/secondProfile/?id=" + this.state.id + "&time=" + new Date())
+            //fetch("http://10.0.2.2:3000/secondProfile/?id=" + this.state.id + "&time=" + new Date())
             .then(responseData => {  
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {
                     this.state.image[1].uri = responseData.url;                                     
@@ -70,8 +70,8 @@ export default class NewProfileImg extends Component {
             })
         )
         .then(() =>
-            //fetch("http://localhost:3000/thirdProfile/?id=" + this.state.id + "&time=" + new Date())
-            fetch("http://10.0.2.2:3000/thirdProfile/?id=" + this.state.id + "&time=" + new Date())
+            fetch("http://localhost:3000/thirdProfile/?id=" + this.state.id + "&time=" + new Date())
+            //fetch("http://10.0.2.2:3000/thirdProfile/?id=" + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[2].uri = responseData.url;                                   
@@ -79,24 +79,24 @@ export default class NewProfileImg extends Component {
             })
         )
         .then(() =>
-            //fetch("http://localhost:3000/fourthProfile/?id=" + this.state.id + "&time=" + new Date())
-            fetch("http://10.0.2.2:3000/fourthProfile/?id=" + this.state.id + "&time=" + new Date())
+            fetch("http://localhost:3000/fourthProfile/?id=" + this.state.id + "&time=" + new Date())
+            //fetch("http://10.0.2.2:3000/fourthProfile/?id=" + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[3].uri = responseData.url;     
                 }
             })
         ).then(() =>
-            //fetch("http://localhost:3000/fifthProfile/?id=" + this.state.id + "&time=" + new Date())
-            fetch("http://10.0.2.2:3000/fifthProfile/?id=" + this.state.id + "&time=" + new Date())
+            fetch("http://localhost:3000/fifthProfile/?id=" + this.state.id + "&time=" + new Date())
+            //fetch("http://10.0.2.2:3000/fifthProfile/?id=" + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[4].uri = responseData.url;                                     
                 }
             })
         ).then(() => 
-            //fetch("http://localhost:3000/sixthProfile/?id=" + this.state.id + "&time=" + new Date())
-            fetch("http://10.0.2.2:3000/sixthProfile/?id=" + this.state.id + "&time=" + new Date())
+            fetch("http://localhost:3000/sixthProfile/?id=" + this.state.id + "&time=" + new Date())
+            //fetch("http://10.0.2.2:3000/sixthProfile/?id=" + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[5].uri = responseData.url;                                     
@@ -255,8 +255,8 @@ export default class NewProfileImg extends Component {
             type: type,
         })
 
-        //const URL = "http://localhost:3000/uploadProfile";
-        const URL = "http://10.0.2.2:3000/uploadProfile";
+        const URL = "http://localhost:3000/uploadProfile";
+        //const URL = "http://10.0.2.2:3000/uploadProfile";
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -285,8 +285,8 @@ export default class NewProfileImg extends Component {
 
         const nickname = await AsyncStorage.getItem('nickname'); 
 
-        //fetch("http://localhost:3000/firstProfile/?id=" + this.state.id  + "&time=" + new Date())
-        fetch("http://10.0.2.2:3000/firstProfile/?id=" + this.state.id  + "&time=" + new Date())
+        fetch("http://localhost:3000/firstProfile/?id=" + this.state.id  + "&time=" + new Date())
+        //fetch("http://10.0.2.2:3000/firstProfile/?id=" + this.state.id  + "&time=" + new Date())
         .then(responseData => {           
             const URL = 'https://api-us.cometchat.io/v3.0/users';
             fetch(URL, {
@@ -337,8 +337,8 @@ export default class NewProfileImg extends Component {
     }
 
     setCompleted = () => {
-        //const URL = "http://localhost:3000/setCompleted";
-        const URL = "http://10.0.2.2:3000/setCompleted";
+        const URL = "http://localhost:3000/setCompleted";
+        //const URL = "http://10.0.2.2:3000/setCompleted";
         fetch(URL, {
             method: 'POST',
             headers: {

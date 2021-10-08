@@ -13,6 +13,12 @@ import { useNavigation } from '@react-navigation/native';
 
 import auth from "@react-native-firebase/auth";
 
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+
 const LogoutBtn = () => {
   const [user, setUser] = useState();
 
@@ -27,7 +33,7 @@ const LogoutBtn = () => {
 
   const navigation = useNavigation();
 
-  const logout = () => {
+  const logout = async() => {
     Alert.alert(
       "Logout",
       "Are you sure? You want to logout?",
@@ -41,6 +47,7 @@ const LogoutBtn = () => {
         {
           text: "Confirm",
           onPress: () => {
+            GoogleSignin.signOut();
             auth()
               .signOut()
               .then(() => navigation.replace("Auth"))
@@ -56,6 +63,15 @@ const LogoutBtn = () => {
       { cancelable: false }
     );
   };
+
+  const signOut = async() => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (  
     <View style={{width:100, height:39, justifyContent:'center', alignItems:'center', zIndex:200}}>

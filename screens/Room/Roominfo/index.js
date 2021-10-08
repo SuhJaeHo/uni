@@ -4,7 +4,6 @@ import styles from './styles'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 function Roominfo({ route, navigation }) {
-
     const { sendd } = route.params;
 
     return (

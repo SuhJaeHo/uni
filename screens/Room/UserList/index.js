@@ -22,7 +22,7 @@ export default class UserList extends Component {
     }
   
     componentDidMount = async() => {
-        console.log(this.props.route.params.sendd._id);
+        console.log(this.props.route.params.sendd.GUID);
         this.connect();
     }
 
@@ -36,6 +36,7 @@ export default class UserList extends Component {
 
         var usersId = new Array();
         var usersNick = new Array();
+
         const URL = "http://localhost:3000/userList";
         //const URL = "http:/10.0.2.2:3000/userList";
         fetch(URL, {
@@ -93,17 +94,25 @@ export default class UserList extends Component {
                     key={key++}
                 >
                     <View style={styles.usersList}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Image
-                                 source={{uri : this.state.usersProfile[i]}}
-                                 style={{width: 80, height: 80, borderRadius: 40, overflow: 'hidden', borderWidth: 3,}}
-                                 key={key++}
-                            />
-                            <Text
-                                 style={styles.usersNick}
-                            >
-                                 {this.state.usersNick[i]}
-                            </Text>
+                        <View style={styles.infoContainer}>
+                            <View style={styles.imgContainer}>
+                                <Image
+                                    source={{uri : this.state.usersProfile[i]}}
+                                    style={{width: 70, height: 70, borderRadius: 40, overflow: 'hidden', borderWidth: 1,marginLeft:5}}
+                                    key={key++}
+                                />
+                            </View>
+                            <View>
+                                <Text
+                                    style={styles.usersNick}
+                                >
+                                    {this.state.usersNick[i]}
+                                </Text>
+                                <Text style={styles.introText}>
+                                    introdoce about me
+                                </Text>
+                            </View>
+                            
                        </View>
                        <View style={styles.checkList}>
                             <AntDesign
@@ -160,7 +169,8 @@ export default class UserList extends Component {
 
     //그룹채팅 합류
     joinGroup = () => {
-        var GUID = this.props.route.params.GUID;
+        var GUID = this.props.route.params.sendd.GUID;
+
         var groupType = CometChat.GROUP_TYPE.PUBLIC;
 
         CometChat.joinGroup(GUID, groupType).then(
@@ -176,14 +186,16 @@ export default class UserList extends Component {
     render() {
         return (
             <View>
-                <View style={styles.headerConatiner}>
+                {/*
+                <View style={styles.headerConatiner}>                        
                         <AntDesign
                             name={"arrowleft"}
                             style={styles.backIcon}
                             onPress={() => {this.props.navigation.navigate('RoomList');}}
                         />  
-                        <Text>Request User List</Text>                    
+                        <Text>Request User List</Text>                                            
                 </View>
+                */}
                 <View>
                     {this.showUsersProfile()}
                 </View>

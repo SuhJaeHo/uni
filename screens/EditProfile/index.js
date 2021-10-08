@@ -111,7 +111,7 @@ export default class EditProfile extends Component {
                         :
                         <Image 
                             source={{uri: data.uri}}
-                            style={{width: 100, height: 150, borderRadius: 25}}
+                            style={{width: Dimensions.get('window').width*0.26, height: 150, borderRadius: 25}}
                         />
                     }
                 </TouchableOpacity>
@@ -298,53 +298,53 @@ export default class EditProfile extends Component {
         return (
             <View style={styles.editContainer}>                  
                 <TouchableOpacity activeOpacity={1} onPress={() => this.bs.current.snapTo(1)}>                 
-                <ImageBackground
-                    source={require("../../assets/imgs/3.png")} resizeMode="cover" 
-                    style={{ width: "100%", height: '110%' }}                    
-                >                    
-                    <View style={styles.announceContainer}>
-                        <View style={styles.headerConatiner}>
-                            <MaterialIcons name={"arrow-back-ios"} 
-                                size={45} 
-                                color={'#000'}
-                                style={{marginLeft:10}}
-                                onPress={() => {this.props.navigation.navigate('DrawerNav');}}
-                            />                   
-                        </View>
-                        <View style={{ flexDirection:'row', alignItems:'flex-end' }}>
-                            <Text style={styles.announceTitle}>
-                                사진
-                            </Text>
+                    <ImageBackground
+                        source={require("../../assets/imgs/3.png")} resizeMode="cover" 
+                        style={{ width: "100%", height: '110%' }}                    
+                    >                    
+                        <View style={styles.announceContainer}>
+                            <View style={styles.headerConatiner}>
+                                <MaterialIcons name={"arrow-back-ios"} 
+                                    size={45} 
+                                    color={'#000'}
+                                    style={{marginLeft:10, marginTop:20}}
+                                    onPress={() => {this.props.navigation.navigate('DrawerNav');}}
+                                />                   
+                            </View>
+                            <View style={{ flexDirection:'row', alignItems:'flex-end' }}>
+                                <Text style={styles.announceTitle}>
+                                    사진
+                                </Text>
+                                <Text style={styles.announce}>
+                                    을 
+                                </Text>
+                            </View>
                             <Text style={styles.announce}>
-                                을 
-                            </Text>
+                                추가해 주세요! 
+                            </Text>                                           
                         </View>
-                        <Text style={styles.announce}>
-                             추가해 주세요! 
-                        </Text>                                           
-                    </View>
-                    <View style={{ flex: 1, justifyContent: 'center', marginTop: 60 }}>  
-                        <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', width: Dimensions.get('window').width*0.9, marginHorizontal: Dimensions.get('window').width*0.05}}>
-                            {this.state.picker}
-                        </View>                        
-                        <View style={styles.interestContainer}>
-                            <Pressable
-                                style={styles.interestList}
-                                onPress={() => this.props.navigation.push('editHobby', {interest: this.state.userInterest})}
-                            >
-                                <Text>{this.state.interestList}</Text>
-                            </Pressable>                                                     
-                        </View>   
-                        <BottomSheet
-                            ref={this.bs}
-                            snapPoints={[400, 0]}
-                            initialSnap={1}
-                            renderContent={this.renderContent}                   
-                            enabledContentTapInteraction={false}
-                            enabledInnerScrolling={false}
-                        />                                                                                                      
-                    </View>
-                </ImageBackground>               
+                        <View style={{ flex: 1, justifyContent: 'center', marginTop: 60 }}>  
+                            <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', width: Dimensions.get('window').width*0.9, marginHorizontal: Dimensions.get('window').width*0.05}}>
+                                {this.state.picker}
+                            </View>                        
+                            <View style={styles.interestContainer}>
+                                <Pressable
+                                    style={styles.interestList}
+                                    onPress={() => this.props.navigation.push('editHobby', {interest: this.state.userInterest})}
+                                >
+                                    <Text>{this.state.interestList}</Text>
+                                </Pressable>                                                     
+                            </View>   
+                            <BottomSheet
+                                ref={this.bs}
+                                snapPoints={[400, 0]}
+                                initialSnap={1}
+                                renderContent={this.renderContent}                   
+                                enabledContentTapInteraction={false}
+                                enabledInnerScrolling={false}
+                            />                                                                                                      
+                        </View>
+                    </ImageBackground>               
                 </TouchableOpacity>
             </View> 
         )

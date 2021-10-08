@@ -26,6 +26,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import styles from './styles';
 
+const renderHeight = Dimensions.get('window').height * 0.8;
+
 export default class Main extends Component {
      constructor(props) {
           super(props);
@@ -306,7 +308,7 @@ export default class Main extends Component {
                this.bs.current.snapTo(0);                          
           }else {
                this.setState({hostsProfile: null, usersProfile: null})
-               this.bs.current.snapTo(5);
+               this.bs.current.snapTo(2);
           }
      }
 
@@ -349,7 +351,7 @@ export default class Main extends Component {
      bs = React.createRef();
      renderContent = () => (    
           <View
-             style={{flex: 0, backgroundColor: '#fff', padding: 20, height: 700,}}
+             style={{flex: 0, backgroundColor: '#fff', padding: 20, height: renderHeight}}
           >
                {this.state.roomInfo !== undefined ? 
                /* ScrollView 끝에 잘리는거 수정 필요 */
@@ -497,8 +499,9 @@ export default class Main extends Component {
                     <BottomSheet
                          ref={this.bs}
                          renderContent={this.renderContent}
-                         snapPoints={[700, 600, 450, 300, 150, 0]}
-                         initialSnap={5}
+                         snapPoints={[renderHeight, 450, 0]}
+                         //snapPoints={[700, 600, 450, 300, 150, 0]}
+                         initialSnap={2}
                          borderRadius={10}
                          enabledContentTapInteraction={false}
                     />

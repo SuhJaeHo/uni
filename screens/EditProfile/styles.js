@@ -18,17 +18,18 @@ const styles = StyleSheet.create({
     flexDirection:'row'
   },
   imageBoard: {
-    width: 98,
+    width: Dimensions.get('window').width*0.26,
     height: 150,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
     borderRadius: 25,
-    margin: 9,
-    shadowOpacity: 0.5,
+    margin:Dimensions.get('window').width*0.02,
+    shadowOpacity: 3,
     shadowRadius: 5,
     shadowColor: 'grey',
-    shadowOffset: { height: 3, width: 3 },
+    elevation: 3,
+    shadowOffset: { height: 5, width: 3 },
   }, 
   //BottomSheet
   pickerButton: {
@@ -76,7 +77,8 @@ const styles = StyleSheet.create({
     lineHeight: 70
   },
   interestContainer: {
-    marginTop:30,
+    width: Dimensions.get('window').width*0.26,
+    marginTop: 30,
   },
   interestList: {
     marginHorizontal: Dimensions.get('window').width * 0.05,

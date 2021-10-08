@@ -55,8 +55,8 @@ export default class Nickname extends Component {
                 console.log(e);
             }
 
-            //const URL = "http://localhost:3000/setNickname";
-            const URL = "http://10.0.2.2:3000/setNickname";
+            const URL = "http://localhost:3000/setNickname";
+            //const URL = "http://10.0.2.2:3000/setNickname";
             fetch(URL, {
                 method: 'POST',
                 headers: {

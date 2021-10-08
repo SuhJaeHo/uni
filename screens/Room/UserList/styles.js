@@ -14,35 +14,58 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     line: {
-        borderBottomColor: 'black',
-        borderBottomWidth: 1,
+        
+        
+        
+    },
+    infoContainer:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        flex: 4
+    },
+    userImg: {
+        width: 80, height: 80, borderRadius: 40, overflow: 'hidden', borderWidth: 3,
     },
     usersList: {
-        width: Dimensions.get('window').width,
+        width: Dimensions.get('window').width*0.95,
+        height: Dimensions.get('window').height*0.1,
+        marginHorizontal: Dimensions.get('window').width*0.025,
         flexDirection: 'row',
-        flexWrap: 'wrap', 
-        alignItems: 'center',
-        marginLeft: 5,
-        justifyContent: 'space-between',
+        alignItems: 'center',        
+        marginTop: 10,
+        borderRadius: 20,
+        backgroundColor: '#fff',
+        shadowOpacity: 0.3,
+        shadowRadius: 5,
+        shadowColor: 'grey',
+        shadowOffset: { height: 3, width: 3 },
+        borderWidth: 3,
+        borderColor: '#fb009e'        
     },
     usersNick: {
         marginLeft: 10,
+        fontSize: 16,
+        fontWeight: 'bold'        
+    },
+    introText: {
+        marginLeft: 10,        
     },
     checkList: {
         flexDirection: 'row',
         flexWrap: 'wrap', 
         marginHorizontal: 10,
+        flex:1
     },
     allowIcon: {
         fontSize: 30,
         marginRight: 5,
-        color: 'green',
-        fontWeight: 'bold',
+        color:'green',
+        fontWeight:'bold'
     },
     refuseIcon: {
         fontSize: 28,
-        color: 'red',
-        marginLeft: 5,
+        color:'red',
+        marginLeft:5
     }
 });
 

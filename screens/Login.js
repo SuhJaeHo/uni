@@ -138,7 +138,7 @@ const LoginScreen = ({ navigation }) => {
           ).then(
             CometChat.registerTokenForPushNotification(fcmToken).then(
               () => {
-                console.log('OK');
+                console.log(fcmToken);
               },
               (error) => {
                 console.log('Fail: ', error);

@@ -6,10 +6,13 @@ const styles = StyleSheet.create({
         justifyContent:'center',        
     },
     sectionText:{
-        fontSize:18,
-        marginLeft:10,
+        fontSize:20,
+        marginLeft:20,
         backgroundColor:"#fff",
-        width:125
+        zIndex:10,
+        fontWeight:'bold',
+        marginTop:15,
+        color:'grey'
     },
     renderContainer:{
         backgroundColor:'#fff',
