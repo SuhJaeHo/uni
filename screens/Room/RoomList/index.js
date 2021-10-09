@@ -52,7 +52,7 @@ export default class RoomList extends Component {
                     hostRoomInfo: responseData[0],
                     joinRoomInfo: responseData[1],
                })
-          })                 
+          })                
      }
 
      showRoomList = () => {

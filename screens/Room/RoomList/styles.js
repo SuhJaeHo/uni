@@ -53,8 +53,7 @@ const styles = StyleSheet.create({
         fontSize:14,
         color:'grey',
         marginTop:10
-    },
-  
+    },  
     timeText:{
         fontSize:15,
         marginTop:10        
@@ -77,7 +76,6 @@ const styles = StyleSheet.create({
         flex:3,
         marginLeft:13                
     }
-
 });
 
 export default styles;

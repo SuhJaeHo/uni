@@ -13,7 +13,7 @@ export default class Time extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            time: '',
+            dateTime: '',
             showTime: '',
             isChange: false,
         }
@@ -27,7 +27,7 @@ export default class Time extends Component {
         var currentTime = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + (9 * 60 * 60 * 1000));
         
         if(!this.state.isChange) {
-            this.state.time = currentTime;
+            this.state.dateTime = currentTime;
             this.state.showTime = Moment(currentTime).format('MM/DD(dd)  HH:mm');
         }
 
@@ -38,32 +38,30 @@ export default class Time extends Component {
                 </View>
                 <DatePicker
                     mode='datetime'
-                    date={this.state.time}
+                    date={this.state.dateTime}
                     onDateChange={this.onChangeTime}
                     minimumDate={currentTime}
                     minuteInterval={10}
                     locale="ko"
                     is24hourSource="locale"
-                    androidVariant="nativeAndroid"
-                    
+                    androidVariant="nativeAndroid"                    
                 />
             </View>
         )
     }
 
     onChangeTime = (selectedTime) => {
-        const currentTime = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + (9 * 60 * 60 * 1000));
+        const currentTime = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + (9 * 60 * 60 * 1000));                     
 
         if(currentTime > selectedTime) {
             //Alert 대신 Fade out으로 바꿀 예정
             Alert.alert('X');
         }else {
             this.setState({       
-                time: selectedTime,         
+                dateTime: selectedTime,         
                 showTime: Moment(selectedTime).format('MM/DD(dd)  HH:mm'),
-                isChange: true,
+                isChange: true,                
             })     
-
             this.datePicker();                               
         }
     }
@@ -75,7 +73,7 @@ export default class Time extends Component {
                     <AntDesign                        
                         name={"arrowleft"}
                         style={styles.backIcon}
-                        onPress={() => this.props.navigation.push('Hosting', {time: JSON.stringify(this.state.time), timeInfo: this.state.showTime, Info: 'time'})}
+                        onPress={() => this.props.navigation.push('Hosting', {time: JSON.stringify(this.state.dateTime), timeInfo: this.state.showTime, Info: 'time'})}
                     />
                     <Text>약속시간</Text>
                 </View>                
@@ -83,7 +81,7 @@ export default class Time extends Component {
                     {this.datePicker()}                    
                 </View>
                 <Pressable
-                    onPress={() => this.props.navigation.push('Hosting', {time: JSON.stringify(this.state.time), timeInfo: this.state.showTime, Info: 'time'})}
+                    onPress={() => this.props.navigation.push('Hosting', {time: JSON.stringify(this.state.dateTime), timeInfo: this.state.showTime, Info: 'time'})}
                     style={styles.setBtn}
                 >
                     <Text style={{color:'#fff', fontSize:25, fontWeight:'bold'}}>

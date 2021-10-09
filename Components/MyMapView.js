@@ -252,7 +252,7 @@ export default class MyMapView extends Component {
                     <View>                          
                         <MapView
                             style={{width: '100%', height: '100%'}}                    
-                            //showsUserLocation={true}                                                                                               
+                            showsUserLocation={true}                                                                                               
                             region={this.props.region}                               
                             onPanDrag={() => this.state.dragCount += 1}                        
                             onRegionChangeComplete={(reg) => {
@@ -276,7 +276,7 @@ export default class MyMapView extends Component {
                         <MapView
                             ref={ref => {this.map = ref}}
                             style={{width: '100%', height: '100%'}}                    
-                            //showsUserLocation={true}                                                                                               
+                            showsUserLocation={true}                                                                                               
                             region={this.state.pressedCurrentBtn === true ? this.props.region : region}                            
                             onRegionChangeComplete={(reg) => {   
                             this.setState({pressedCurrentBtn: false})                            

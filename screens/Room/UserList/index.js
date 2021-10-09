@@ -118,7 +118,7 @@ export default class UserList extends Component {
                             <AntDesign
                                  name={"checkcircleo"}
                                  style={styles.allowIcon}           
-                                 onPress={() => {this.allowUser(this.state.usersId[i]); this.joinGroup()}}                                             
+                                 onPress={() => {this.allowUser(this.state.usersId[i]); this.joinGroup(this.state.usersId[i])}}                                             
                             />
                             <AntDesign
                                  name={"closecircleo"}
@@ -148,6 +148,7 @@ export default class UserList extends Component {
                 _id: this.props.route.params.sendd._id,
                 id: userId,
                 hostId: this.state.id,
+                GUID: this.props.route.params.sendd.GUID,
             })
         })
         .then(response => response.json())
@@ -168,9 +169,22 @@ export default class UserList extends Component {
     }
 
     //그룹채팅 합류
-    joinGroup = () => {
+    joinGroup = (requestId) => {
         var GUID = this.props.route.params.sendd.GUID;
+        var new_member = [
+            new CometChat.GroupMember(requestId, CometChat.GROUP_MEMBER_SCOPE.PARTICIPANT)
+        ]
 
+        CometChat.addMembersToGroup(GUID, new_member, []).then(
+            response => {
+                console.log("response", response);
+            },
+            error => {
+                console.log("Something went wrong", error);
+            }
+        )
+
+        /*
         var groupType = CometChat.GROUP_TYPE.PUBLIC;
 
         CometChat.joinGroup(GUID, groupType).then(
@@ -181,6 +195,7 @@ export default class UserList extends Component {
                 console.log("Group joining failed with exception:", error);
             }
         )
+        */
     }
 
     render() {

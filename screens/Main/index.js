@@ -24,6 +24,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
+import { CometChat } from '@cometchat-pro/react-native-chat';
+
 import styles from './styles';
 
 const renderHeight = Dimensions.get('window').height * 0.8;
@@ -47,6 +49,7 @@ export default class Main extends Component {
 
                roomData: [],
                userData: [],
+               GUID: [],
                hobbyList: [],               
                hobby: '',
                onFilter: false,   
@@ -102,13 +105,14 @@ export default class Main extends Component {
                this.setState({
                     roomData: responseData[0],
                     userData: responseData[1],
+                    GUID: responseData[2],
                })
      
                this.state.userData.map(userData => {
                     Interest = userData.hobby.split(',');       
                })                                        
           })
-          .then(() => {
+          .then(() => {                                             
                Interest.map((hobby, index) => {
                     hobbyList.push (                                   
                          <ActionButton.Item 
@@ -183,7 +187,6 @@ export default class Main extends Component {
                                         <Image style={{ width:38,height:38, zIndex:10,  borderRadius:19 ,  }} source={require('../../assets/cateicon/pool.png')}/>                                  
                                    : hobby === '탁구' ?                                  
                                         <FontAwesome5 
-
                                              name={"table-tennis"}
                                              size={37}   
                                              color={'#000'}
@@ -204,13 +207,32 @@ export default class Main extends Component {
                               }
                          </ActionButton.Item>                                                       
                     )                              
-               })
+               });
+
+               console.log(this.state.GUID);
+
+               if(this.state.GUID.length !== 0) {
+                    this.deleteGroupChat(this.state.GUID);
+               };
           })
           .then(() => {
                this.setState({
                     hobbyList: hobbyList,
                })
           })                      
+     }
+
+     deleteGroupChat = async(GUID) => {  
+          GUID.map((data, index) => {
+               CometChat.deleteGroup(data.GUID).then(
+                    response => {
+                         console.log("Groups deleted successfully:", response);
+                    },
+                    error => {
+                         console.log("Group delete failed with exception:", error);
+                    }
+               )
+          })                        
      }
 
      connectFilter = async(hobby) => {
@@ -295,14 +317,16 @@ export default class Main extends Component {
                }
 
                for(let i = 0; i < data.joinUser.length; i++) {
-                    fetch("http://localhost:3000/firstProfile/?id=" + data.joinUser[i]  + "&time=" + new Date())
-                    //fetch("http://10.0.2.2:3000/firstProfile/?id=" + data.joinUser[i]  + "&time=" + new Date())
-                    .then(responseData => {
-                         if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
-                              usersProfile.push(responseData.url);    
-                         }
-                    })                    
-                    .then(() => this.state.usersProfile = usersProfile)                               
+                    if(data.hostUser[i] !== data.joinUser[i]) {
+                         fetch("http://localhost:3000/firstProfile/?id=" + data.joinUser[i]  + "&time=" + new Date())
+                         //fetch("http://10.0.2.2:3000/firstProfile/?id=" + data.joinUser[i]  + "&time=" + new Date())
+                         .then(responseData => {
+                              if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {                                            
+                                   usersProfile.push(responseData.url);    
+                              }
+                         })                    
+                         .then(() => this.state.usersProfile = usersProfile)                          
+                    }                                                  
                }
 
                this.bs.current.snapTo(0);                          

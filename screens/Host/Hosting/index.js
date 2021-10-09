@@ -80,8 +80,15 @@ export default class Hosting extends Component {
             const lng = await AsyncStorage.getItem('lng');
             const category = await AsyncStorage.getItem('category');
             const title = await AsyncStorage.getItem('title');
-            const time = await AsyncStorage.getItem('time');
+
+            var getTime = await AsyncStorage.getItem('time');
+
+            var time = new Date(getTime);
+            time.setHours(time.getHours() + 9); 
             const timeInfo = await AsyncStorage.getItem('timeInfo');
+
+            var chatLimit = new Date(getTime);       
+            chatLimit.setHours(chatLimit.getHours() + 11);            
             this.setState({
                 room: {
                     id: id,
@@ -90,8 +97,9 @@ export default class Hosting extends Component {
                     lng: lng,
                     category: category,
                     title: title,
-                    time: time,
+                    time: time,                                      
                     timeInfo: timeInfo,
+                    chatLimit: chatLimit,  
                 },
                 check: check,         
                 _id: _id,       
@@ -110,7 +118,7 @@ export default class Hosting extends Component {
     }
 
     createRoom = async() => {        
-        const {id, address, lat, lng, category, title, time, timeInfo} = this.state.room;
+        const {id, address, lat, lng, category, title, time, timeInfo, chatLimit} = this.state.room;
         var GUID = Moment(new Date()).format('MMDD_HHmmss');
 
         const URL = "http://localhost:3000/createRoom";
@@ -129,6 +137,7 @@ export default class Hosting extends Component {
                 title: title,
                 time: time,
                 timeInfo: timeInfo,
+                chatLimit: chatLimit,
                 GUID: GUID,
             })
         })
