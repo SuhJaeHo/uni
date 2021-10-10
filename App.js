@@ -63,11 +63,11 @@ PushNotification.configure({
 export default class App extends Component {
   componentDidMount = () => {         
     this.foreground();   
-    this.background();               
+    this.background();    
   }
 
   foreground = () => {
-    messaging().onMessage(remoteMessage => {                  
+    messaging().onMessage(async remoteMessage => {                  
       //this.showNotification(payload.data.title, payload.data.body);
       console.log(remoteMessage);
       this.showNotification(remoteMessage.data.title, remoteMessage.data.body);
@@ -75,7 +75,7 @@ export default class App extends Component {
   }
 
   background = () => {
-    messaging().setBackgroundMessageHandler(remoteMessage => {
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
       //this.showNotification(remoteMessage.data.title, remoteMessage.data.body);
       console.log(remoteMessage);
       this.showNotification(remoteMessage.data.title, remoteMessage.data.body);

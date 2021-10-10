@@ -14,6 +14,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { CometChat } from '@cometchat-pro/react-native-chat';
 
+import messaging from '@react-native-firebase/messaging';
+
 import styles from './styles';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
@@ -33,11 +35,13 @@ export default class NewProfileImg extends Component {
             ],
             index: 0,
             nextColor: '#fff',
+
+            FCM_TOKEN: '',
         }
     }
 
-    componentDidMount = () => {
-        this.getProfile();
+    componentDidMount = async() => {
+        this.getProfile();        
     }
 
     getProfile = async () => {
@@ -48,6 +52,9 @@ export default class NewProfileImg extends Component {
                     id: id,
                 })
             }
+
+            const FCM_TOKEN = await messaging().getToken();
+            this.setState({FCM_TOKEN: FCM_TOKEN});
         } catch(e) {
             console.log(e);
         }
@@ -315,6 +322,9 @@ export default class NewProfileImg extends Component {
                     }
                 )
             }) 
+            .then(() => {
+                CometChat.registerTokenForPushNotification(this.state.FCM_TOKEN);
+            })
         })            
     }
 

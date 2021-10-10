@@ -47,6 +47,7 @@ const LoginScreen = ({ navigation }) => {
   //chatting
   const appID = '194886ce53b70b4a';
   const region = 'us';
+  const AUTH_KEY = 'a16d0c1f33bd96ff2246dd8259206eb96009aac3'
   const appSetting = new CometChat.AppSettingsBuilder()
     .subscribePresenceForAllUsers()
     .setRegion(region)
@@ -70,7 +71,7 @@ const LoginScreen = ({ navigation }) => {
     // Check if user is already signed in
   }, []);
 
-  const getFcmToken = async() => {
+  const getFcmToken = async(id) => {
     const authStatus = await messaging().requestPermission();
     
     const enabled = authStatus === messaging.AuthorizationStatus.AUTHORIZED || authStatus === messaging.AuthorizationStatus.PROVISIONAL;
@@ -84,7 +85,7 @@ const LoginScreen = ({ navigation }) => {
 
   const connect = async(id, email) => {
     try {
-      await AsyncStorage.setItem('id', id)    
+      await AsyncStorage.setItem('id', id);    
     } catch (e) {
       console.log(e);
     }  
@@ -116,26 +117,23 @@ const LoginScreen = ({ navigation }) => {
           .then(responseData => console.log(responseData))
           */
 
-          console.log(id);
-          console.log(fcmToken);
-
           CometChat.init(appID, appSetting).then(
             () => {
               console.log('Initialization completed successfully');
             },
             (error) => {
               console.log('Initialization failed with error:', error);
-            }            
+            }                             
           ).then(
-            CometChat.login(id, 'a16d0c1f33bd96ff2246dd8259206eb96009aac3').then (
+            CometChat.login(id, AUTH_KEY).then (
               User => {
                 console.log("Login Successful:", { User });
               },
               error => {
                 console.log("Login failed with exception:", { error });
               }
-            )  
-          ).then(
+            )              
+          ).then(                        
             CometChat.registerTokenForPushNotification(fcmToken).then(
               () => {
                 console.log(fcmToken);
@@ -144,7 +142,7 @@ const LoginScreen = ({ navigation }) => {
                 console.log('Fail: ', error);
               }
             )
-          )                        
+          )                   
 
           navigation.navigate('DrawerNav');             
         }else {         
@@ -152,6 +150,30 @@ const LoginScreen = ({ navigation }) => {
         }
     })
   }  
+
+  /*
+  const cometChat = async() => {
+    try {
+      // First initialize the app
+      await CometChat.init(appID, appSetting);
+    
+      // Login the user
+      const Id = await AsyncStorage.getItem('id');
+      await CometChat.login(Id, AUTH_KEY);
+      
+      // Get the FCM device token
+      // You should have imported the following in the file:
+      // import messaging from '@react-native-firebase/messaging';
+      const FCM_TOKEN = await messaging().getToken();
+      
+      // Register the token with Enhanced Push Notifications extension
+      await CometChat.registerTokenForPushNotification(FCM_TOKEN);
+    } catch (error) {
+      console.log(error);
+      // Handle errors gracefully
+    }
+  }
+  */
 
   const g_signIn = async () => {
     // It will prompt google Signin Widget
@@ -169,7 +191,7 @@ const LoginScreen = ({ navigation }) => {
       .then((idToken) => {
         var id = idToken.additionalUserInfo.profile.sub;          
         var email = idToken.additionalUserInfo.profile.email;
-        connect(id, email);        
+        connect(id, email);    
       })     
     } catch (error) {
       console.log('Message', JSON.stringify(error));

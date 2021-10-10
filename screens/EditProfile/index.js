@@ -191,7 +191,28 @@ export default class EditProfile extends Component {
             }).catch((e) => Alert.alert(JSON.stringify(e)));
         }
 
+        await this.updateChatUser();
         this.bs.current.snapTo(1);        
+    }
+
+    updateChatUser = async() => {                
+        fetch("http://localhost:3000/firstProfile/?id=" + this.state.id  + "&time=" + new Date())
+        .then(responseData => {
+            const URL = "https://194886ce53b70b4a.api-us.cometchat.io/v3.0/users/" + this.state.id;
+            fetch(URL, {
+                method: "PUT",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    apiKey: '6197c8db5c52ec9d249c77762f78d6843fc42d24',
+                },
+                body: JSON.stringify({ 
+                    avatar: responseData.url,             
+                })
+            })
+            .then(response => response.json())
+            .then(responseData => console.log(responseData))  
+        })                 
     }
 
     uploadImage = async(image, index) => {

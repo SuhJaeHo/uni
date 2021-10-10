@@ -23,6 +23,7 @@ import Geocoder from 'react-native-geocoding';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { CometChat } from '@cometchat-pro/react-native-chat';
 
@@ -209,6 +210,23 @@ export default class Main extends Component {
                     )                              
                });
 
+               hobbyList.push (
+                    <ActionButton.Item
+                         key={"all"} buttonColor='#49ffbd'
+                         onPress={() => 
+                              {
+                                   this.connectFilter("all");
+                                   this.state.hobby = "all";
+                              }}
+                    >
+                         <FontAwesome 
+                              name={"repeat"}
+                              size={37}   
+                              color={'#000'}
+                         />
+                    </ActionButton.Item>
+               )
+
                console.log(this.state.GUID);
 
                if(this.state.GUID.length !== 0) {
@@ -313,7 +331,7 @@ export default class Main extends Component {
                               hostsProfile.push(responseData.url);
                          }
                     })                   
-                    .then(() => this.state.hostsProfile = hostsProfile);
+                    .then(() => this.setState({hostsProfile: hostsProfile}));
                }
 
                for(let i = 0; i < data.joinUser.length; i++) {
@@ -325,7 +343,7 @@ export default class Main extends Component {
                                    usersProfile.push(responseData.url);    
                               }
                          })                    
-                         .then(() => this.state.usersProfile = usersProfile)                          
+                         .then(() => this.setState({usersProfile: usersProfile}));                          
                     }                                                  
                }
 
@@ -533,7 +551,3 @@ export default class Main extends Component {
           )
      }
 }
-
-//oneSignal : https://documentation.onesignal.com/reference/create-notification
-
-

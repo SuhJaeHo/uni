@@ -172,7 +172,7 @@ export default class UserList extends Component {
     joinGroup = (requestId) => {
         var GUID = this.props.route.params.sendd.GUID;
         var new_member = [
-            new CometChat.GroupMember(requestId, CometChat.GROUP_MEMBER_SCOPE.PARTICIPANT)
+            new CometChat.GroupMember(requestId, CometChat.GROUP_MEMBER_SCOPE.ADMIN)
         ]
 
         CometChat.addMembersToGroup(GUID, new_member, []).then(
