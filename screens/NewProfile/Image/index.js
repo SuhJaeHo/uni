@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, TouchableOpacity, Pressable, Dimensions, Image, TextInput, Alert, SafeAreaView, ImageBackground} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import {Convert} from 'mongo-image-converter';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
@@ -16,8 +16,9 @@ import { CometChat } from '@cometchat-pro/react-native-chat';
 
 import messaging from '@react-native-firebase/messaging';
 
+import { CHAT_APP_ID, CHAT_API_KEY, SERVER_URL, CHAT_AUTH_KEY } from '@env';
+
 import styles from './styles';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 
 export default class NewProfileImg extends Component {
     constructor(props) {
@@ -60,16 +61,14 @@ export default class NewProfileImg extends Component {
         }
         console.log(this.state.id);
 
-        fetch("http://localhost:3000/firstProfile/?id=" + this.state.id  + "&time=" + new Date())
-        //fetch("http://10.0.2.2:3000/firstProfile/?id=" + this.state.id  + "&time=" + new Date())
+        fetch(`${SERVER_URL}/firstProfile/?id=` + this.state.id  + "&time=" + new Date())
         .then(responseData => {
             if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
                 this.state.image[0].uri = responseData.url;     
             }
         })
         .then(() =>
-            fetch("http://localhost:3000/secondProfile/?id=" + this.state.id + "&time=" + new Date())
-            //fetch("http://10.0.2.2:3000/secondProfile/?id=" + this.state.id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/secondProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {  
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {
                     this.state.image[1].uri = responseData.url;                                     
@@ -77,8 +76,7 @@ export default class NewProfileImg extends Component {
             })
         )
         .then(() =>
-            fetch("http://localhost:3000/thirdProfile/?id=" + this.state.id + "&time=" + new Date())
-            //fetch("http://10.0.2.2:3000/thirdProfile/?id=" + this.state.id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/thirdProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[2].uri = responseData.url;                                   
@@ -86,24 +84,21 @@ export default class NewProfileImg extends Component {
             })
         )
         .then(() =>
-            fetch("http://localhost:3000/fourthProfile/?id=" + this.state.id + "&time=" + new Date())
-            //fetch("http://10.0.2.2:3000/fourthProfile/?id=" + this.state.id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/fourthProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[3].uri = responseData.url;     
                 }
             })
         ).then(() =>
-            fetch("http://localhost:3000/fifthProfile/?id=" + this.state.id + "&time=" + new Date())
-            //fetch("http://10.0.2.2:3000/fifthProfile/?id=" + this.state.id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/fifthProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[4].uri = responseData.url;                                     
                 }
             })
         ).then(() => 
-            fetch("http://localhost:3000/sixthProfile/?id=" + this.state.id + "&time=" + new Date())
-            //fetch("http://10.0.2.2:3000/sixthProfile/?id=" + this.state.id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/sixthProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[5].uri = responseData.url;                                     
@@ -262,8 +257,7 @@ export default class NewProfileImg extends Component {
             type: type,
         })
 
-        const URL = "http://localhost:3000/uploadProfile";
-        //const URL = "http://10.0.2.2:3000/uploadProfile";
+        const URL = `${SERVER_URL}/upload`;
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -281,7 +275,7 @@ export default class NewProfileImg extends Component {
         .setRegion('us')
         .build();
 
-        CometChat.init('194886ce53b70b4a', appSetting).then(
+        CometChat.init(CHAT_APP_ID, appSetting).then(
             () => {
                 console.log('Initialization completed successfully');
             },
@@ -292,8 +286,7 @@ export default class NewProfileImg extends Component {
 
         const nickname = await AsyncStorage.getItem('nickname'); 
 
-        fetch("http://localhost:3000/firstProfile/?id=" + this.state.id  + "&time=" + new Date())
-        //fetch("http://10.0.2.2:3000/firstProfile/?id=" + this.state.id  + "&time=" + new Date())
+        fetch(`${SERVER_URL}/firstProfile/?id=` + this.state.id  + "&time=" + new Date())
         .then(responseData => {           
             const URL = 'https://api-us.cometchat.io/v3.0/users';
             fetch(URL, {
@@ -301,8 +294,8 @@ export default class NewProfileImg extends Component {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    appId: '194886ce53b70b4a',
-                    apiKey: '6197c8db5c52ec9d249c77762f78d6843fc42d24',
+                    appId: CHAT_APP_ID,
+                    apiKey: CHAT_API_KEY,
                 },
                 body: JSON.stringify({
                     uid: this.state.id,
@@ -313,7 +306,7 @@ export default class NewProfileImg extends Component {
             .then(response => response.json())
             .then(responseData => console.log(responseData))   
             .then(() => {
-                CometChat.login(this.state.id, 'a16d0c1f33bd96ff2246dd8259206eb96009aac3').then (
+                CometChat.login(this.state.id, CHAT_AUTH_KEY).then (
                     User => {
                       console.log("Login Successful:", { User });
                     },
@@ -347,8 +340,7 @@ export default class NewProfileImg extends Component {
     }
 
     setCompleted = () => {
-        const URL = "http://localhost:3000/setCompleted";
-        //const URL = "http://10.0.2.2:3000/setCompleted";
+        const URL = `${SERVER_URL}/setCompleted`;
         fetch(URL, {
             method: 'POST',
             headers: {

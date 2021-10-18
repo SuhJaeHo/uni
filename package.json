@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "heroku-postbuild": "npm run build",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -25,6 +26,7 @@
     "@react-navigation/drawer": "5.12.5",
     "@react-navigation/native": "5.9.4",
     "@react-navigation/stack": "5.14.5",
+    "babel-plugin-dotenv-import": "2.2.0",
     "emoji-mart-native": "0.6.2-beta",
     "hangul-js": "0.2.6",
     "lodash": "4.17.21",
@@ -66,6 +68,7 @@
     "react-native-video": "5.1.1",
     "react-native-video-controls": "2.8.1",
     "react-native-webview": "11.13.0",
+    "react-redux": "7.2.5",
     "reanimated-bottom-sheet": "1.0.0-alpha.22",
     "redux": "4.1.1",
     "redux-thunk": "2.3.0",

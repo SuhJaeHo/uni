@@ -11,8 +11,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+import { SERVER_URL, CHAT_API_KEY, CHAT_APP_ID } from '@env'
+
 import styles from './styles';
-import { ScrollView } from 'react-native-gesture-handler';
 
 export default class EditProfile extends Component {
     constructor(props) {
@@ -47,14 +48,14 @@ export default class EditProfile extends Component {
             id: id,
         })
 
-        fetch("http://localhost:3000/firstProfile/?id=" + id  + "&time=" + new Date())
+        fetch(`${SERVER_URL}/firstProfile/?id=` + id  + "&time=" + new Date())
         .then(responseData => {
             if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
                 this.state.image[0].uri = responseData.url;     
             }
         })
         .then(() =>
-            fetch("http://localhost:3000/secondProfile/?id=" + id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/secondProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {  
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {
                     this.state.image[1].uri = responseData.url;                                     
@@ -62,7 +63,7 @@ export default class EditProfile extends Component {
             })
         )
         .then(() =>
-            fetch("http://localhost:3000/thirdProfile/?id=" + id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/thirdProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[2].uri = responseData.url;                                   
@@ -70,21 +71,21 @@ export default class EditProfile extends Component {
             })
         )
         .then(() =>
-            fetch("http://localhost:3000/fourthProfile/?id=" + id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/fourthProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[3].uri = responseData.url;     
                 }
             })
         ).then(() =>
-            fetch("http://localhost:3000/fifthProfile/?id=" + id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/fifthProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[4].uri = responseData.url;                                     
                 }
             })
         ).then(() => 
-            fetch("http://localhost:3000/sixthProfile/?id=" + id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/sixthProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[5].uri = responseData.url;                                     
@@ -196,15 +197,15 @@ export default class EditProfile extends Component {
     }
 
     updateChatUser = async() => {                
-        fetch("http://localhost:3000/firstProfile/?id=" + this.state.id  + "&time=" + new Date())
+        fetch(`${SERVER_URL}/firstProfile/?id=` + id  + "&time=" + new Date())
         .then(responseData => {
-            const URL = "https://194886ce53b70b4a.api-us.cometchat.io/v3.0/users/" + this.state.id;
+            const URL = "https://" + CHAT_APP_ID + ".api-us.cometchat.io/v3.0/users/" + this.state.id;
             fetch(URL, {
                 method: "PUT",
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    apiKey: '6197c8db5c52ec9d249c77762f78d6843fc42d24',
+                    apiKey: CHAT_API_KEY,
                 },
                 body: JSON.stringify({ 
                     avatar: responseData.url,             
@@ -234,7 +235,7 @@ export default class EditProfile extends Component {
             type: type,
         })
 
-        const URL = "http://localhost:3000/uploadProfile";
+        const URL = `${SERVER_URL}/uploadProfile`;
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -284,7 +285,7 @@ export default class EditProfile extends Component {
         this.state.interestList = '';
 
         const id = await AsyncStorage.getItem('id');
-        const URL = "http://localhost:3000/userInfo";
+        const URL = `${SERVER_URL}/userInfo`;
         var interest = new Array();
 
         fetch(URL, {

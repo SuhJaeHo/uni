@@ -19,6 +19,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import style from '../lib/chat/cometchat-pro-react-native-ui-kit-3/src/components/Groups/CometChatViewGroupMemberListItem/style';
+import { getCurrentPosition } from 'react-native-geolocation-service';
 
 export default class MyMapView extends Component {
     constructor(props){
@@ -28,7 +29,7 @@ export default class MyMapView extends Component {
                 latitude: 37.49783315274643, 
                 longitude: 127.02783092726877,
                 latitudeDelta: 0.015,
-                longitudeDelta: 0.0121,     
+                longitudeDelta: 0.0121,  
             },
             id: '',
             roomData: [],
@@ -44,8 +45,8 @@ export default class MyMapView extends Component {
         }
     }
 
-    componentDidMount = async() => {                        
-        this.removeStorage();       
+    componentDidMount = async() => { 
+        this.removeStorage();  
     }
 
     removeStorage = async() => {
@@ -237,75 +238,77 @@ export default class MyMapView extends Component {
         }
         
         return marker;
-    } 
+    }     
 
     render() {        
         let marker = <View style={{top: '50%', left: '50%', marginLeft: -15, marginTop: -40, position: 'absolute'}}>
                         <Image style={{height: 50, resizeMode:'contain'}} source={require('../assets/marker/mpin.png')} onLoadEnd={this.changeTrackView}/>   
                      </View>                 
 
-        let region;
+        let region; 
 
         return (    
-            <View>                        
-                {this.state.dragCount === 0 ? 
-                    <View>                          
-                        <MapView
-                            style={{width: '100%', height: '100%'}}                    
-                            showsUserLocation={true}                                                                                               
-                            region={this.props.region}                               
-                            onPanDrag={() => this.state.dragCount += 1}                        
-                            onRegionChangeComplete={(reg) => {
-                                region = reg;                                
-                                this.props.onRegionChange(reg);                                
-                                
-                                if(!this.props.onFilter) {
-                                    this.props.connect();
-                                }else{
-                                    this.props.connectFilter(this.props.hobby);
-                                }
-                            }}                             
-                            onPress={() => this.props.sendData(undefined)}                    
-                        >                    
-                            {this.createMarker()}                                                                                  
-                        </MapView>                
-                        {marker}  
-                    </View>
-                    :
-                    <View>                                            
-                        <MapView
-                            ref={ref => {this.map = ref}}
-                            style={{width: '100%', height: '100%'}}                    
-                            showsUserLocation={true}                                                                                               
-                            region={this.state.pressedCurrentBtn === true ? this.props.region : region}                            
-                            onRegionChangeComplete={(reg) => {   
-                            this.setState({pressedCurrentBtn: false})                            
-                            this.props.onRegionChange(reg);
-                            region = reg;
-
+            <View>                                                                  
+                {this.state.dragCount === 0 ?                                                 
+                <View>                                                            
+                    <MapView
+                        style={{width: '100%', height: '100%'}}                    
+                        showsUserLocation={true}   
+                        showsMyLocationButton={false}                                                                                                                   
+                        region={this.props.region}                                                       
+                        onPanDrag={() => this.state.dragCount += 1}                      
+                        onRegionChangeComplete={(reg) => {
+                            region = reg;                                
+                            this.props.onRegionChange(reg);                                
+                            
                             if(!this.props.onFilter) {
                                 this.props.connect();
                             }else{
                                 this.props.connectFilter(this.props.hobby);
                             }
                         }}                             
-                            onPress={() => this.props.sendData(undefined)}                    
-                        >                    
-                            {this.createMarker()}                                                                                  
-                        </MapView>                
-                        {marker}
-                        <TouchableOpacity
-                            style={styles.locationBtn}
-                            onPress={() => {
-                                this.props.getLocation();                                                               
-                                this.state.pressedCurrentBtn = true;                                
-                            }}
-                        >
-                            <Text>
-                                <Ionicons name="ios-locate" color="grey" size={30} /> 
-                            </Text>
-                        </TouchableOpacity>                            
-                    </View>                
+                        onPress={() => this.props.sendData(undefined)}                    
+                    >                    
+                        {this.createMarker()}                                                                                  
+                    </MapView>                
+                    {marker}   
+                </View>
+                :
+                <View>                                            
+                    <MapView
+                        ref={ref => {this.map = ref}}
+                        style={{width: '100%', height: '100%'}}                    
+                        showsUserLocation={true}    
+                        showsMyLocationButton={false}                                                                                            
+                        region={this.state.pressedCurrentBtn === true ? this.props.region : region}                            
+                        onRegionChangeComplete={(reg) => {   
+                        this.setState({pressedCurrentBtn: false})                            
+                        this.props.onRegionChange(reg);
+                        region = reg;
+
+                        if(!this.props.onFilter) {
+                            this.props.connect();
+                        }else{
+                            this.props.connectFilter(this.props.hobby);
+                        }
+                    }}                             
+                        onPress={() => this.props.sendData(undefined)}                    
+                    >                    
+                        {this.createMarker()}                                                                                  
+                    </MapView>                
+                    {marker}
+                    <TouchableOpacity
+                        style={styles.locationBtn}
+                        onPress={() => {
+                            this.props.getLocation();                                                               
+                            this.state.pressedCurrentBtn = true;                                
+                        }}
+                    >
+                        <Text>
+                            <Ionicons name="ios-locate" color="grey" size={30} /> 
+                        </Text>
+                    </TouchableOpacity>                            
+                </View>                
                 }                                
             </View>
         )                  

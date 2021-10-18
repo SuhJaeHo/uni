@@ -7,6 +7,8 @@ import { CometChat } from '@cometchat-pro/react-native-chat';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
+import { SERVER_URL } from '@env'
+
 import styles from './styles';
 
 export default class UserList extends Component {
@@ -36,9 +38,8 @@ export default class UserList extends Component {
 
         var usersId = new Array();
         var usersNick = new Array();
-
-        const URL = "http://localhost:3000/userList";
-        //const URL = "http:/10.0.2.2:3000/userList";
+        
+        const URL = `${SERVER_URL}/userList`
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -68,18 +69,17 @@ export default class UserList extends Component {
         var usersProfile = new Array();
 
         for(let i = 0; i < this.state.usersId.length; i++) {               
-             fetch("http://localhost:3000/firstProfile/?id=" + this.state.usersId[i] + "&time=" + new Date())
-             //fetch("http://10.0.2.2:3000/firstProfile/?id=" + this.state.usersId[i] + "&time=" + new Date())
-             .then(responseData => {
-                  if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
-                       usersProfile.push(responseData.url);
-                  }
-             })
-             .then(() => {
-                  this.setState({
-                       usersProfile: usersProfile,
-                  })
-             })
+            fetch(`${SERVER_URL}/firstProfile/?id=` + this.state.usersId[i] + "&time=" + new Date())
+            .then(responseData => {
+                if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
+                    usersProfile.push(responseData.url);
+                }
+            })
+            .then(() => {
+                this.setState({
+                    usersProfile: usersProfile,
+                })
+            })
         }          
     }
 
@@ -137,8 +137,7 @@ export default class UserList extends Component {
         var usersId = new Array();
         var usersNick = new Array();
 
-        const URL = "http://localhost:3000/allowUser";
-        //const URL = "http://10.0.0.2:3000/allowUser";
+        const URL = `${SERVER_URL}/allowUser`;
         fetch(URL, {
             method: 'POST',
             headers: {

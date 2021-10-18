@@ -23,6 +23,8 @@ import { Avatar } from 'react-native-paper';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import { SERVER_URL } from '@env';
+
 const CustomSidebarMenu = (props) => {  
     const [url, setUrl] = useState('https://cdn.pixabay.com/photo/2014/10/14/20/24/soccer-488700_960_720.jpg');
     const [email, setEmail] = useState('');
@@ -37,14 +39,12 @@ const CustomSidebarMenu = (props) => {
     const getUserInfo = async() => {
       var id = await AsyncStorage.getItem('id');
 
-      fetch("http://localhost:3000/firstProfile/?id=" + id + "&time=" + new Date())
-      //fetch("http://10.0.2.2:3000/firstProfile/?id=" + id + "&time=" + new Date())
+      fetch(`${SERVER_URL}/firstProfile/?id=` + id + "&time=" + new Date())
       .then(responseData => {
         setUrl(responseData.url);
       })
       .then(
-        fetch("http://localhost:3000/userInfo", {
-        //fetch("http://10.0.2.2:3000/userInfo", {
+          fetch(`${SERVER_URL}/userInfo`, {
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json',

@@ -11,6 +11,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { SERVER_URL } from '@env';
+
 import styles from './styles';
 
 export default class Hosting extends Component {
@@ -121,8 +123,7 @@ export default class Hosting extends Component {
         const {id, address, lat, lng, category, title, time, timeInfo, chatLimit} = this.state.room;
         var GUID = Moment(new Date()).format('MMDD_HHmmss');
 
-        const URL = "http://localhost:3000/createRoom";
-        //const URL = "http://10.0.2.2:3000/createRoom";
+        const URL = `${ SERVER_URL }/createRoom`;
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -148,8 +149,7 @@ export default class Hosting extends Component {
         const {_id} = this.state;
         const {address, lat, lng, category, title, time, timeInfo} = this.state.room;
         
-        const URL = "http://localhost:3000/modifyRoom";
-        //const URL = "http://10.0.2.2:3000/modifyRoom";
+        const URL = `${ SERVER_URL }/modifyRoom`;
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -220,6 +220,8 @@ export default class Hosting extends Component {
         )
     }
 
+
+
     render() {
         return (
             <View style={styles.hostingContainer}>          
@@ -228,93 +230,92 @@ export default class Hosting extends Component {
                     style={{ width:"100%", height:'100%' }}
                 >
                     <SafeAreaView >
-                    <View style={styles.headerConatiner}>
-                        <View style={styles.backIcon}>
-                            <Pressable
-                                onPress={() => this.props.navigation.navigate('DrawerNav')}
-                                style={styles.backIcon}
-                            >
-                            <MaterialIcons name={"arrow-back-ios"} 
-                                size={35} 
-                                color={'#000'}
-                                style={{marginLeft:30}}
-                            />                                
-                            </Pressable>
-                        </View>
-                    
-                        <View style={styles.headerTextContainer}>
-                            {this.state.check === 'modify' 
-                            ? 
-                            <Text style={styles.headerText}>Modify</Text>
-                            : 
-                            <Text style={styles.headerText}>Hosting</Text>
-                            }
-                        </View>
-                    
-                    </View>      
-                <View style={styles.contentContainer}>
-                <View style={styles.categoryContainer}>
-                        <Text style={styles.categoryText}>Category</Text>
-                        <Pressable
-                            style={styles.categoryInput}
-                            onPress={() => this.props.navigation.push('Category')}
-                        >
-                            {this.state.room.category === null ?
-                            <Text>카테고리 설정</Text>
-                            :
-                            <Text>{this.state.room.category}</Text>
-                            }
-                        </Pressable>
-                    </View>
-                    <View style={styles.placeContainer}>
-                        <Text style={styles.placeText}>Place</Text>
-                        <Pressable
-                            style={styles.placeInput}
-                            onPress={() => this.props.navigation.navigate('LocationSearch')}
-                        >                            
-                            <Text>{this.state.room.address}</Text>                            
-                        </Pressable>
-                    </View>
-                    
-                    <View style={styles.titleConatiner}>
-                        <Text style={styles.titleText}>Title</Text>
-                        <TextInput
-                            style={styles.titleInput}
-                            autoCapitalize="none"
-                            onChangeText={text => this.onChangeText(text)}
-                            value={this.state.room.title}
-                        />
-                    </View>
-                    <View style={styles.timeConatiner}>
-                        <Text style={styles.timeText}>Time</Text>
-                        <Pressable
-                            style={styles.timeInput}
-                            onPress={() => this.props.navigation.navigate('Time')}
-                        >                                      
-                            <View style={styles.timeInfo}>
-                                <Text style={styles.timePlaceHolder}>약속시간 설정</Text>
-                                <Text>{this.state.room.timeInfo}</Text>
-                            </View>                                                                
-                        </Pressable>
+                        <View style={styles.headerConatiner}>
+                            <View style={styles.backIcon}>
+                                <Pressable
+                                    onPress={() => this.props.navigation.push('DrawerNav', {
+                                        
+                                    })}
+                                    style={styles.backIcon}
+                                >
+                                <MaterialIcons name={"arrow-back-ios"} 
+                                    size={35} 
+                                    color={'#000'}
+                                    style={{marginLeft:30}}
+                                />                                
+                                </Pressable>
+                            </View>
                         
-                    </View>
-                    {this.state.check === 'modify' ?
-                    <Pressable
-                        style={styles.modifyButton}  
-                        onPress={() => this.modifyRoom()}                           
-                    >
-                        <Text>Complete</Text>
-                    </Pressable>
-                    :        
-                    <Pressable
-                        style={styles.hostButton}
-                        onPress={() => {this.hosting(); this.createGroup();}}                        
-                    >
-                        <Text style={{color:'#000', fontSize:25, fontWeight:'bold'}}>Hosting</Text>
-                    </Pressable>
-                    }
-                </View>
-                </SafeAreaView>
+                            <View style={styles.headerTextContainer}>
+                                {this.state.check === 'modify' 
+                                ? 
+                                <Text style={styles.headerText}>Modify</Text>
+                                : 
+                                <Text style={styles.headerText}>Hosting</Text>
+                                }
+                            </View>                
+                        </View>      
+                        <View style={styles.contentContainer}>
+                            <View style={styles.categoryContainer}>
+                                <Text style={styles.categoryText}>Category</Text>
+                                <Pressable
+                                    style={styles.categoryInput}
+                                    onPress={() => this.props.navigation.push('Category')}
+                                >
+                                    {this.state.room.category === null ?
+                                    <Text>카테고리 설정</Text>
+                                    :
+                                    <Text>{this.state.room.category}</Text>
+                                    }
+                                </Pressable>
+                            </View>
+                            <View style={styles.placeContainer}>
+                                <Text style={styles.placeText}>Place</Text>
+                                <Pressable
+                                    style={styles.placeInput}
+                                    onPress={() => this.props.navigation.navigate('LocationSearch')}
+                                >                            
+                                    <Text>{this.state.room.address}</Text>                            
+                                </Pressable>
+                            </View>                    
+                            <View style={styles.titleConatiner}>
+                                <Text style={styles.titleText}>Title</Text>
+                                <TextInput
+                                    style={styles.titleInput}
+                                    autoCapitalize="none"
+                                    onChangeText={text => this.onChangeText(text)}
+                                    value={this.state.room.title}
+                                />
+                            </View>
+                            <View style={styles.timeConatiner}>
+                                <Text style={styles.timeText}>Time</Text>
+                                <Pressable
+                                    style={styles.timeInput}
+                                    onPress={() => this.props.navigation.navigate('Time')}
+                                >                                      
+                                    <View style={styles.timeInfo}>
+                                        <Text style={styles.timePlaceHolder}>약속시간 설정</Text>
+                                        <Text>{this.state.room.timeInfo}</Text>
+                                    </View>                                                                
+                                </Pressable>                        
+                            </View>
+                            {this.state.check === 'modify' ?
+                            <Pressable
+                                style={styles.modifyButton}  
+                                onPress={() => this.modifyRoom()}                           
+                            >
+                                <Text style={{color:'#000', fontSize:25, fontWeight:'bold'}}>Complete</Text>
+                            </Pressable>
+                            :        
+                            <Pressable
+                                style={styles.hostButton}
+                                onPress={() => {this.hosting(); this.createGroup();}}                        
+                            >
+                                <Text style={{color:'#000', fontSize:25, fontWeight:'bold'}}>Hosting</Text>
+                            </Pressable>
+                            }
+                        </View>
+                    </SafeAreaView>
                 </ImageBackground>
             </View>
         )

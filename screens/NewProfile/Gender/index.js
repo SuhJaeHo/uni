@@ -7,7 +7,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import LinearGradient from 'react-native-linear-gradient';
+import { SERVER_URL } from '@env';
 
 import styles from './styles';
 
@@ -53,8 +53,7 @@ export default class Gender extends Component {
     }
 
     connect = async () => {
-        const URL = "http://localhost:3000/setGender";
-        //const URL = "http://10.0.2.2:3000/setGender";
+        const URL = `${SERVER_URL}/setGender`;
         fetch(URL, {
             method: 'POST',
             headers: {

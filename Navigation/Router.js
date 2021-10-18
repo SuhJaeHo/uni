@@ -132,13 +132,15 @@ const Router = ({navigation}) => {
                         }
                     }}
                 />
+                {/*
                 <Stack.Screen
                     name={"Main"}
                     component={Main}
                     options={{
                         headerShown: false,    
                     }}
-                />  
+                /> 
+                */} 
                 <Stack.Screen
                     name={"DrawerNav"}
                     component={DrawerNav}

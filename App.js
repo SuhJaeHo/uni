@@ -9,6 +9,12 @@ import PushNotification, {Importance} from 'react-native-push-notification';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import rootReducer from './Components/redux/reducer';
+
+const store = createStore(rootReducer);
+
 PushNotification.configure({
   largeIcon: "ic_launcher",
   smallIcon: "ic_notification",
@@ -58,7 +64,7 @@ PushNotification.configure({
     soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
   },
     (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
-  );
+  );  
 
 export default class App extends Component {
   componentDidMount = () => {         
@@ -79,7 +85,7 @@ export default class App extends Component {
       //this.showNotification(remoteMessage.data.title, remoteMessage.data.body);
       console.log(remoteMessage);
       this.showNotification(remoteMessage.data.title, remoteMessage.data.body);
-    })
+    })    
   }
 
   showNotification = (title, message) => {
@@ -91,12 +97,14 @@ export default class App extends Component {
       channelId: 'TEST',      
       //channelId: 'Default Channel',      
     })    
-  }
+  }  
 
   render() {
     return (
       <>
-        <Router/>
+        <Provider store = { store }>          
+          <Router/>
+        </Provider>
       </>
     )
   }

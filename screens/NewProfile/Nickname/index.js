@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+import { SERVER_URL } from '@env';
 import styles from './styles';
 
 export default class Nickname extends Component {
@@ -45,7 +46,6 @@ export default class Nickname extends Component {
     }
 
     connect = async () => {
-        console.log('들어옴');
         if(this.state.nickname === '') {
             Alert.alert('닉네임을 설정해주세요');
         }else {
@@ -54,9 +54,8 @@ export default class Nickname extends Component {
             } catch (e) {
                 console.log(e);
             }
-
-            const URL = "http://localhost:3000/setNickname";
-            //const URL = "http://10.0.2.2:3000/setNickname";
+            
+            const URL = `${SERVER_URL}/setNickname`;
             fetch(URL, {
                 method: 'POST',
                 headers: {
@@ -132,8 +131,8 @@ export default class Nickname extends Component {
                         >
                             <Text style={styles.btnFonts}>NEXT </Text>
                             <MaterialIcons 
-                            name={"navigate-next"}
-                            style={styles.btnFonts}
+                                name={"navigate-next"}
+                                style={styles.btnFonts}
                             />
                         </Pressable>
                     </View>

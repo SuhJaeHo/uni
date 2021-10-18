@@ -55,7 +55,7 @@ const NavigationDrawerStructure = (props)=> {
     );
 }
 
-function homeScreenStack({ navigation }) {
+function homeScreenStack({ navigation }) {    
     return (
         <Stack.Navigator initialRouteName="HomePage">            
             <Stack.Screen
@@ -69,8 +69,9 @@ function homeScreenStack({ navigation }) {
                     />,
                     headerShown: true,
                     headerTransparent: true,
-                }}
-            />            
+                }}                                                
+            >                
+            </Stack.Screen>            
             <Stack.Screen
                 name={"EditProfile"}
                 component={EditProfile}
@@ -82,25 +83,26 @@ function homeScreenStack({ navigation }) {
     );
 }
 
-export default function DrawerNav({ navigation }) {
-    return (
+export default function DrawerNav({ navigation }) {  
+    return (                        
         <Drawer.Navigator      
             drawerContentOptions={{
                 activeTintColor: '#e91e63',
                 itemStyle: { marginVertical: 5 },            
-            }}
+            }}            
             drawerContent={(props) => <CustomSidebarMenu {...props} />}     
             drawerStyle={{
                 width: Dimensions.get('window').width * 0.82
             }}       
-        >  
+        >              
             <Drawer.Screen
                 name="HomePage"
                 options={{ 
                     drawerLabel: 'Home 🏠' ,
                 }}
-                component={homeScreenStack} 
-            />     
+                component={homeScreenStack}        
+            >
+            </Drawer.Screen>
             <Drawer.Screen
                 name="FirstPage"
                 options={{ 
