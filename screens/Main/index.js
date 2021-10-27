@@ -27,7 +27,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { CometChat } from '@cometchat-pro/react-native-chat';
 
-import { GEO_KEY, SERVER_URL } from '@env';
+import { geo, LOCAL_URL } from '@env';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -95,7 +95,7 @@ export default class Main extends Component {
           var Interest = new Array();
           var hobbyList = new Array();
 
-          const URL = `${SERVER_URL}/main`;
+          const URL = `${LOCAL_URL}/main`;
           fetch(URL, {
                method: 'POST',
                headers: {
@@ -233,7 +233,6 @@ export default class Main extends Component {
                     </ActionButton.Item>
                )
 
-               console.log(this.state.GUID);
                if(this.state.GUID.length !== 0) {
                     this.deleteGroupChat(this.state.GUID);
                };
@@ -262,7 +261,7 @@ export default class Main extends Component {
           const id = await AsyncStorage.getItem('id');
           this.state.onFilter = true;                   
   
-          const URL = `${SERVER_URL}/main`;
+          const URL = `${LOCAL_URL}/main`;
           fetch(URL, {
                method: 'POST',
                headers: {
@@ -294,7 +293,7 @@ export default class Main extends Component {
                               longitudeDelta: 0.0121,
                          },                                                      
                     }),
-                    Geocoder.init(GEO_KEY, { language: 'ko' });
+                    Geocoder.init(geo, { language: 'ko' });
                     Geocoder.from(position.coords.latitude, position.coords.longitude)
                          .then(json => {
                               var address = json.results[0].formatted_address;
@@ -314,7 +313,7 @@ export default class Main extends Component {
 
      onMapRegionChange = async(region) => {                             
           this.setState({region: region})
-          Geocoder.init(GEO_KEY, { language: 'ko' });
+          Geocoder.init(geo, { language: 'ko' });
           await Geocoder.from(region.latitude, region.longitude)
           .then(json => {
                var address = json.results[0].formatted_address;
@@ -332,7 +331,7 @@ export default class Main extends Component {
                this.setState({roomInfo: data});    
                
                for(let i = 0; i < data.hostUser.length; i++) {
-                    fetch(`${SERVER_URL}/firstProfile/?id=` + data.hostUser[i] + "&time=" + new Date())
+                    fetch(`${LOCAL_URL}/firstProfile/?id=` + data.hostUser[i] + "&time=" + new Date())
                     .then(responseData => {
                          if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {
                               hostsProfile.push(responseData.url);
@@ -343,7 +342,7 @@ export default class Main extends Component {
 
                for(let i = 0; i < data.joinUser.length; i++) {
                     if(data.hostUser[i] !== data.joinUser[i]) {
-                         fetch(`${SERVER_URL}/firstProfile/?id=` + data.joinUser[i]  + "&time=" + new Date())
+                         fetch(`${LOCAL_URL}/firstProfile/?id=` + data.joinUser[i]  + "&time=" + new Date())
                          .then(responseData => {
                               if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {                                            
                                    usersProfile.push(responseData.url);    
@@ -361,7 +360,7 @@ export default class Main extends Component {
      }
 
      joinRoom = async(hostId, roomId) => {
-          const URL = `${SERVER_URL}/joinRoom`;
+          const URL = `${LOCAL_URL}/joinRoom`;
           fetch(URL, {
                method: 'POST',
                headers: {
@@ -376,7 +375,7 @@ export default class Main extends Component {
      }
      
      checkJoin = async() => {
-          const URL = `${SERVER_URL}/checkJoin`;
+          const URL = `${LOCAL_URL}/checkJoin`;
           fetch(URL, {
                method: 'POST',
                headers: {

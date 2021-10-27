@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {View, Text, TouchableOpacity, Pressable, Dimensions, Image, TextInput, Alert, SafeAreaView, ImageBackground} from 'react-native';
-import ImagePicker from 'react-native-image-crop-picker';
 import { TouchableHighlight } from 'react-native-gesture-handler';
+
+import ImagePicker from 'react-native-image-crop-picker';
+import ImageResizer from 'react-native-image-resizer';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
@@ -16,7 +18,7 @@ import { CometChat } from '@cometchat-pro/react-native-chat';
 
 import messaging from '@react-native-firebase/messaging';
 
-import { CHAT_APP_ID, CHAT_API_KEY, SERVER_URL, CHAT_AUTH_KEY } from '@env';
+import { CHAT_APP_ID, CHAT_API_KEY, LOCAL_URL, CHAT_AUTH_KEY } from '@env';
 
 import styles from './styles';
 
@@ -46,6 +48,8 @@ export default class NewProfileImg extends Component {
     }
 
     getProfile = async () => {
+        var type = '';
+
         try {
             const id = await AsyncStorage.getItem('id');
             if(id !== null) {
@@ -59,24 +63,25 @@ export default class NewProfileImg extends Component {
         } catch(e) {
             console.log(e);
         }
-        console.log(this.state.id);
 
-        fetch(`${SERVER_URL}/firstProfile/?id=` + this.state.id  + "&time=" + new Date())
+        fetch(`${LOCAL_URL}/firstProfile/?id=` + this.state.id + "&time=" + new Date())
         .then(responseData => {
+            console.log(responseData.headers.get('content-type'));
             if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
                 this.state.image[0].uri = responseData.url;     
             }
         })
         .then(() =>
-            fetch(`${SERVER_URL}/secondProfile/?id=` + this.state.id + "&time=" + new Date())
+            fetch(`${LOCAL_URL}/secondProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {  
+                console.log(responseData);
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {
                     this.state.image[1].uri = responseData.url;                                     
                 }
-            })
+            })            
         )
         .then(() =>
-            fetch(`${SERVER_URL}/thirdProfile/?id=` + this.state.id + "&time=" + new Date())
+            fetch(`${LOCAL_URL}/thirdProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[2].uri = responseData.url;                                   
@@ -84,21 +89,21 @@ export default class NewProfileImg extends Component {
             })
         )
         .then(() =>
-            fetch(`${SERVER_URL}/fourthProfile/?id=` + this.state.id + "&time=" + new Date())
+            fetch(`${LOCAL_URL}/fourthProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[3].uri = responseData.url;     
                 }
             })
         ).then(() =>
-            fetch(`${SERVER_URL}/fifthProfile/?id=` + this.state.id + "&time=" + new Date())
+            fetch(`${LOCAL_URL}/fifthProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[4].uri = responseData.url;                                     
                 }
             })
         ).then(() => 
-            fetch(`${SERVER_URL}/sixthProfile/?id=` + this.state.id + "&time=" + new Date())
+            fetch(`${LOCAL_URL}/sixthProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[5].uri = responseData.url;                                     
@@ -111,7 +116,7 @@ export default class NewProfileImg extends Component {
     picker = () => {
         let picker = new Array();
 
-        this.state.image.map((data, index) => { 
+        this.state.image.map((data, index) => {             
             picker.push (
                 <TouchableOpacity
                     style={styles.imageBoard}
@@ -176,7 +181,7 @@ export default class NewProfileImg extends Component {
     pickImage = async(option) => {
         if(option === 'camera') {
             ImagePicker.openCamera({
-                width: 300, height: 300, cropping: true, freeStyleCropEnabled: true, includeBase64: true,           
+                cropping: true, freeStyleCropEnabled: true, includeBase64: true,           
             })
             .then(image => {
                 var sequence = 6;
@@ -206,7 +211,7 @@ export default class NewProfileImg extends Component {
             })
         }else {
             ImagePicker.openPicker({
-                width: 300, height: 300, cropping: true, freeStyleCropEnabled: true, includeBase64: true,
+                cropping: true, freeStyleCropEnabled: true, includeBase64: true,
             }).then((image) => {
                 var sequence = 6;
                 var check = 0;
@@ -239,10 +244,13 @@ export default class NewProfileImg extends Component {
     }
 
     uploadImage = async(image, index) => {
+        var profile;             
+        profile = await ImageResizer.createResizedImage(image.path, 700, 700, 'JPEG', 100, 0, undefined, false, {mode: 'contain'});
+
         const formData = new FormData();
 
-        var path = image.path;
-        var name = image.path.substring(path.lastIndexOf('/') + 1, path.length);
+        var path = profile.uri;        
+        var name = profile.uri.substring(path.lastIndexOf('/') + 1, path.length);        
         var type = image.mime;
 
         var id = this.state.id;
@@ -257,7 +265,7 @@ export default class NewProfileImg extends Component {
             type: type,
         })
 
-        const URL = `${SERVER_URL}/upload`;
+        const URL = `${LOCAL_URL}/uploadProfile`;
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -286,7 +294,7 @@ export default class NewProfileImg extends Component {
 
         const nickname = await AsyncStorage.getItem('nickname'); 
 
-        fetch(`${SERVER_URL}/firstProfile/?id=` + this.state.id  + "&time=" + new Date())
+        fetch(`${LOCAL_URL}/firstProfile/?id=` + this.state.id  + "&time=" + new Date())
         .then(responseData => {           
             const URL = 'https://api-us.cometchat.io/v3.0/users';
             fetch(URL, {
@@ -340,7 +348,7 @@ export default class NewProfileImg extends Component {
     }
 
     setCompleted = () => {
-        const URL = `${SERVER_URL}/setCompleted`;
+        const URL = `${LOCAL_URL}/setCompleted`;
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -362,8 +370,8 @@ export default class NewProfileImg extends Component {
                         style={{ width: "100%", height: '100%', }}
                     >
                         <View style={styles.announceContainer}>
-                            <View style={{ flexDirection:'row', alignItems:'flex-end'}}>
-                                <Text style={ styles.announceTitle}>
+                            <View style={{ flexDirection:'row', alignItems:'flex-end' }}>
+                                <Text style={styles.announceTitle}>
                                     사진
                                 </Text>
                                 <Text style={ styles.announce}>

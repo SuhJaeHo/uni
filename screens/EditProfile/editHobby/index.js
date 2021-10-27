@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import { SERVER_URL } from '@env';
+import { LOCAL_URL } from '@env';
 
 import styles from './styles';
 
@@ -56,7 +56,7 @@ export default class editHobby extends Component {
     }
     
     get_Interest = async () => {
-        const URL = `${SERVER_URL}/setInterest`;
+        const URL = `${LOCAL_URL}/setInterest`;
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -74,7 +74,7 @@ export default class editHobby extends Component {
     }
 
     send_Interest = async () => {
-        const URL = `${SERVER_URL}/setInterest`;        
+        const URL = `${LOCAL_URL}/setInterest`;        
         fetch(URL, {
             method: 'POST',
             headers: {

@@ -11,7 +11,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { SERVER_URL } from '@env';
+import { LOCAL_URL } from '@env';
 
 import styles from './styles';
 
@@ -123,7 +123,7 @@ export default class Hosting extends Component {
         const {id, address, lat, lng, category, title, time, timeInfo, chatLimit} = this.state.room;
         var GUID = Moment(new Date()).format('MMDD_HHmmss');
 
-        const URL = `${ SERVER_URL }/createRoom`;
+        const URL = `${ LOCAL_URL }/createRoom`;
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -149,7 +149,7 @@ export default class Hosting extends Component {
         const {_id} = this.state;
         const {address, lat, lng, category, title, time, timeInfo} = this.state.room;
         
-        const URL = `${ SERVER_URL }/modifyRoom`;
+        const URL = `${ LOCAL_URL }/modifyRoom`;
         fetch(URL, {
             method: 'POST',
             headers: {

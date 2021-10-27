@@ -3,7 +3,7 @@ import {Text, View, TextInput, Pressable, ScrollView, Image} from 'react-native'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { SERVER_URL } from '@env';
+import { LOCAL_URL } from '@env';
 
 import styles from './styles';
 
@@ -34,7 +34,7 @@ export default class RoomList extends Component {
                console.log(e);
           }
 
-          const URL = `${SERVER_URL}/roomList`;
+          const URL = `${LOCAL_URL}/roomList`;
           fetch(URL, {
                method: 'POST',
                headers: {

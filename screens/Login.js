@@ -29,11 +29,11 @@ import {
   AccessToken, LoginManager
 } from 'react-native-fbsdk-next';
 
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { CometChat } from '@cometchat-pro/react-native-chat';
 
-import { CHAT_APP_ID, CHAT_API_KEY,CHAT_AUTH_KEY, SERVER_URL, GOOGLE_WEB_CLIENT_ID } from '@env';
+import { CHAT_APP_ID, CHAT_API_KEY, CHAT_AUTH_KEY, LOCAL_URL, GOOGLE_WEB_CLIENT_ID } from '@env';
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState("");
@@ -67,7 +67,7 @@ const LoginScreen = ({ navigation }) => {
       //scopes: ['https://www.googleapis.com/auth/drive.readonly'],
       // Repleace with your webClientId
       // Generated from Firebase console
-      webClientId: '913377494399-3utpu41533gamaa6fgqtui5ajcu54pt6.apps.googleusercontent.com'
+      webClientId: GOOGLE_WEB_CLIENT_ID
     });
     // Check if user is already signed in
   }, []);
@@ -91,7 +91,7 @@ const LoginScreen = ({ navigation }) => {
       console.log(e);
     }  
 
-    const URL = `${SERVER_URL}/signIn`;
+    const URL = `${LOCAL_URL}/signIn`;
     await fetch(URL, {
         method: 'POST',
         headers: {
@@ -107,16 +107,16 @@ const LoginScreen = ({ navigation }) => {
     .then(responseData => {
         if(responseData) {
           /*
-          const url = 'https://api-us.cometchat.io/v3.0/users/';
+          const url = 'https://api-us.cometchat.io/v3.0/users/118277362616323123439';
           fetch(url, {
             method: 'DELETE',
-            headers: {Accept: 'application/json', 'Content-Type': 'application/json', appId: CHAT_APP_ID, apiKey: CHAT_API_KEY'},
+            headers: {Accept: 'application/json', 'Content-Type': 'application/json', appId: CHAT_APP_ID, apiKey: CHAT_API_KEY},
             body: JSON.stringify({permanent: true})
           })
           .then(response => response.json())
           .then(responseData => console.log(responseData))
           */
-
+          
           CometChat.init(appID, appSetting).then(
             () => {
               console.log('Initialization completed successfully');

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {KeyboardAvoidingView, View, Text, TouchableOpacity, Pressable, Dimensions, Image, TextInput, Alert, SafeAreaView, ImageBackground} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
+import ImageResizer from 'react-native-image-resizer';
+import { Buffer } from 'buffer';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
@@ -11,7 +13,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import { SERVER_URL, CHAT_API_KEY, CHAT_APP_ID } from '@env'
+import { LOCAL_URL, CHAT_API_KEY, CHAT_APP_ID } from '@env'
 
 import styles from './styles';
 
@@ -46,16 +48,17 @@ export default class EditProfile extends Component {
         const id = await AsyncStorage.getItem('id');
         this.setState({ 
             id: id,
-        })
+        })            
 
-        fetch(`${SERVER_URL}/firstProfile/?id=` + id  + "&time=" + new Date())
+        fetch(`${LOCAL_URL}/firstProfile/?id=` + id  + "&time=" + new Date())        
         .then(responseData => {
+            console.log(responseData);                        
             if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
-                this.state.image[0].uri = responseData.url;     
-            }
+                this.state.image[0].uri = responseData.url;    
+            }   
         })
         .then(() =>
-            fetch(`${SERVER_URL}/secondProfile/?id=` + id + "&time=" + new Date())
+            fetch(`${LOCAL_URL}/secondProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {  
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {
                     this.state.image[1].uri = responseData.url;                                     
@@ -63,36 +66,48 @@ export default class EditProfile extends Component {
             })
         )
         .then(() =>
-            fetch(`${SERVER_URL}/thirdProfile/?id=` + id + "&time=" + new Date())
+            fetch(`${LOCAL_URL}/thirdProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {
+                console.log(responseData);
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[2].uri = responseData.url;                                   
                 }
             })
         )
         .then(() =>
-            fetch(`${SERVER_URL}/fourthProfile/?id=` + id + "&time=" + new Date())
+            fetch(`${LOCAL_URL}/fourthProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[3].uri = responseData.url;     
                 }
             })
         ).then(() =>
-            fetch(`${SERVER_URL}/fifthProfile/?id=` + id + "&time=" + new Date())
+            fetch(`${LOCAL_URL}/fifthProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[4].uri = responseData.url;                                     
                 }
             })
         ).then(() => 
-            fetch(`${SERVER_URL}/sixthProfile/?id=` + id + "&time=" + new Date())
+            fetch(`${LOCAL_URL}/sixthProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[5].uri = responseData.url;                                     
                 }
             })
-        )
+        )        
         .then(() => this.picker())
+
+        /*
+        .then(response => response.json())
+        .then(responseData => {                              
+            const b64 = Buffer(responseData[0]).toString('base64');
+            const a64 = Buffer(responseData[1]).toString('base64');         
+            const mimeType = 'image/jpeg';
+            test.push(<Image source={{uri : `data:${mimeType};base64,${b64}`}} style={{width: 50, height: 50}}/>);
+            test.push(<Image source={{uri : `data:${mimeType};base64,${a64}`}} style={{width: 50, height: 50}}/>);            
+        })
+        */
     }
 
     picker = () => {
@@ -127,9 +142,9 @@ export default class EditProfile extends Component {
     pickImage = async(option) => {
         if(option === 'camera') {
             ImagePicker.openCamera({
-                width: 300, height: 400, cropping: true, freeStyleCropEnabled: true, includeBase64: true,           
+                cropping: true, freeStyleCropEnabled: true, includeBase64: true,           
             })
-            .then(image => {
+            .then(image => {                
                 var sequence = 6;
                 var check = 0;
 
@@ -163,7 +178,7 @@ export default class EditProfile extends Component {
             })
         }else {
             ImagePicker.openPicker({
-                width: 300, height: 300, cropping: true, freeStyleCropEnabled: true, includeBase64: true,
+                cropping: true, freeStyleCropEnabled: true, includeBase64: true,
             }).then((image) => {
                 var sequence = 6;
                 var check = 0;
@@ -197,7 +212,7 @@ export default class EditProfile extends Component {
     }
 
     updateChatUser = async() => {                
-        fetch(`${SERVER_URL}/firstProfile/?id=` + id  + "&time=" + new Date())
+        fetch(`${LOCAL_URL}/firstProfile/?id=` + this.state.id  + "&time=" + new Date())
         .then(responseData => {
             const URL = "https://" + CHAT_APP_ID + ".api-us.cometchat.io/v3.0/users/" + this.state.id;
             fetch(URL, {
@@ -216,11 +231,14 @@ export default class EditProfile extends Component {
         })                 
     }
 
-    uploadImage = async(image, index) => {
+    uploadImage = async(image, index) => { 
+        var profile;             
+        profile = await ImageResizer.createResizedImage(image.path, 1000, 1000, 'JPEG', 100, 0, undefined, false, {mode: 'contain'});
+
         const formData = new FormData();
 
-        var path = image.path;
-        var name = image.path.substring(path.lastIndexOf('/') + 1, path.length);
+        var path = profile.uri;        
+        var name = profile.uri.substring(path.lastIndexOf('/') + 1, path.length);        
         var type = image.mime;
 
         var id = this.state.id;
@@ -235,7 +253,7 @@ export default class EditProfile extends Component {
             type: type,
         })
 
-        const URL = `${SERVER_URL}/uploadProfile`;
+        const URL = `${LOCAL_URL}/uploadProfile`;
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -285,7 +303,7 @@ export default class EditProfile extends Component {
         this.state.interestList = '';
 
         const id = await AsyncStorage.getItem('id');
-        const URL = `${SERVER_URL}/userInfo`;
+        const URL = `${LOCAL_URL}/userInfo`;
         var interest = new Array();
 
         fetch(URL, {
@@ -346,7 +364,7 @@ export default class EditProfile extends Component {
                             </Text>                                           
                         </View>
                         <View style={{ flex: 1, justifyContent: 'center', marginTop: 60 }}>  
-                            <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', width: Dimensions.get('window').width*0.9, marginHorizontal: Dimensions.get('window').width*0.05}}>
+                            <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', width: Dimensions.get('window').width*0.9, marginHorizontal: Dimensions.get('window').width*0.05}}>                                
                                 {this.state.picker}
                             </View>                        
                             <View style={styles.interestContainer}>
@@ -363,7 +381,7 @@ export default class EditProfile extends Component {
                                 initialSnap={1}
                                 renderContent={this.renderContent}                   
                                 enabledContentTapInteraction={false}
-                                enabledInnerScrolling={false}
+                                enabledInnerScrolling={false}                                
                             />                                                                                                      
                         </View>
                     </ImageBackground>               

@@ -7,7 +7,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import { GOOGLE_PLACE_API_KEY} from '@env';
+import { google_place_api_key } from '@env';
 
 import styles from './styles';
 
@@ -60,7 +60,7 @@ export default class LocationSearch extends Component {
                         this.props.navigation.push('Hosting', {address: data.description, lat: details.geometry.location.lat, lng: details.geometry.location.lng, Info: 'place'})
                     }}
                     query={{
-                        key: GOOGLE_PLACE_API_KEY,
+                        key: google_place_api_key,
                         components: 'country:kr',
                         language: 'ko',
                         rankby: 'distance',

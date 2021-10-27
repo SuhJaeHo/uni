@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import { SERVER_URL } from '@env';
+import { LOCAL_URL } from '@env';
 
 import styles from './styles';
 
@@ -43,7 +43,7 @@ export default class Interest extends Component {
     }
     
     get_Interest = async () => {
-        const URL = `${SERVER_URL}/setInterest`;
+        const URL = `${LOCAL_URL}/setInterest`;
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -61,7 +61,7 @@ export default class Interest extends Component {
     }
 
     send_Interest = async () => {
-        const URL = `${SERVER_URL}/setInterest`;
+        const URL = `${LOCAL_URL}/setInterest`;
         fetch(URL, {
             method: 'POST',
             headers: {

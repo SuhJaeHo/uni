@@ -18,6 +18,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import Foundation from 'react-native-vector-icons/Foundation';
+
 import style from '../lib/chat/cometchat-pro-react-native-ui-kit-3/src/components/Groups/CometChatViewGroupMemberListItem/style';
 import { getCurrentPosition } from 'react-native-geolocation-service';
 
@@ -62,6 +64,7 @@ export default class MyMapView extends Component {
         var key = 0;        
 
         if(this.props.roomData.length === 0) {
+            console.log('들어옴');
             this.state.trackView = true;
         }
 
@@ -242,7 +245,7 @@ export default class MyMapView extends Component {
 
     render() {        
         let marker = <View style={{top: '50%', left: '50%', marginLeft: -15, marginTop: -40, position: 'absolute'}}>
-                        <Image style={{height: 50, resizeMode:'contain'}} source={require('../assets/marker/mpin.png')} onLoadEnd={this.changeTrackView}/>   
+                        <Image style={{height: 50, resizeMode:'contain'}} source={require('../assets/marker/mpin.png')}/>   
                      </View>                 
 
         let region; 
@@ -251,7 +254,7 @@ export default class MyMapView extends Component {
             <View>                                                                  
                 {this.state.dragCount === 0 ?                                                 
                 <View>                                                            
-                    <MapView
+                    <MapView                    
                         style={{width: '100%', height: '100%'}}                    
                         showsUserLocation={true}   
                         showsMyLocationButton={false}                                                                                                                   

@@ -26,6 +26,8 @@ import RoomList from "../screens/Room/RoomList";
 import Roomctrl from "../screens/Room/Roomctrl";
 import UserList from "../screens/Room/UserList";
 
+import UserProfile from "../screens/UserProfile";
+
 import DrawerNav from './Ctrl';
 import EditProfile from '../screens/EditProfile';
 import editHobby from '../screens/EditProfile/editHobby';
@@ -256,6 +258,23 @@ const Router = ({navigation}) => {
                     options={{
                         headerShown: false,    
                     }}
+                />
+                <Stack.Screen
+                    name={"UserProfile"}
+                    component={UserProfile}  
+                    options={{
+                        headerShown: true,
+                        title: '유저 프로필',
+                        headerTitleStyle:{
+                            fontSize:19
+                        },
+                        headerBackImage: ()=>(<Ionicons name={"ios-chevron-back"} size={30}/>),
+                        headerBackTitle:' ',
+                        headerBackTitleStyle:{
+                            fontSize: 18,
+                            color: 'black'
+                        }
+                    }}                                      
                 />
             </Stack.Navigator>
         </NavigationContainer>

@@ -7,7 +7,7 @@ import DatePicker from 'react-native-date-picker';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import { SERVER_URL } from '@env';
+import { LOCAL_URL } from '@env';
 
 import styles from './styles';
 
@@ -59,7 +59,7 @@ export default class Birth extends Component {
     }   
 
     connect = async () => {
-        const URL = `${SERVER_URL}/setBirth`;
+        const URL = `${LOCAL_URL}/setBirth`;
         fetch(URL, {
             method: 'POST',
             headers: {

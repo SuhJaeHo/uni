@@ -20,10 +20,11 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Avatar } from 'react-native-paper';
+import ImageModal from 'react-native-image-modal';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { SERVER_URL } from '@env';
+import { LOCAL_URL } from '@env';
 
 const CustomSidebarMenu = (props) => {  
     const [url, setUrl] = useState('https://cdn.pixabay.com/photo/2014/10/14/20/24/soccer-488700_960_720.jpg');
@@ -39,12 +40,12 @@ const CustomSidebarMenu = (props) => {
     const getUserInfo = async() => {
       var id = await AsyncStorage.getItem('id');
 
-      fetch(`${SERVER_URL}/firstProfile/?id=` + id + "&time=" + new Date())
+      fetch(`${LOCAL_URL}/firstProfile/?id=` + id + "&time=" + new Date())
       .then(responseData => {
         setUrl(responseData.url);
       })
       .then(
-          fetch(`${SERVER_URL}/userInfo`, {
+          fetch(`${LOCAL_URL}/userInfo`, {
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json',
@@ -76,7 +77,19 @@ const CustomSidebarMenu = (props) => {
               </Text> 
             </View>
             <View style={{flex: 1, paddingHorizontal: 10, marginLeft: 25}}>
-              <Avatar.Image size={120} source={{uri: url}} />
+              <ImageModal 
+                swipeToDismiss={false}
+                resizeMode="contain"
+                imageBackgroundColor="#000000"
+                style={{
+                  width: 120,
+                  height: 120,
+                }}
+                source={{
+                  uri: 'https://loof-img.s3.ap-northeast-2.amazonaws.com/1635318245098_09912d4f-497b-4e3f-93e2-3f8c23c9fe51.JPEG',                    
+                }}
+              />
+              {/*<Avatar.Image size={120} source={{uri: url}} />*/}
             </View>
           </View>
         </View>
