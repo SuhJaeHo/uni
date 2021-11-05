@@ -40,7 +40,10 @@ export default class Setting extends Component {
                 </View>
                 <View style={{}}>
                     <View style={{justifyContent:'center', alignItems:'center', backgroundColor:'#fff', }}>
-                        <TouchableOpacity style={{justifyContent:'center', alignItems:'center', backgroundColor:'#fff', paddingVertical:10}}>
+                        <TouchableOpacity 
+                            style={{justifyContent:'center', alignItems:'center', backgroundColor:'#fff', paddingVertical:10}}
+                            onPress={() => alert ('서비스 준비중')}
+                        >
                             <Image
                                 style={{width:80, height:80}}
                                 source={require('../../../assets/imgs/invitation.png')}

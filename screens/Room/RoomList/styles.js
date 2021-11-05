@@ -23,9 +23,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginRight: 10,
     },
-    cardContainer: {
-        
-    },
     roomCard: {
         width: Dimensions.get('window').width*0.9,
         marginHorizontal: Dimensions.get('window').width*0.05,
@@ -33,17 +30,21 @@ const styles = StyleSheet.create({
         padding:15,
         marginVertical: 15,
         borderRadius:25,
-        backgroundColor:'#96FFD9',
+        backgroundColor:'#fff',
         shadowOpacity: 0.3,
         shadowRadius: 5,
         shadowColor: 'grey',
         shadowOffset: { height: 3, width: 3 },
+        elevation: 5,
         resizeMode:'contain',
         flexDirection:'row',
-        alignItems:'center'        
+        alignItems:'center',
+        borderWidth:3,
+        borderColor:'#fb009e',
+        backgroundColor:'#FAFAFA'        
     },  
     titleContainer:{
-        width:100,
+        width:100,        
     },
     titleText:{
         fontSize:20,
@@ -59,18 +60,21 @@ const styles = StyleSheet.create({
         marginTop:10        
     },
     categoryIcon:{
-        backgroundColor:'#fb009e',
+        backgroundColor:'#fff',
         width:80,
         height:80,
         borderRadius:50,
         flex:1,
         justifyContent:'center',
-        alignItems:'center'        
+        alignItems:'center',
+        borderWidth:4,
+        borderColor:"#96FFD9"                
     },
     categoryText:{
         fontSize:20,
         color:'#fff',
-        marginLeft:-4
+        marginLeft:-3,
+        color:'#000'
     },
     infoContainer:{
         flex:3,

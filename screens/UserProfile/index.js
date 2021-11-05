@@ -20,9 +20,9 @@ export default class Category extends Component {
             gender: '', 
             visible: false,
             reason: [
-                    'message',
-                    'profile image',
-                    'appoint',                    
+                    '부적절한 메세지',
+                    '부적절한 프로필 사진',
+                    '기타',                    
                     'Cancel',
             ]
         }
@@ -85,7 +85,7 @@ export default class Category extends Component {
 
     render() {
         return (
-            <View style={{ width: Dimensions.get('window').width * 0.96 , marginHorizontal: Dimensions.get('window').width * 0.02,}}>                
+            <View style={{}}>                
                 <Image                     
                     source={{ uri: this.state.profile }}
                     style={{ width: Dimensions.get('window').width * 1, height: Dimensions.get('window').height * 0.4 }}                                
@@ -94,18 +94,17 @@ export default class Category extends Component {
                     <View style={{flexDirection:'row'}}>
                         <Text style={styles.userName}>{this.state.userName} </Text>   
                         <Text style={styles.userAge}> {this.state.age}</Text>    
-                    </View>                    
-                    
-                    <Text style={styles.userGender}>{this.state.gender}</Text>                         
-                
+                    </View>                                        
+                    <Text style={styles.userGender}>{this.state.gender}</Text>                                         
                     <FlatList 
                         contentContainerStyle={styles.hobbyList}
                         data={this.state.hobby}
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index.toString()}
-                        horizontal={true}                        
+                        horizontal={true}           
+                        showsHorizontalScrollIndicator={false}             
                     />
-                    <View style={{justifyContent:'center', alignItems:'center', marginTop:90,  }}>
+                    <View style={{justifyContent:'center', alignItems:'center', marginTop:30}}>
                         <TouchableOpacity
                             onPress={()=>alert('서비스 준비중')}
                             style={styles.userBtn}
@@ -127,7 +126,7 @@ export default class Category extends Component {
                     </View>                    
                     <ActionSheet 
                         ref={this.bs}
-                        title={'Select Reason'}
+                        title={'신고 사유'}
                         options={this.state.reason}
                         cancelButtonIndex={3} 
                         onPress={(index) => this.report(this.state.reason[index])}  
@@ -163,14 +162,15 @@ const styles = StyleSheet.create({
     },
     hobbyContainer:{
         borderWidth: 1,
+        borderColor:'#fb009e',
         paddingVertical: 7,
-        paddingHorizontal: 9,
+        paddingHorizontal: 7,
         justifyContent: 'center',
         alignItems: 'center',
-        marginHorizontal: 5,
+        marginRight: 5,
         borderRadius: 20,
-        height: 35,
-        marginTop: 10,
+        height: 50,
+        marginTop: 10,        
     },
     userBtn:{
         width: 250,         

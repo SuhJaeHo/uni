@@ -9,6 +9,7 @@ import {
   Keyboard,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import PassMeter from "react-native-passmeter";
 import auth from "@react-native-firebase/auth";
@@ -29,10 +30,16 @@ const RegisterScreen = ({ navigation }) => {
 
   const handleSubmitButton = () => {    
     setErrortext("");
-    if (!userName) return alert("Please fill Name");
-    if (!userEmail) return alert("Please fill Email");
-    if (!userPassword) return alert("Please fill Address");
-    if (userPassword ==! userPasswordCheck) alert ("password check");
+    if (!userName) return Alert.alert("이름을 입력하세요");
+    if (!userEmail) return Alert.alert("이메일을 입력하세요");
+    if (!userPassword) return Alert.alert("비밀번호를 설정하세요");
+    if (userPassword != userPasswordCheck) {
+      Alert.alert("비밀번호를 확인해주세요");
+      return false;
+    } 
+
+    console.log(userPassword);
+    console.log(userPasswordCheck);
 
     auth()
       .createUserWithEmailAndPassword(
@@ -143,6 +150,11 @@ const RegisterScreen = ({ navigation }) => {
               blurOnSubmit={false}
             />
           </View>
+          {errortext != "" ? (
+            <Text style={styles.errorTextStyle}>
+              {errortext}
+            </Text>
+          ) : null}
           <View style={styles.sectionStyle}>
             <View style={{flexDirection: 'row', alignItems: 'center', marginBottom:10}}>
               <View style={{ height: 1, backgroundColor: '#fff'}} />
@@ -164,7 +176,28 @@ const RegisterScreen = ({ navigation }) => {
               secureTextEntry={true}
               onSubmitEditing={Keyboard.dismiss}
               blurOnSubmit={false}
-            />           
+            /> 
+            <View style={{flexDirection: 'row', alignItems: 'center', marginBottom:10}}>
+              <View style={{ height: 1, backgroundColor: '#fff'}} />
+              <View>
+                <Text style={{width:100, textAlign:'left', color:'#fff', fontWeight:'bold', fontSize:20}}>
+                  Confirm
+                </Text>
+              </View>              
+            </View>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={(UserPassword) =>
+                setUserPasswordCheck(UserPassword)
+              }
+              placeholder="Enter Password"
+              placeholderTextColor="#8b9cb5"
+              ref={passwordInputRef}
+              returnKeyType="next"
+              secureTextEntry={true}
+              onSubmitEditing={Keyboard.dismiss}
+              blurOnSubmit={false}
+            />          
             <View style={{marginTop:10}}>
               <PassMeter
                 showLabels
@@ -174,14 +207,8 @@ const RegisterScreen = ({ navigation }) => {
                 labels={PASS_LABELS}            
               />
             </View>            
-          </View>
-          {errortext != "" ? (
-            <Text style={styles.errorTextStyle}>
-              {" "}
-              {errortext}{" "}
-            </Text>
-          ) : null}
-          <View style={{justifyContent:'center', alignItems:'center', marginTop:100}}>
+          </View>          
+          <View style={{justifyContent:'center', alignItems:'center', marginTop:200}}>
             <TouchableOpacity
               style={styles.buttonStyle}
               activeOpacity={0.5}

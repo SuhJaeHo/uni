@@ -133,16 +133,7 @@ const Router = ({navigation}) => {
                             color: 'black'
                         }
                     }}
-                />
-                {/*
-                <Stack.Screen
-                    name={"Main"}
-                    component={Main}
-                    options={{
-                        headerShown: false,    
-                    }}
-                /> 
-                */} 
+                />                
                 <Stack.Screen
                     name={"DrawerNav"}
                     component={DrawerNav}
@@ -221,7 +212,17 @@ const Router = ({navigation}) => {
                     name={"UserList"}
                     component={UserList}
                     options={{
-                        headerShown: false,    
+                        headerShown: true,
+                        title: '참가 요청 유저',
+                        headerTitleStyle:{
+                            fontSize:19
+                        },
+                        headerBackImage: ()=>(<Ionicons name={"ios-chevron-back"} size={30}/>),
+                        headerBackTitle:' ',
+                        headerBackTitleStyle:{
+                            fontSize: 18,
+                            color: 'black'
+                        }
                     }}
                 />
                 <Stack.Screen

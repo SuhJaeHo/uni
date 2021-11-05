@@ -5,7 +5,7 @@ import ImageResizer from 'react-native-image-resizer';
 import { Buffer } from 'buffer';
 
 import BottomSheet from 'reanimated-bottom-sheet';
-import Animated from 'react-native-reanimated';
+import ActionSheet from 'react-native-actionsheet';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -34,6 +34,12 @@ export default class EditProfile extends Component {
             index: 0,
             interestList: [],
             userInterest: [],
+
+            menu: [
+                '갤러리',
+                '카메라', 
+                '취소',           
+            ],
         }
     }
 
@@ -116,7 +122,7 @@ export default class EditProfile extends Component {
             picker.push (
                 <TouchableOpacity
                     style={styles.imageBoard}
-                    onPress={() => {this.setState({index : index}); this.bs.current.snapTo(0);}}
+                    onPress={() => {this.setState({index : index}); this.showActionSheet();}}
                     key={index}
                 >                    
                     {data.uri === undefined ?
@@ -138,12 +144,17 @@ export default class EditProfile extends Component {
         })
     }
 
+    bs = React.createRef();
+    showActionSheet = () => {        
+        this.bs.current.show();
+    };
+
     pickImage = async(option) => {
-        if(option === 'camera') {
+        if(option === '카메라') {
             ImagePicker.openCamera({
                 cropping: true, freeStyleCropEnabled: true, includeBase64: true,           
             })
-            .then(image => {                
+            .then(image => {
                 var sequence = 6;
                 var check = 0;
 
@@ -152,9 +163,6 @@ export default class EditProfile extends Component {
                         if(this.state.index === index) {
                             data.uri = image.path;
                             data.mime = image.mime;
-                            data.width = image.width;
-                            data.height = image.height;
-                            
                             check += 1;
                         }
                     }else if(data.uri === undefined) {
@@ -162,9 +170,6 @@ export default class EditProfile extends Component {
                             if(sequence > index) {
                                 data.uri = image.path;
                                 data.mime = image.mime;
-                                data.width = image.width;
-                                data.height = image.height;
-
                                 sequence = index;
                                 this.setState({index: sequence});
                             }
@@ -174,8 +179,12 @@ export default class EditProfile extends Component {
                 
                 this.uploadImage(image, this.state.index);
                 this.picker();
-            })
-        }else {
+            }).catch((error) => {
+                if (error === 'E_PICKER_CANCELLED') {
+                    return false;
+                }
+            });
+        }else if(option === '갤러리') {
             ImagePicker.openPicker({
                 cropping: true, freeStyleCropEnabled: true, includeBase64: true,
             }).then((image) => {
@@ -203,11 +212,12 @@ export default class EditProfile extends Component {
                 
                 this.uploadImage(image, this.state.index);
                 this.picker();    
-            }).catch((e) => Alert.alert(JSON.stringify(e)));
-        }
-
-        await this.updateChatUser();
-        this.bs.current.snapTo(1);        
+            }).catch((error) => {
+                if (error === 'E_PICKER_CANCELLED') {
+                    return false;
+                }
+            });
+        }        
     }
 
     updateChatUser = async() => {                
@@ -261,42 +271,7 @@ export default class EditProfile extends Component {
             },
             body: formData,
         })
-    }
-
-    bs = React.createRef();
-    renderContent = () => (
-        <View
-            style={{
-                flex: 0,
-                backgroundColor: '#fff',
-                paddingTop: 30,
-                height: 700,
-            }}
-        >      
-            <Pressable
-                style={styles.pickerButton}
-                onPress={() => this.pickImage('camera')}
-            >
-                <Fontisto 
-                    name={'camera'}
-                    size={25} 
-                    style={{marginHorizontal: 40}}
-                />                
-                <Text style={{fontSize: 17}}>Take Photo</Text>
-            </Pressable>
-            <Pressable
-                style={styles.pickerButton}
-                onPress={() => this.pickImage('gallery')}
-            >
-                <FontAwesome 
-                    name={'image'}
-                    size={25}
-                    style={{marginHorizontal: 40}}
-                />
-                <Text style={{fontSize: 17}}>Choose From Gallery</Text>
-            </Pressable>
-        </View>
-    );    
+    }    
 
     getUserInfo = async() => {       
         this.state.interestList = '';
@@ -374,14 +349,13 @@ export default class EditProfile extends Component {
                                     <Text>{this.state.interestList}</Text>
                                 </Pressable>                                                     
                             </View>   
-                            <BottomSheet
+                            <ActionSheet 
                                 ref={this.bs}
-                                snapPoints={[400, 0]}
-                                initialSnap={1}
-                                renderContent={this.renderContent}                   
-                                enabledContentTapInteraction={false}
-                                enabledInnerScrolling={false}                                
-                            />                                                                                                      
+                                title={'프로필 사진 업로드'}
+                                options={this.state.menu}
+                                cancelButtonIndex={2} 
+                                onPress={(index) => this.pickImage(this.state.menu[index])}  
+                            />                                                                                                       
                         </View>
                     </ImageBackground>               
                 </TouchableOpacity>
