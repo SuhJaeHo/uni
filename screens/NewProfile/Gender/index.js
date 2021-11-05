@@ -92,19 +92,20 @@ export default class Gender extends Component {
                         </View>
                         <View style={styles.selectboxContainer}>
                             <Pressable
-                                style={{
+                                style={{                                    
                                     width: Dimensions.get('window').width * 0.4,
                                     height: Dimensions.get('window').width * 0.4,
                                     backgroundColor: this.state.manColor,
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     marginVertical: 10,
-                                    marginHorizontal: 10,                            
+                                    marginHorizontal: 10,                                                               
                                     shadowOpacity: 0.5,
                                     shadowRadius: 5,
                                     shadowColor: 'grey',
                                     shadowOffset: { height: 2, width: 2 },
-                                    borderRadius: 20,
+                                    borderRadius: 20,           
+                                    elevation: 5,                                                             
                                 }}
                                 onPress={() => {this.setState({gender: '남성'}); this.check_Gender('남성');}}
                             >                                                    
@@ -123,7 +124,8 @@ export default class Gender extends Component {
                                     shadowRadius: 5,
                                     shadowColor: 'grey',
                                     shadowOffset: { height: 2, width: 2 },
-                                    borderRadius: 25
+                                    borderRadius: 25,
+                                    elevation: 5,  
                                 }}
                                 onPress={() => {this.setState({gender: '여성'}); this.check_Gender('여성');}}
                             >                                        
@@ -142,9 +144,10 @@ export default class Gender extends Component {
                                 shadowRadius: 5,
                                 shadowColor: 'grey',
                                 shadowOffset: { height: 2, width: 2 },
+                                elevation: 5,  
                                 borderRadius: 25,
                                 position: 'absolute',
-                                bottom: 10                                                   
+                                bottom: 10,                                                                                 
                             }}
                             onPress={() => 
                                 {

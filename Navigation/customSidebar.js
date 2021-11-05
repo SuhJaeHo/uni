@@ -25,6 +25,7 @@ import ImageModal from 'react-native-image-modal';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { LOCAL_URL } from '@env';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const CustomSidebarMenu = (props) => {  
     const [url, setUrl] = useState('https://cdn.pixabay.com/photo/2014/10/14/20/24/soccer-488700_960_720.jpg');
@@ -77,19 +78,7 @@ const CustomSidebarMenu = (props) => {
               </Text> 
             </View>
             <View style={{flex: 1, paddingHorizontal: 10, marginLeft: 25}}>
-              <ImageModal 
-                swipeToDismiss={false}
-                resizeMode="contain"
-                imageBackgroundColor="#000000"
-                style={{
-                  width: 120,
-                  height: 120,
-                }}
-                source={{
-                  uri: 'https://loof-img.s3.ap-northeast-2.amazonaws.com/1635318245098_09912d4f-497b-4e3f-93e2-3f8c23c9fe51.JPEG',                    
-                }}
-              />
-              {/*<Avatar.Image size={120} source={{uri: url}} />*/}
+              <Avatar.Image size={120} source={{uri: url}} />            
             </View>
           </View>
         </View>
@@ -97,9 +86,11 @@ const CustomSidebarMenu = (props) => {
             style={{justifyContent: 'center', alignItems: 'center',  flexDirection: 'row', marginBottom: 15, marginTop: 15}}
             onPress={()=> props.navigation.navigate('EditProfile')}
           >
-            <Text style={{color: 'grey', fontSize: 13}}>
-              Edit Profile
-            </Text>
+            <TouchableOpacity>
+              <Text style={{color: 'grey', fontSize: 13}}>
+                내 프로필
+              </Text>              
+            </TouchableOpacity>            
             <Icon name="keyboard-arrow-right" color="grey" size={30} /> 
           </Pressable>
         <DrawerContentScrollView {...props}>

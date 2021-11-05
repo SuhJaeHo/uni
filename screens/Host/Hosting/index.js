@@ -7,9 +7,7 @@ import 'moment/locale/ko';
 
 import { CometChat } from '@cometchat-pro/react-native-chat';
 
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { LOCAL_URL } from '@env';
 
@@ -43,14 +41,13 @@ export default class Hosting extends Component {
         return true;
     }
 
-    asyncStorage = async() => {
+    asyncStorage = async() => {        
         if(this.props.route.params.Info === 'modify') {
-            await AsyncStorage.setItem('check', this.props.route.params.Info);
-            
+            await AsyncStorage.setItem('check', this.props.route.params.Info);            
             await AsyncStorage.setItem('_id', this.props.route.params._id);
-            await AsyncStorage.setItem('address', this.props.route.params.address);
             await AsyncStorage.setItem('lat', JSON.stringify(this.props.route.params.lat));
             await AsyncStorage.setItem('lng', JSON.stringify(this.props.route.params.lng));
+            await AsyncStorage.setItem('address', this.props.route.params.address);            
             await AsyncStorage.setItem('category', this.props.route.params.category);
             await AsyncStorage.setItem('title', this.props.route.params.title);
             await AsyncStorage.setItem('time', JSON.parse(this.props.route.params.time));
@@ -220,8 +217,6 @@ export default class Hosting extends Component {
         )
     }
 
-
-
     render() {
         return (
             <View style={styles.hostingContainer}>          
@@ -233,9 +228,7 @@ export default class Hosting extends Component {
                         <View style={styles.headerConatiner}>
                             <View style={styles.backIcon}>
                                 <Pressable
-                                    onPress={() => this.props.navigation.push('DrawerNav', {
-                                        
-                                    })}
+                                    onPress={() => this.props.navigation.navigate('DrawerNav')}
                                     style={styles.backIcon}
                                 >
                                 <MaterialIcons name={"arrow-back-ios"} 
@@ -249,9 +242,9 @@ export default class Hosting extends Component {
                             <View style={styles.headerTextContainer}>
                                 {this.state.check === 'modify' 
                                 ? 
-                                <Text style={styles.headerText}>Modify</Text>
+                                <Text style={styles.headerText}>수정</Text>
                                 : 
-                                <Text style={styles.headerText}>Hosting</Text>
+                                <Text style={styles.headerText}>호스트</Text>
                                 }
                             </View>                
                         </View>      

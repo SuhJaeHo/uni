@@ -18,11 +18,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height * 0.8,            
+        height: Dimensions.get('window').height * 0.8,                    
     },
     selectboxContainer: {
        position: 'absolute',
-       flexDirection: 'row',
+       flexDirection: 'row',       
     },
     announceContainer:{
         position: 'absolute',

@@ -69,7 +69,7 @@ function homeScreenStack({ navigation }) {
                     />,
                     headerShown: true,
                     headerTransparent: true,
-                }}                                                
+                }}                                                         
             >                
             </Stack.Screen>            
             <Stack.Screen
@@ -111,23 +111,6 @@ export default function DrawerNav({ navigation }) {
                 }}
                 component={Announce} 
             />
-            {/*
-            <Drawer.Screen
-                name="SecondPage"
-                options={{ 
-                    drawerLabel: '이용내역 📑',
-                    headerShown: false,
-                }}
-                component={History} 
-            />
-            <Drawer.Screen
-                name="ThirdPage"
-                options={{ drawerLabel: '랭크 🏆',
-                    headerShown: false,    
-                }}
-                component={Rank} 
-            />  
-            */}
             <Drawer.Screen
                 name="고객지원"
                 options={{ 
@@ -140,14 +123,7 @@ export default function DrawerNav({ navigation }) {
                 name="SetPage"
                 options={{ 
                     drawerLabel: 'Setting ⚙️',
-                    headerShown: false,
-                    headerLeft: () => (
-                        <Button
-                            onPress={() => navigation.goBack()}
-                            title="<"
-                            color="black"
-                        />
-                    ),
+                    headerShown: false,                    
                 }}
                 component={Setting} 
             />

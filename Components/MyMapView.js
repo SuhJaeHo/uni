@@ -64,7 +64,6 @@ export default class MyMapView extends Component {
         var key = 0;        
 
         if(this.props.roomData.length === 0) {
-            console.log('들어옴');
             this.state.trackView = true;
         }
 
@@ -85,155 +84,114 @@ export default class MyMapView extends Component {
                             source={require('../assets/pin/ping.png')}                            
                             onLoad={() => this.state.trackView = false}                            
                         />
-                        <MaterialCommunityIcons
-                            name={"soccer"}
-                            size={37}
-                            color={'black'}
-                            style={{ zIndex:10, marginBottom:8 }}   
+                        <Image  
+                            style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
+                            source={require('../assets/cateicon/soccer.png')}
                         />
                     </View>
                     : roomInfo.category === '농구' ? 
                     <View style={{ justifyContent: 'center', alignItems: 'center', height: 100, width: 55 }}>
                         <Image style={{resizeMode: 'contain', width: 50, position: 'absolute'}} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                        <Ionicons
-                            name={"basketball"}
-                            size={37}   
-                            color={'#B96319'}     
-                            style={{ zIndex:10, marginBottom:8 }}                                        
+                        <Image  
+                            style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
+                            source={require('../assets/cateicon/basketball.png')}
                         />
                     </View>
                     : roomInfo.category === '볼링' ?
                     <View style={{ justifyContent: 'center', alignItems: 'center', height: 100, width: 55 }}>
                         <Image style={{resizeMode: 'contain', width: 50, position: 'absolute'}} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                        <FontAwesome5 
-                            name={"bowling-ball"}
-                            size={37}
-                            color={'#000'}
-                            style={{ zIndex:10, marginBottom:8 }}  
+                        <Image  
+                            style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
+                            source={require('../assets/cateicon/bowling.png')}
                         />
                     </View>   
-                    : roomInfo.category === '야구' ?
-                    <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                        <Ionicons 
-                            name={"baseball-outline"}
-                            size={37}   
-                            color={'#bc2b62'}
-                        />
-                    </View>
-                    : roomInfo.category === '배드민턴' ?
-                    <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                        <MaterialCommunityIcons 
-                            name={"badminton"}
-                            size={37}   
-                            color={'#bc2b62'}
-                        />
-                    </View>
                     : roomInfo.category === '등산' ?
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
                         <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                        <Foundation 
-                            name={"mountains"}
-                            size={37}   
-                            color={'#bc2b62'}
+                        <Image  
+                            style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
+                            source={require('../assets/cateicon/hiking.png')}
                         />
-                    </View>
-                    : roomInfo.category === '당구' ?
-                    <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                        <MaterialCommunityIcons 
-                            name={"billiards"}
-                            size={37}   
-                            color={'#bc2b62'}
-                        />
-                    </View>
-                    : roomInfo.category === '요가' ?
-                    <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                        <MaterialCommunityIcons 
-                            name={"yoga"}
-                            size={37}   
-                            color={'#bc2b62'}
-                        />  
                     </View>
                     : roomInfo.category === '웨이트' ?
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
                         <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                        <MaterialCommunityIcons 
-                            name={"weight-lifter"}
-                            size={37}   
-                            color={'#bc2b62'}
-                        />
-                    </View>
-                    : roomInfo.category === '자전거' ?
-                    <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                        <Ionicons 
-                            name={"bicycle"}
-                            size={37}   
-                            color={'#000'}
+                        <Image  
+                            style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
+                            source={require('../assets/cateicon/weight.png')}
                         />
                     </View>
                     : roomInfo.category === '런닝' ?
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
                         <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                        <FontAwesome5 
-                            name={"running"}
-                            size={37}   
-                            color={'#000'}
+                        <Image  
+                            style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
+                            source={require('../assets/cateicon/running.png')}
                         />
                     </View>
                     : roomInfo.category === '골프' ?
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
                         <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                        <MaterialCommunityIcons 
-                            name={"golf"}
-                            size={37}   
-                            color={'#000'}
+                        <Image  
+                            style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
+                            source={require('../assets/cateicon/golf.png')}
                         />
                     </View>
                     : roomInfo.category === '탁구' ?
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
                         <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                        <FontAwesome5 
-                            name={"table-tennis"}
-                            size={37}   
-                            color={'#000'}
+                        <Image  
+                            style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
+                            source={require('../assets/cateicon/table-tennis.png')}
                         />
                     </View>
-                    : roomInfo.category === '스케이트 보드' ?
-                    <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                        <MaterialCommunityIcons 
-                            name={"skateboard"}
-                            size={37}   
-                            color={'#000'}
-                        />
-                    </View>
-                    : roomInfo.category === '커피 한잔' ?
-                    <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
-                    <MaterialCommunityIcons 
-                        name={"coffee"}
-                        size={37}   
-                        color={'#000'}
-                    />
-                    </View>
-                    : roomInfo.category === '밥 한끼!' ? 
+                    : roomInfo.category === '술 한잔' ?
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
                         <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
                         <Image  
-                        style={{ backgroundColor:'#fff', width:38,height:38, zIndex:10, marginBottom:8, borderRadius:19}}   
-                        source={require('../assets/cateicon/dish.png')}
-                    />                          
+                            style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
+                            source={require('../assets/cateicon/drink.png')}
+                        />
                     </View>
-                    : roomInfo.category === '클럽' ? 
+                    : roomInfo.category === '배틀그라운드' ? 
+                    <View style={{ justifyContent:'center', alignItems:'center', height:100, width:55 }} >
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute'}} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image  
+                            style={{ width:36, height:38, zIndex:38, marginBottom:7, backgroundColor:'#fff', borderRadius:19, padding:5 }}   
+                            source={require('../assets/cateicon/pubg.png')}
+                        />                                                                    
+                    </View>
+                    : roomInfo.category === '리그오브레전드' ? 
+                    <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute'}} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image  
+                            style={{ width:36, height:38, zIndex:38, marginBottom:8, borderRadius:19 }}   
+                            source={require('../assets/cateicon/lol.png')}
+                        />                                                                    
+                    </View>
+                    : roomInfo.category === '언어교환' ? 
+                    <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute'}} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image  
+                            style={{ width:36, height:38, zIndex:38, marginBottom:8, borderRadius:19 }}   
+                            source={require('../assets/cateicon/language.png')}
+                        />                                                                    
+                    </View>
+                    : roomInfo.category === '보드게임' ? 
+                    <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute'}} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image  
+                            style={{ width:36, height:38, zIndex:38, marginBottom:8, borderRadius:19 }}   
+                            source={require('../assets/cateicon/board-game.png')}
+                        />                                                                    
+                    </View>
+                    : roomInfo.category === '파티' ? 
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
                         <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
                         <Image  
-                            style={{ backgroundColor:'#fff', width:38,height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
-                            source={require('../assets/cateicon/disco-ball.png')}/>                         
+                            style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
+                            source={require('../assets/cateicon/party.png')}
+                        />                       
                     </View>                 
                     : null}
                 </Marker>
@@ -262,7 +220,7 @@ export default class MyMapView extends Component {
                         onPanDrag={() => this.state.dragCount += 1}                      
                         onRegionChangeComplete={(reg) => {
                             region = reg;                                
-                            this.props.onRegionChange(reg);                                
+                            this.props.onRegionChange(reg);                                                           
                             
                             if(!this.props.onFilter) {
                                 this.props.connect();
@@ -285,16 +243,16 @@ export default class MyMapView extends Component {
                         showsMyLocationButton={false}                                                                                            
                         region={this.state.pressedCurrentBtn === true ? this.props.region : region}                            
                         onRegionChangeComplete={(reg) => {   
-                        this.setState({pressedCurrentBtn: false})                            
-                        this.props.onRegionChange(reg);
-                        region = reg;
+                            this.setState({pressedCurrentBtn: false})                            
+                            this.props.onRegionChange(reg);
+                            region = reg;
 
-                        if(!this.props.onFilter) {
-                            this.props.connect();
-                        }else{
-                            this.props.connectFilter(this.props.hobby);
-                        }
-                    }}                             
+                            if(!this.props.onFilter) {
+                                this.props.connect();
+                            }else{
+                                this.props.connectFilter(this.props.hobby);
+                            }
+                        }}                             
                         onPress={() => this.props.sendData(undefined)}                    
                     >                    
                         {this.createMarker()}                                                                                  

@@ -150,6 +150,7 @@ export default class editHobby extends Component {
                         shadowRadius: 5,
                         shadowColor: 'grey',
                         shadowOffset: { height: 3, width: 3 },
+                        elevation: 10,
                     }}
                     onPress={() => 
                         {
@@ -234,6 +235,7 @@ export default class editHobby extends Component {
                         shadowRadius: 5,
                         shadowColor: 'grey',
                         shadowOffset: { height: 3, width: 3 },
+                        elevation: 10,
                     }}
                     onPress={() => 
                         {

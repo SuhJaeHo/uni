@@ -51,8 +51,7 @@ export default class EditProfile extends Component {
         })            
 
         fetch(`${LOCAL_URL}/firstProfile/?id=` + id  + "&time=" + new Date())        
-        .then(responseData => {
-            console.log(responseData);                        
+        .then(responseData => {                      
             if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
                 this.state.image[0].uri = responseData.url;    
             }   

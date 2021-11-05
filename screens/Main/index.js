@@ -11,12 +11,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MyMapView from '../../Components/MyMapView';
 import MainButton from '../../Components/MainButton';
-import ViewProfiles from '../../Components/ViewProfiles';
 
 import Moment from 'moment';
 import 'moment/locale/ko';
 
-//import Geolocation from '@react-native-community/geolocation';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 
@@ -29,18 +27,9 @@ import { CometChat } from '@cometchat-pro/react-native-chat';
 
 import { geo, LOCAL_URL } from '@env';
 
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import rootReducer from '../../Components/redux/reducer';
-import { useSelector, useDispatch } from 'react-redux';
-
 import styles from './styles';
 
-const store = createStore(rootReducer);
-
 const renderHeight = Dimensions.get('window').height * 0.8;
-
-//const reduxState = useSelector(state => state);
 
 export default class Main extends Component {
      constructor(props) {
@@ -53,7 +42,6 @@ export default class Main extends Component {
                address: 0,
                id: '',
                push: 0,
-
                roomData: [],
                userData: [],
                GUID: [],
@@ -74,9 +62,9 @@ export default class Main extends Component {
                this.hosted();
           }
 
-          this.props.navigation.addListener('focus', async () => {
+          this.props.navigation.addListener('focus', async () => {               
                this.removeStorage();     
-               this.connect();                      
+               this.connect();                               
           })               
      }
 
@@ -132,84 +120,75 @@ export default class Main extends Component {
                          >
                               {
                                    hobby === '축구' ?                   
-                                        <MaterialCommunityIcons
-                                             name={"soccer"}
-                                             size={37}
-                                             color={'black'}
-                                             style={{ zIndex:10,  }}   
+                                        <Image 
+                                             style={{width: 34, height: 34, zIndex: 10}}
+                                             source={require('../../assets/cateicon/soccer.png')}
                                         />
                                    : hobby === '농구' ?
-                                        <Ionicons
-                                             name={"basketball"}
-                                             size={37}    
-                                             style={{ zIndex:10, }}                                        
-                                        /> 
+                                        <Image 
+                                             style={{width: 38, height: 38, zIndex: 10}}
+                                             source={require('../../assets/cateicon/basketball.png')}
+                                        />
                                    : hobby === '볼링' ?
-                                        <FontAwesome5 
-                                             name={"bowling-ball"}
-                                             size={37}   
-                                             color={'#bc2b62'}
-                                        />
-                                   : hobby === '야구' ?
-                                        <Ionicons 
-                                             name={"baseball-outline"}
-                                             size={37}                                           
-                                        />
-                                   : hobby === '배드민턴' ?
-                                        <MaterialCommunityIcons 
-                                             name={"badminton"}
-                                             size={37}                                           
-                                        />
-                                   : hobby === '요가' ?
-                                        <FontAwesome5 
-                                             name={"baseball-outline"}
-                                             size={37}                                                
+                                        <Image  
+                                             style={{width:38, height:38, zIndex:10}}   
+                                             source={require('../../assets/cateicon/bowling.png')}
                                         />
                                    : hobby === '웨이트' ?
-                                        <MaterialCommunityIcons 
-                                             name={"weight-lifter"}
-                                             size={37}                                                
+                                        <Image  
+                                             style={{width:36, height:36, zIndex:10}}   
+                                             source={require('../../assets/cateicon/weight.png')}
                                         />
                                    : hobby === '등산' ?
-                                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../../assets/pin/ping.png')}/>
-                                   : hobby === '자전거' ?
-                                        <Ionicons 
-                                             name={"bicycle"}
-                                             size={37}   
-                                             color={'#000'}
-                                        />
+                                   <Image  
+                                        style={{width:36, height:36, zIndex:10}}   
+                                        source={require('../../assets/cateicon/hiking.png')}
+                                   />
                                    : hobby === '런닝' ?
-                                        <FontAwesome5 
-                                             name={"running"}
-                                             size={37}   
-                                             color={'#000'}
+                                        <Image  
+                                             style={{width:36, height:36, zIndex:10}}   
+                                             source={require('../../assets/cateicon/running.png')}
                                         />
                                    : hobby === '골프' ?                                  
-                                        <MaterialCommunityIcons 
-                                             name={"golf"}
-                                             size={37}   
-                                             color={'#000'}
-                                        />
-                                   : hobby === '당구' ?                                  
-                                        <Image style={{ width:38,height:38, zIndex:10,  borderRadius:19 ,  }} source={require('../../assets/cateicon/pool.png')}/>                                  
+                                        <Image  
+                                             style={{width:36, height:36, zIndex:10}}   
+                                             source={require('../../assets/cateicon/golf.png')}
+                                        />                                             
                                    : hobby === '탁구' ?                                  
-                                        <FontAwesome5 
-                                             name={"table-tennis"}
-                                             size={37}   
-                                             color={'#000'}
-                                        />                                  
-                                   : hobby === '스케이트 보드' ?                                  
-                                        <Image style={{ width:38,height:38, zIndex:10, borderRadius:19}} source={require('../../assets/cateicon/skateboard.png')}/>         
-                                   : hobby === '커피 한잔' ?                                  
-                                        <MaterialCommunityIcons 
-                                             name={"coffee"}
-                                             size={37}   
-                                             color={'#000'}
-                                        />                               
-                                   : hobby === '밥 한끼!' ?                               
-                                        <Image style={{ width:38,height:38, zIndex:10, marginBottom:8, borderRadius:19}} source={require('../../assets/cateicon/dish.png')}/>                                                                      
-                                   : hobby === '클럽' ?                                                                 
-                                        <Image style={{width:38, height:38, borderRadius:19}} source={require('../../assets/cateicon/disco-ball.png')}/>                                                                         
+                                        <Image  
+                                             style={{width:36, height:36, zIndex:10}}   
+                                             source={require('../../assets/cateicon/table-tennis.png')}
+                                        />  
+                                   : hobby === '술 한잔' ?
+                                        <Image  
+                                             style={{width:38, height:38, zIndex:10}}   
+                                             source={require('../../assets/cateicon/drink.png')}
+                                        />   
+                                   : hobby === '언어교환' ? 
+                                        <Image  
+                                             style={{width:36, height:36, zIndex:10}}   
+                                             source={require('../../assets/cateicon/language.png')}
+                                        />   
+                                   : hobby === '보드게임' ?
+                                        <Image  
+                                             style={{width:36, height:36, zIndex:10}}   
+                                             source={require('../../assets/cateicon/board-game.png')}
+                                        />                                                                                              
+                                   : hobby === '리그오브레전드' ?                                  
+                                        <Image  
+                                             style={{width:36, height:36, zIndex:10}}   
+                                             source={require('../../assets/cateicon/lol.png')}
+                                        />
+                                   : hobby === '배틀그라운드' ?                                  
+                                        <Image  
+                                             style={{width:36, height:30, zIndex:30, backgroundColor:'#fff', borderRadius:10}}   
+                                             source={require('../../assets/cateicon/pubg.png')}
+                                        />                                                                                                
+                                   : hobby === '파티' ?                                                                 
+                                        <Image  
+                                             style={{width:36, height:36, zIndex:10}}   
+                                             source={require('../../assets/cateicon/party.png')}
+                                        />
                                    : <Text>{hobby}</Text>
                               }
                          </ActionButton.Item>                                                       
@@ -319,7 +298,7 @@ export default class Main extends Component {
                var address = json.results[0].formatted_address;
                this.setState({
                     address: address,
-               }, () => {console.log(this.state.address)});
+               });
           })          
      } 
      
@@ -467,6 +446,7 @@ export default class Main extends Component {
                                    _id: this.state.roomInfo._id, address: this.state.roomInfo.address, lat: this.state.roomInfo.latitude, lng: this.state.roomInfo.longitude, 
                                    category: this.state.roomInfo.category, title: this.state.roomInfo.title, time: JSON.stringify(this.state.roomInfo.time), timeInfo: this.state.roomInfo.timeInfo, Info: 'modify'
                               }
+                         
                          )}                              
                          style={styles.modifyButton}
                     >

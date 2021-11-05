@@ -123,6 +123,7 @@ export default class Birth extends Component {
                                 shadowRadius: 5,
                                 shadowColor: 'grey',
                                 shadowOffset: { height: 2, width: 2 },
+                                elevation: 5,
                                 borderRadius: 25,
                                 position: 'absolute',
                                 bottom: 10

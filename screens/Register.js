@@ -5,29 +5,34 @@ import {
   TextInput,
   View,
   Text,
-  Image,
   KeyboardAvoidingView,
   Keyboard,
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-
+import PassMeter from "react-native-passmeter";
 import auth from "@react-native-firebase/auth";
 
 const RegisterScreen = ({ navigation }) => {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [userPasswordCheck, setUserPasswordCheck] = useState("")
   const [errortext, setErrortext] = useState("");
 
   const emailInputRef = createRef();
   const passwordInputRef = createRef();
 
-  const handleSubmitButton = () => {
+  const MAX_LEN = 15,
+  MIN_LEN = 6,
+  PASS_LABELS = ["Too Short", "Weak", "Normal", "Strong", "Secure"];
+
+  const handleSubmitButton = () => {    
     setErrortext("");
     if (!userName) return alert("Please fill Name");
     if (!userEmail) return alert("Please fill Email");
     if (!userPassword) return alert("Please fill Address");
+    if (userPassword ==! userPasswordCheck) alert ("password check");
 
     auth()
       .createUserWithEmailAndPassword(
@@ -38,6 +43,8 @@ const RegisterScreen = ({ navigation }) => {
         console.log(
           "Registration Successful. Please Login to proceed"
         );
+        user.user.sendEmailVerification();
+        alert('이메일 인증을 완료해주세요!')
         console.log(user);
         if (user) {
           auth()
@@ -46,7 +53,7 @@ const RegisterScreen = ({ navigation }) => {
               photoURL:
                 "https://aboutreact.com/profile.png",
             })
-            .then(() => navigation.replace("HomeScreen"))
+            .then(() => navigation.replace("Auth"))
             .catch((error) => {
               alert(error);
               console.error(error);
@@ -65,9 +72,17 @@ const RegisterScreen = ({ navigation }) => {
       });
   };
 
+  const passwordCheck = () => {
+    if (userPassword === userPasswordCheck){
+      true
+    } else {
+      false
+    };
+  }
+
   return (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: "#307ecc" }}
+      style={{ flex: 1, backgroundColor: "#121212" }}
     >
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -75,26 +90,22 @@ const RegisterScreen = ({ navigation }) => {
           justifyContent: "center",
           alignContent: "center",
         }}
-      >
-        <View style={{ alignItems: "center" }}>
-          <Image
-            source={require("../assets/logo/logo.jpg")}
-            style={{
-              width: "50%",
-              height: 100,
-              resizeMode: "contain",
-              margin: 30,
-            }}
-          />
-        </View>
+      >        
         <KeyboardAvoidingView enabled>
           <View style={styles.sectionStyle}>
+            <View style={{flexDirection: 'row', alignItems: 'center', marginBottom:10}}>
+              <View style={{ height: 1, backgroundColor: '#fff'}} />
+              <View>
+                <Text style={{width: 100, textAlign:'left', color: '#fff', fontWeight:'bold', fontSize:20}}>
+                  Name
+                </Text>
+              </View>              
+            </View>
             <TextInput
               style={styles.inputStyle}
               onChangeText={(UserName) =>
                 setUserName(UserName)
               }
-              underlineColorAndroid="#f000"
               placeholder="Enter Name"
               placeholderTextColor="#8b9cb5"
               autoCapitalize="sentences"
@@ -107,12 +118,19 @@ const RegisterScreen = ({ navigation }) => {
             />
           </View>
           <View style={styles.sectionStyle}>
+            <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
+              <View style={{height: 1, backgroundColor: '#fff'}}/>
+              <View>
+                <Text style={{width: 100, textAlign:'left', color: '#fff', fontWeight:'bold', fontSize:20}}>
+                  Email
+                </Text>
+              </View>                  
+            </View>
             <TextInput
               style={styles.inputStyle}
               onChangeText={(UserEmail) =>
                 setUserEmail(UserEmail)
-              }
-              underlineColorAndroid="#f000"
+              }              
               placeholder="Enter Email"
               placeholderTextColor="#8b9cb5"
               keyboardType="email-address"
@@ -126,12 +144,19 @@ const RegisterScreen = ({ navigation }) => {
             />
           </View>
           <View style={styles.sectionStyle}>
+            <View style={{flexDirection: 'row', alignItems: 'center', marginBottom:10}}>
+              <View style={{ height: 1, backgroundColor: '#fff'}} />
+              <View>
+                <Text style={{width: 100, textAlign:'left', color: '#fff', fontWeight:'bold', fontSize:20}}>
+                  Password
+                </Text>
+              </View>              
+            </View>
             <TextInput
               style={styles.inputStyle}
               onChangeText={(UserPassword) =>
                 setUserPassword(UserPassword)
               }
-              underlineColorAndroid="#f000"
               placeholder="Enter Password"
               placeholderTextColor="#8b9cb5"
               ref={passwordInputRef}
@@ -139,7 +164,16 @@ const RegisterScreen = ({ navigation }) => {
               secureTextEntry={true}
               onSubmitEditing={Keyboard.dismiss}
               blurOnSubmit={false}
-            />
+            />           
+            <View style={{marginTop:10}}>
+              <PassMeter
+                showLabels
+                password={userPassword}
+                maxLength={MAX_LEN}
+                minLength={MIN_LEN}
+                labels={PASS_LABELS}            
+              />
+            </View>            
           </View>
           {errortext != "" ? (
             <Text style={styles.errorTextStyle}>
@@ -147,35 +181,19 @@ const RegisterScreen = ({ navigation }) => {
               {errortext}{" "}
             </Text>
           ) : null}
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            activeOpacity={0.5}
-            onPress={handleSubmitButton}
-          >
-            <Text style={styles.buttonTextStyle}>
-              REGISTER
-            </Text>
-          </TouchableOpacity>
+          <View style={{justifyContent:'center', alignItems:'center', marginTop:100}}>
+            <TouchableOpacity
+              style={styles.buttonStyle}
+              activeOpacity={0.5}
+              onPress={handleSubmitButton}
+            >
+              <Text style={styles.buttonTextStyle}>
+                회원가입
+              </Text>
+            </TouchableOpacity>
+          </View>          
         </KeyboardAvoidingView>
       </ScrollView>
-      <Text
-        style={{
-          fontSize: 18,
-          textAlign: "center",
-          color: "white",
-        }}
-      >
-        React Native Firebase Authentication
-      </Text>
-      <Text
-        style={{
-          fontSize: 16,
-          textAlign: "center",
-          color: "white",
-        }}
-      >
-        www.aboutreact.com
-      </Text>
     </SafeAreaView>
   );
 };
@@ -183,40 +201,43 @@ const RegisterScreen = ({ navigation }) => {
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
-  sectionStyle: {
-    flexDirection: "row",
-    height: 40,
+  sectionStyle: {    
+    height: 80,
     marginTop: 20,
     marginLeft: 35,
     marginRight: 35,
-    margin: 10,
+    margin: 10,    
+  },
+  text:{
+    color: '#fff'
   },
   buttonStyle: {
-    backgroundColor: "#7DE24E",
-    borderWidth: 0,
-    color: "#FFFFFF",
-    borderColor: "#7DE24E",
-    height: 40,
-    alignItems: "center",
+    backgroundColor: "#fb009e",    
+    color: "#FFFFFF",    
+    height: 50,    
     borderRadius: 30,
-    marginLeft: 35,
-    marginRight: 35,
+    width: 312,
     marginTop: 20,
     marginBottom: 20,
+    justifyContent:'center',
+    alignItems:'center'
   },
   buttonTextStyle: {
-    color: "#FFFFFF",
+    color: "#fff",
     paddingVertical: 10,
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight:'bold',  
   },
   inputStyle: {
-    flex: 1,
-    color: "white",
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingLeft:20,
+    color: "#fff",
+    width: 312,
+    height: 45,
     borderWidth: 1,
     borderRadius: 30,
-    borderColor: "#dadae8",
+    borderColor: "#fff",
+    marginBottom: 10,
+    marginTop: 10  
   },
   errorTextStyle: {
     color: "red",

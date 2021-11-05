@@ -6,19 +6,18 @@ import ImagePicker from 'react-native-image-crop-picker';
 import ImageResizer from 'react-native-image-resizer';
 
 import BottomSheet from 'reanimated-bottom-sheet';
-import Animated from 'react-native-reanimated';
+import ActionSheet from 'react-native-actionsheet';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { CometChat } from '@cometchat-pro/react-native-chat';
 
 import messaging from '@react-native-firebase/messaging';
 
-import { CHAT_APP_ID, CHAT_API_KEY, LOCAL_URL, CHAT_AUTH_KEY } from '@env';
+import { CHAT_APP_ID_1, CHAT_API_KEY_2, CHAT_AUTH_KEY_1, LOCAL_URL  } from '@env';
 
 import styles from './styles';
 
@@ -39,6 +38,12 @@ export default class NewProfileImg extends Component {
             index: 0,
             nextColor: '#fff',
 
+            menu: [
+                '갤러리',
+                '카메라', 
+                '취소',           
+            ],
+
             FCM_TOKEN: '',
         }
     }
@@ -48,8 +53,6 @@ export default class NewProfileImg extends Component {
     }
 
     getProfile = async () => {
-        var type = '';
-
         try {
             const id = await AsyncStorage.getItem('id');
             if(id !== null) {
@@ -66,7 +69,6 @@ export default class NewProfileImg extends Component {
 
         fetch(`${LOCAL_URL}/firstProfile/?id=` + this.state.id + "&time=" + new Date())
         .then(responseData => {
-            console.log(responseData.headers.get('content-type'));
             if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
                 this.state.image[0].uri = responseData.url;     
             }
@@ -74,7 +76,6 @@ export default class NewProfileImg extends Component {
         .then(() =>
             fetch(`${LOCAL_URL}/secondProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {  
-                console.log(responseData);
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {
                     this.state.image[1].uri = responseData.url;                                     
                 }
@@ -120,7 +121,7 @@ export default class NewProfileImg extends Component {
             picker.push (
                 <TouchableOpacity
                     style={styles.imageBoard}
-                    onPress={() => {this.setState({index : index}); this.bs.current.snapTo(0);}}
+                    onPress={() => {this.setState({index : index}); this.showActionSheet();}}
                     key={index}
                 >                    
                     {data.uri === undefined ?
@@ -143,43 +144,12 @@ export default class NewProfileImg extends Component {
     }
 
     bs = React.createRef();
-
-    renderContent = () => (
-        <View
-            style={{
-                flex: 0,
-                backgroundColor: '#fff',
-                paddingTop: 30,
-                height: 700,
-            }}
-        >      
-            <Pressable
-                style={styles.pickerButton}
-                onPress={() => this.pickImage('camera')}
-            >
-                <Fontisto 
-                    name={'camera'}
-                    size={25} 
-                    style={{marginHorizontal: 40}}
-                />                
-                <Text style={{fontSize: 17}}>Take Photo</Text>
-            </Pressable>
-            <Pressable
-                style={styles.pickerButton}
-                onPress={() => this.pickImage('gallery')}
-            >
-                <FontAwesome 
-                    name={'image'}
-                    size={25}
-                    style={{marginHorizontal: 40}}
-                />
-                <Text style={{fontSize: 17}}>Choose From Gallery</Text>
-            </Pressable>
-        </View>
-    );
+    showActionSheet = () => {        
+        this.bs.current.show();
+    };
 
     pickImage = async(option) => {
-        if(option === 'camera') {
+        if(option === '카메라') {
             ImagePicker.openCamera({
                 cropping: true, freeStyleCropEnabled: true, includeBase64: true,           
             })
@@ -208,8 +178,12 @@ export default class NewProfileImg extends Component {
                 
                 this.uploadImage(image, this.state.index);
                 this.picker();
-            })
-        }else {
+            }).catch((error) => {
+                if (error === 'E_PICKER_CANCELLED') {
+                    return false;
+                }
+            });
+        }else if(option === '갤러리') {
             ImagePicker.openPicker({
                 cropping: true, freeStyleCropEnabled: true, includeBase64: true,
             }).then((image) => {
@@ -237,10 +211,12 @@ export default class NewProfileImg extends Component {
                 
                 this.uploadImage(image, this.state.index);
                 this.picker();    
-            }).catch((e) => Alert.alert(JSON.stringify(e)));
-        }
-
-        this.bs.current.snapTo(1);        
+            }).catch((error) => {
+                if (error === 'E_PICKER_CANCELLED') {
+                    return false;
+                }
+            });
+        }        
     }
 
     uploadImage = async(image, index) => {
@@ -283,7 +259,7 @@ export default class NewProfileImg extends Component {
         .setRegion('us')
         .build();
 
-        CometChat.init(CHAT_APP_ID, appSetting).then(
+        CometChat.init(CHAT_APP_ID_1, appSetting).then(
             () => {
                 console.log('Initialization completed successfully');
             },
@@ -302,8 +278,8 @@ export default class NewProfileImg extends Component {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    appId: CHAT_APP_ID,
-                    apiKey: CHAT_API_KEY,
+                    appId: CHAT_APP_ID_1,
+                    apiKey: CHAT_API_KEY_2,
                 },
                 body: JSON.stringify({
                     uid: this.state.id,
@@ -314,7 +290,7 @@ export default class NewProfileImg extends Component {
             .then(response => response.json())
             .then(responseData => console.log(responseData))   
             .then(() => {
-                CometChat.login(this.state.id, CHAT_AUTH_KEY).then (
+                CometChat.login(this.state.id, CHAT_AUTH_KEY_1).then (
                     User => {
                       console.log("Login Successful:", { User });
                     },
@@ -364,7 +340,7 @@ export default class NewProfileImg extends Component {
     render() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>   
-                <TouchableHighlight activeOpacity={1} onPress={() => this.bs.current.snapTo(1)}>
+                <TouchableHighlight activeOpacity={1}>
                     <ImageBackground
                         source={require("../../../assets/imgs/3.png")} resizeMode="cover" 
                         style={{ width: "100%", height: '100%', }}
@@ -403,7 +379,7 @@ export default class NewProfileImg extends Component {
                                         shadowRadius: 5,
                                         shadowColor: 'grey',
                                         shadowOffset: { height: 3, width: 3 },
-                                        position: 'absolute'
+                                        position: 'absolute',
                                     }}                                
                                     onPress={() => this.check()}
                                 >
@@ -435,13 +411,12 @@ export default class NewProfileImg extends Component {
                                 </Pressable>
                             </View>
                             }                    
-                            <BottomSheet
+                            <ActionSheet 
                                 ref={this.bs}
-                                snapPoints={[200, 0]}
-                                initialSnap={1}
-                                renderContent={this.renderContent}                   
-                                enabledContentTapInteraction={false}
-                                enabledInnerScrolling={false}
+                                title={'프로필 사진 업로드'}
+                                options={this.state.menu}
+                                cancelButtonIndex={2} 
+                                onPress={(index) => this.pickImage(this.state.menu[index])}  
                             />                                       
                         </View>
                     </ImageBackground>

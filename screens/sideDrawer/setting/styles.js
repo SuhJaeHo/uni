@@ -12,10 +12,22 @@ const styles = StyleSheet.create({
         marginHorizontal: Dimensions.get('window').width * 0.4,         
         position:'absolute',
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
     },
     headerText:{
-       fontSize:18         
+        fontSize:18                   
+    },
+    backIcon: {
+        fontWeight: 'bold',
+        marginRight: 10,
+        flexDirection:'row'
+    },
+    textBtn:{
+        width:"100%",
+        alignItems:'flex-start',
+        fontSize:25,
+        marginLeft:20,
+        marginVertical:5        
     }    
 });
 

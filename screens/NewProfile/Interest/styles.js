@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowColor: 'grey',
     shadowOffset: { height: 3, width: 3 },
+    elevation: 5,
   },  
   selectedBox: {
     height: 50,    
@@ -39,7 +40,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 5,
     shadowColor: 'grey',
-    shadowOffset: { height: 3, width: 3 },    
+    shadowOffset: { height: 3, width: 3 },  
+    elevation: 5,  
   },
   boxText:{
     fontSize:20

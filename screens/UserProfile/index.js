@@ -7,6 +7,7 @@ import FastImage from 'react-native-fast-image';
 import ActionSheet from 'react-native-actionsheet';
 
 import { LOCAL_URL } from '@env';
+import { TouchableOpacity } from 'react-native';
 
 export default class Category extends Component {
     constructor(props) {
@@ -18,7 +19,6 @@ export default class Category extends Component {
             hobby: [],  
             gender: '', 
             visible: false,
-
             reason: [
                     'message',
                     'profile image',
@@ -39,7 +39,7 @@ export default class Category extends Component {
             userName: this.props.route.params.name,
             profile: this.props.route.params.image.uri,
         })
-        
+
         fetch(`${LOCAL_URL}/userProfile/?id=` + uid)    
         .then(response => response.json())
         .then(responseData => {
@@ -53,8 +53,10 @@ export default class Category extends Component {
 
     renderItem = ({item}) => {
         return (
-            <View>
-                <Text style={styles.hobbyItem}>{item}</Text>
+            <View style={{flexWrap: 'wrap', }}>
+                <View style={styles.hobbyContainer}>
+                    <Text style={styles.hobbyItem}>{item}</Text>
+                </View>
             </View>
         )
     }
@@ -83,26 +85,46 @@ export default class Category extends Component {
 
     render() {
         return (
-            <View>                
+            <View style={{ width: Dimensions.get('window').width * 0.96 , marginHorizontal: Dimensions.get('window').width * 0.02,}}>                
                 <Image                     
                     source={{ uri: this.state.profile }}
                     style={{ width: Dimensions.get('window').width * 1, height: Dimensions.get('window').height * 0.4 }}                                
                 />
                 <View style={styles.userContainer}>
-                    <Text style={styles.userInfo} numberOfLines={2}>{this.state.userName},  {this.state.age}</Text>   
-                    <Text>{this.state.gender}</Text>                         
-                    <Text>관심사</Text>
+                    <View style={{flexDirection:'row'}}>
+                        <Text style={styles.userName}>{this.state.userName} </Text>   
+                        <Text style={styles.userAge}> {this.state.age}</Text>    
+                    </View>                    
+                    
+                    <Text style={styles.userGender}>{this.state.gender}</Text>                         
+                
                     <FlatList 
                         contentContainerStyle={styles.hobbyList}
                         data={this.state.hobby}
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index.toString()}
+                        horizontal={true}                        
                     />
-                    <TouchableHighlight
-                       onPress={this.showActionSheet}
-                    >
-                        <Text>{this.state.userName}님 신고</Text>
-                    </TouchableHighlight>
+                    <View style={{justifyContent:'center', alignItems:'center', marginTop:90,  }}>
+                        <TouchableOpacity
+                            onPress={()=>alert('서비스 준비중')}
+                            style={styles.userBtn}
+                        >
+                            <Text style={{fontSize:20}}>{this.state.userName}님 친구추가</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={()=>alert('서비스 준비중')}
+                            style={styles.userBtn}
+                        >
+                            <Text style={{fontSize:20}}>{this.state.userName}님에게 메세지 보내기</Text>
+                        </TouchableOpacity>
+                        <TouchableHighlight
+                            onPress={this.showActionSheet}
+                            style={styles.userRptBtn}
+                        >
+                            <Text style={{fontSize:20, color:'red'}}>{this.state.userName}님 신고</Text>
+                        </TouchableHighlight>
+                    </View>                    
                     <ActionSheet 
                         ref={this.bs}
                         title={'Select Reason'}
@@ -118,15 +140,50 @@ export default class Category extends Component {
 
 const styles = StyleSheet.create({
     userContainer: {        
-        padding: Dimensions.get('window').width * 0.05,        
+        marginLeft: Dimensions.get('window').width * 0.02,    
     },
-    userInfo: {
+    userName: {
         fontSize: 30,
+        fontWeight: 'bold',
+        marginBottom: 5
+    },
+    userAge: {
+        fontSize: 30,
+        marginBottom: 5
+    },
+    userGender:{
+        fontSize: 25,
+        marginBottom: 5
     },
     hobbyList: {
         flexDirection: 'row',                                
     },
     hobbyItem: {
-        marginRight: 20,                
+        fontSize: 17,                
+    },
+    hobbyContainer:{
+        borderWidth: 1,
+        paddingVertical: 7,
+        paddingHorizontal: 9,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 5,
+        borderRadius: 20,
+        height: 35,
+        marginTop: 10,
+    },
+    userBtn:{
+        width: 250,         
+        alignItems: 'center',
+        marginVertical: 10,
+        paddingVertical: 5,
+        borderRadius: 20
+    },
+    userRptBtn:{
+        width: 250,         
+        alignItems: 'center',
+        marginVertical: 10,
+        paddingVertical: 5,
+        borderRadius: 20
     }
-  });
+}); 
