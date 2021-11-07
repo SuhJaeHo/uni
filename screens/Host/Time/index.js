@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import {Text, View, TextInput, Pressable, Alert} from 'react-native';
+import {Text, View, TextInput, Pressable, Alert, BackHandler} from 'react-native';
 
 import DatePicker from 'react-native-date-picker';
 import Moment from 'moment';
 import 'moment/locale/ko';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
+
+import { LogBox } from "react-native";
 
 import styles from './styles';
 
@@ -20,7 +22,19 @@ export default class Time extends Component {
     }
 
     componentDidMount = () => {
-        
+        LogBox.ignoreAllLogs(true); 
+        this.props.navigation.addListener('focus', async () => {
+            BackHandler.addEventListener('hardwareBackPress', this.backButtonClick);  
+        });   
+    }
+
+    componentWillUnmount = async() => {
+        BackHandler.removeEventListener('hardwareBackPress', this.backButtonClick);
+    }
+
+    backButtonClick = () => {
+        this.props.navigation.navigate('Hosting');
+        return true;
     }
 
     datePicker = () => {

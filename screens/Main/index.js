@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, Alert, Button, Pressable, Dimensions, TextInput, Image} from 'react-native';
+import { View, Text, Alert, Button, Pressable, Dimensions, TextInput, Image, BackHandler} from 'react-native';
 import { Platform, PermissionsAndroid } from 'react-native';
 
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -25,11 +25,19 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { CometChat } from '@cometchat-pro/react-native-chat';
 
-import { geo, LOCAL_URL } from '@env';
+import { geo, LOCAL_URL, CHAT_APP_ID_1, CHAT_API_KEY_2, CHAT_AUTH_KEY_1} from '@env';
+
+import { LogBox } from "react-native";
 
 import styles from './styles';
 
 const renderHeight = Dimensions.get('window').height * 0.8;
+
+const region = 'us';
+const appSetting = new CometChat.AppSettingsBuilder()
+.subscribePresenceForAllUsers()
+.setRegion(region)
+.build();    
 
 export default class Main extends Component {
      constructor(props) {
@@ -50,22 +58,39 @@ export default class Main extends Component {
                onFilter: false,   
                firstLoading: true, 
                
-               check: false,               
+               check: false,    
+               
+               cnt: 0,
+               temp: 0,
           }
      }
 
-     componentDidMount = async() => {                                              
-          if(this.state.firstLoading) {               
+     componentDidMount = async() => {      
+          LogBox.ignoreAllLogs(true); 
+          BackHandler.addEventListener('hardwareBackPress', this.backButtonClick); 
+                                                      
+          if(this.state.firstLoading) {                                             
                this.state.firstLoading = false;           
                this.getCurrentLocation();     
           }else {
                this.hosted();
           }
 
-          this.props.navigation.addListener('focus', async () => {               
-               this.removeStorage();     
-               this.connect();                               
+          this.props.navigation.addListener('focus', async () => {         
+               this.setState({
+                    temp: 1,
+               })             
+               this.removeStorage();                                   
           })               
+     }
+
+     componentWillUnmount = async() => {
+          BackHandler.removeEventListener('hardwareBackPress', this.backButtonClick);
+     }
+
+     backButtonClick = () => {
+          BackHandler.exitApp();
+          return true;
      }
 
      removeStorage = async() => {
@@ -113,7 +138,8 @@ export default class Main extends Component {
                          <ActionButton.Item 
                               key={index} buttonColor='#49ffbd' 
                               onPress={() => 
-                                   {
+                                   {                               
+                                        this.state.cnt = 1;
                                         this.connectFilter(hobby); 
                                         this.state.hobby = hobby;
                                    }}
@@ -200,6 +226,7 @@ export default class Main extends Component {
                          key={"all"} buttonColor='#49ffbd'
                          onPress={() => 
                               {
+                                   this.state.cnt = 1;
                                    this.connectFilter("all");
                                    this.state.hobby = "all";
                               }}
@@ -238,7 +265,7 @@ export default class Main extends Component {
 
      connectFilter = async(hobby) => {
           const id = await AsyncStorage.getItem('id');
-          this.state.onFilter = true;                   
+          this.state.onFilter = true;                          
   
           const URL = `${LOCAL_URL}/main`;
           fetch(URL, {
@@ -290,7 +317,9 @@ export default class Main extends Component {
           })
      }
 
-     onMapRegionChange = async(region) => {                             
+     onMapRegionChange = async(region) => {                  
+          this.state.cnt = 0;  
+          this.state.temp = 0;        
           this.setState({region: region})
           Geocoder.init(geo, { language: 'ko' });
           await Geocoder.from(region.latitude, region.longitude)
@@ -480,7 +509,7 @@ export default class Main extends Component {
      }
 
      //방 만들었을 때 방 만든 주소를 중심으로 지도를 띄운다.
-     hosted = () => {
+     hosted = () => {          
           this.setState({
                region: {
                     latitude: parseFloat(this.props.route.params.lat),
@@ -505,6 +534,8 @@ export default class Main extends Component {
                          roomData={this.state.roomData}                         
                          hobby={this.state.hobby}
                          check={this.state.check}
+                         cnt={this.state.cnt}
+                         temp={this.state.temp}
                     >
                     </MyMapView>                    
                     <ActionButton 

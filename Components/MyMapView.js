@@ -21,7 +21,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Foundation from 'react-native-vector-icons/Foundation';
 
 import style from '../lib/chat/cometchat-pro-react-native-ui-kit-3/src/components/Groups/CometChatViewGroupMemberListItem/style';
-import { getCurrentPosition } from 'react-native-geolocation-service';
 
 export default class MyMapView extends Component {
     constructor(props){
@@ -44,10 +43,11 @@ export default class MyMapView extends Component {
             dragCount: 0,
             pressedCurrentBtn: false,
             trackView: true,
+            firstLoading: true,
         }
     }
 
-    componentDidMount = async() => { 
+    componentDidMount = async() => {         
         this.removeStorage();  
     }
 
@@ -61,11 +61,23 @@ export default class MyMapView extends Component {
 
     createMarker = () => {        
         let marker = []
-        var key = 0;        
+        var key = 0;         
+
+        console.log(this.props.temp);
+
+        if(this.props.hobby !== '' && this.props.cnt === 1) {         
+            this.state.trackView = true;
+        }else if(this.state.firstLoading) {
+            this.state.firstLoading = false;
+        }else if(this.props.temp === 1) {
+            this.state.trackView = true;
+        }else {        
+            this.state.trackView = false;
+        }
 
         if(this.props.roomData.length === 0) {
             this.state.trackView = true;
-        }
+        }        
 
         for(let index = 0; index < this.props.roomData.length; index++) {            
             this.props.roomData.map(roomInfo => marker.push (                  
@@ -75,122 +87,136 @@ export default class MyMapView extends Component {
                         this.props.sendData(roomInfo);                    
                     }}
                     key={key++}                
-                    tracksViewChanges={this.state.trackView}                                                                                                                                                                             
+                    tracksViewChanges={this.state.trackView}                                                                                                                                                                                                 
                 >
                     {roomInfo.category === '축구' ?
                     <View style={{justifyContent: 'center', alignItems: 'center', height: 100, width: 55}}>
                         <Image
                             style={{resizeMode: 'contain', width: 50, position: 'absolute'}}                            
-                            source={require('../assets/pin/ping.png')}                            
-                            onLoad={() => this.state.trackView = false}                            
+                            source={require('../assets/pin/ping.png')}    
+                            onLoadStart={() => this.state.trackView = false}                                    
                         />
                         <Image  
                             style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
                             source={require('../assets/cateicon/soccer.png')}
+                            onLoadStart={() => this.state.trackView = false}                             
                         />
                     </View>
                     : roomInfo.category === '농구' ? 
                     <View style={{ justifyContent: 'center', alignItems: 'center', height: 100, width: 55 }}>
-                        <Image style={{resizeMode: 'contain', width: 50, position: 'absolute'}} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode: 'contain', width: 50, position: 'absolute'}} source={require('../assets/pin/ping.png')} onLoadStart={() => this.state.trackView = false}/>
                         <Image  
                             style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
                             source={require('../assets/cateicon/basketball.png')}
+                            onLoadStart={() => this.state.trackView = false} 
                         />
                     </View>
                     : roomInfo.category === '볼링' ?
                     <View style={{ justifyContent: 'center', alignItems: 'center', height: 100, width: 55 }}>
-                        <Image style={{resizeMode: 'contain', width: 50, position: 'absolute'}} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode: 'contain', width: 50, position: 'absolute'}} source={require('../assets/pin/ping.png')}/>
                         <Image  
                             style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
                             source={require('../assets/cateicon/bowling.png')}
+                            onLoadStart={() => this.state.trackView = false} 
                         />
                     </View>   
                     : roomInfo.category === '등산' ?
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')}/>
                         <Image  
                             style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
                             source={require('../assets/cateicon/hiking.png')}
+                            onLoadStart={() => this.state.trackView = false} 
                         />
                     </View>
                     : roomInfo.category === '웨이트' ?
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')}/>
                         <Image  
                             style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
                             source={require('../assets/cateicon/weight.png')}
+                            onLoadStart={() => this.state.trackView = false} 
                         />
                     </View>
                     : roomInfo.category === '런닝' ?
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoadStart={() => this.state.trackView = false}/>
                         <Image  
                             style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
                             source={require('../assets/cateicon/running.png')}
+                            onLoadStart={() => this.state.trackView = false}                                                                       
                         />
                     </View>
                     : roomInfo.category === '골프' ?
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')}/>
                         <Image  
                             style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
                             source={require('../assets/cateicon/golf.png')}
+                            onLoadStart={() => this.state.trackView = false} 
                         />
                     </View>
                     : roomInfo.category === '탁구' ?
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')}/>
                         <Image  
                             style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
                             source={require('../assets/cateicon/table-tennis.png')}
+                            onLoadStart={() => this.state.trackView = false} 
                         />
                     </View>
                     : roomInfo.category === '술 한잔' ?
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')}/>
                         <Image  
                             style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
                             source={require('../assets/cateicon/drink.png')}
+                            onLoadStart={() => this.state.trackView = false} 
                         />
                     </View>
                     : roomInfo.category === '배틀그라운드' ? 
                     <View style={{ justifyContent:'center', alignItems:'center', height:100, width:55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute'}} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute'}} source={require('../assets/pin/ping.png')}/>
                         <Image  
                             style={{ width:36, height:38, zIndex:38, marginBottom:7, backgroundColor:'#fff', borderRadius:19, padding:5 }}   
                             source={require('../assets/cateicon/pubg.png')}
+                            onLoadStart={() => this.state.trackView = false} 
                         />                                                                    
                     </View>
                     : roomInfo.category === '리그오브레전드' ? 
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute'}} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute'}} source={require('../assets/pin/ping.png')}/>
                         <Image  
                             style={{ width:36, height:38, zIndex:38, marginBottom:8, borderRadius:19 }}   
                             source={require('../assets/cateicon/lol.png')}
+                            onLoadStart={() => this.state.trackView = false} 
                         />                                                                    
                     </View>
                     : roomInfo.category === '언어교환' ? 
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute'}} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute'}} source={require('../assets/pin/ping.png')}/>
                         <Image  
                             style={{ width:36, height:38, zIndex:38, marginBottom:8, borderRadius:19 }}   
                             source={require('../assets/cateicon/language.png')}
+                            onLoadStart={() => this.state.trackView = false} 
                         />                                                                    
                     </View>
                     : roomInfo.category === '보드게임' ? 
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute'}} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute'}} source={require('../assets/pin/ping.png')}/>
                         <Image  
                             style={{ width:36, height:38, zIndex:38, marginBottom:8, borderRadius:19 }}   
                             source={require('../assets/cateicon/board-game.png')}
+                            onLoadStart={() => this.state.trackView = false} 
                         />                                                                    
                     </View>
                     : roomInfo.category === '파티' ? 
                     <View style={{ justifyContent:'center', alignItems:'center', height: 100, width: 55 }} >
-                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')} onLoad={() => this.state.trackView = false}/>
+                        <Image style={{resizeMode:'contain', width:50, position:'absolute' }} source={require('../assets/pin/ping.png')}/>
                         <Image  
                             style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
                             source={require('../assets/cateicon/party.png')}
+                            onLoadStart={() => this.state.trackView = false} 
                         />                       
                     </View>                 
                     : null}
@@ -212,8 +238,8 @@ export default class MyMapView extends Component {
             <View>                                                                  
                 {this.state.dragCount === 0 ?                                                 
                 <View>                                                            
-                    <MapView                    
-                        style={{width: '100%', height: '100%'}}                    
+                    <MapView                  
+                        style={{width: '100%', height: '100%'}}                                            
                         showsUserLocation={true}   
                         showsMyLocationButton={false}                                                                                                                   
                         region={this.props.region}                                                       
@@ -235,7 +261,7 @@ export default class MyMapView extends Component {
                     {marker}   
                 </View>
                 :
-                <View>                                            
+                <View>                                                            
                     <MapView
                         ref={ref => {this.map = ref}}
                         style={{width: '100%', height: '100%'}}                    

@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import {Text, View, TextInput, Pressable, ScrollView, Image} from 'react-native';
+import {Text, View, TextInput, Pressable, ScrollView, Image, BackHandler, Dimensions} from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { LOCAL_URL } from '@env'
+import { LOCAL_URL } from '@env';
+
+import * as enums from '../../../lib/chat/cometchat-pro-react-native-ui-kit-3/src/utils/enums';
+
+import { LogBox } from "react-native";
 
 import styles from './styles';
 
@@ -21,7 +25,21 @@ export default class RoomList extends Component {
      }
   
      componentDidMount = async() => {
+          LogBox.ignoreAllLogs(true); 
+          this.props.navigation.addListener('focus', async () => {
+               BackHandler.addEventListener('hardwareBackPress', this.backButtonClick);  
+          });   
+
           this.connect();
+     }
+
+     componentWillUnmount = async() => {
+          BackHandler.removeEventListener('hardwareBackPress', this.backButtonClick);
+     }
+  
+     backButtonClick = () => {
+          this.props.navigation.navigate('DrawerNav');
+          return true;
      }
 
      connect = async() => {
@@ -58,8 +76,8 @@ export default class RoomList extends Component {
      showRoomList = () => {
           let roomList = [];
           var key = 0;
-          
-          if(this.state.hostRoomInfo !== undefined) {
+
+          if(this.state.hostRoomInfo.length !== 0) {
                this.state.hostRoomInfo.map(data => roomList.push (
                     <View
                          style={styles.cardContainer}
@@ -157,26 +175,33 @@ export default class RoomList extends Component {
                          </Pressable>  
                     </View>
                ))
-     
-               return roomList;
-          }                   
+          }else {
+               roomList.push (
+                    <View style={styles.noneCard}>
+                         <View style={styles.infoContainer}>                              
+                              <View style={{width: Dimensions.get('window').width}}>
+                                   <Text numberOfLines={1} style={styles.titleText}>호스팅 한 방이 없습니다.</Text>
+                              </View>                                                                                                         
+                         </View>
+                    </View>
+               )
+          }
+          
+          return roomList;
      }
 
      showJoinRoomList = () => {
           let roomList = [];
           var key = 0;
 
-          if(this.state.joinRoomInfo !== undefined) {
+          if(this.state.joinRoomInfo.length !== 0) {
                this.state.joinRoomInfo.map(data => roomList.push (                    
                     <View
                          style={styles.cardContainer}
                          key={key++}
-                    >                                          
-                         {/* joinedAt,  */}       
+                    >                                                
                          <Pressable
-                              onPress={() => this.props.navigation.push('CometChatMessages', 
-                                   {item: {"conversationId": "group_" + data.GUID, "guid": data.GUID, "hasJoined": true, "membersCount": data.hostUser.length + data.joinUser.length, "name": data.title, "owner": data.hostUser, "scope": "admin", "type": "public"}}                                                                      
-                              )}                               
+                              onPress={() => this.props.navigation.push('Chat')}                               
                          >
                               <View style={styles.roomCard}>                              
                                    <View style={styles.categoryIcon}>                                        
@@ -256,7 +281,7 @@ export default class RoomList extends Component {
                                    </View>
                                    <View style={styles.infoContainer}>                              
                                         <View style={styles.titleContainer}>
-                                             <Text numberOfLines={1}  style={styles.titleText}>{data.title}</Text>
+                                             <Text numberOfLines={1} style={styles.titleText}>{data.title}</Text>
                                         </View>
                                         <Text style={styles.timeText}>{data.timeInfo}~ </Text> 
                                         <Text numberOfLines={2} style={styles.locationText}>{data.address}</Text>                                                      
@@ -264,10 +289,20 @@ export default class RoomList extends Component {
                               </View>
                          </Pressable>
                     </View>
-               ))
-               
-               return roomList;
-          }                                        
+               ))               
+          }else {
+               roomList.push (
+                    <View style={styles.noneCard}>
+                         <View style={styles.infoContainer}>                              
+                              <View style={{width: Dimensions.get('window').width}}>
+                                   <Text numberOfLines={1} style={styles.titleText}>참가중인 방이 없습니다.</Text>
+                              </View>                                                                                                         
+                         </View>
+                    </View>
+               )
+          }
+          
+          return roomList;                                     
      }
 
      render() {

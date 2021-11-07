@@ -11,6 +11,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import { LOCAL_URL } from '@env';
 
+import { LogBox } from "react-native";
+
 import styles from './styles';
 
 export default class Hosting extends Component {
@@ -25,6 +27,7 @@ export default class Hosting extends Component {
     }
 
     componentDidMount = async() => {
+        LogBox.ignoreAllLogs(true);  
         this.asyncStorage();
 
         this.props.navigation.addListener('focus', async () => {
@@ -304,7 +307,7 @@ export default class Hosting extends Component {
                                 style={styles.hostButton}
                                 onPress={() => {this.hosting(); this.createGroup();}}                        
                             >
-                                <Text style={{color:'#000', fontSize:25, fontWeight:'bold'}}>Hosting</Text>
+                                <Text style={{color:'#000', fontSize:25, fontWeight:'bold'}}>호스팅</Text>
                             </Pressable>
                             }
                         </View>

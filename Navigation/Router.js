@@ -22,6 +22,8 @@ import Category from '../screens/Host/Category';
 import Time from '../screens/Host/Time'
 import Chat from '../screens/Chat/ChatMain';
 import CometChatMessages from '../lib/chat/cometchat-pro-react-native-ui-kit-3/src/components/Messages/CometChatMessages';
+import { CometChatConversationList } from "../lib/chat/cometchat-pro-react-native-ui-kit-3/src";
+import { CometChatConversationListWithMessages } from "../lib/chat/cometchat-pro-react-native-ui-kit-3/src";
 import RoomList from "../screens/Room/RoomList";
 import Roomctrl from "../screens/Room/Roomctrl";
 import UserList from "../screens/Room/UserList";
@@ -233,12 +235,19 @@ const Router = ({navigation}) => {
                     }}
                 />
                 <Stack.Screen
+                    name={"CometChatConversationList"}
+                    component={CometChatConversationList}
+                    options={{
+                        headerShown: false,    
+                    }}
+                /> 
+                <Stack.Screen
                     name={"CometChatMessages"}
                     component={CometChatMessages}
                     options={{
                         headerShown: false,    
                     }}
-                />                
+                />                               
                 <Stack.Screen
                     name={"LogoutBtn"}
                     component={LogoutBtn}

@@ -7,7 +7,9 @@ import { CometChat } from '@cometchat-pro/react-native-chat';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import { LOCAL_URL } from '@env'
+import { LOCAL_URL } from '@env';
+
+import { LogBox } from "react-native"
 
 import styles from './styles';
 
@@ -24,8 +26,21 @@ export default class UserList extends Component {
     }
   
     componentDidMount = async() => {
-        console.log(this.props.route.params.sendd.GUID);
+        LogBox.ignoreAllLogs(true); 
+        this.props.navigation.addListener('focus', async () => {
+            BackHandler.addEventListener('hardwareBackPress', this.backButtonClick);  
+        });   
+        
         this.connect();
+    }
+
+    componentWillUnmount = async() => {
+        BackHandler.removeEventListener('hardwareBackPress', this.backButtonClick);
+    }
+
+    backButtonClick = () => {
+        this.props.navigation.navigate('RoomList');
+        return true;
     }
 
     connect = async() => {

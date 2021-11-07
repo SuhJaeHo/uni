@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     hostButton: {
         padding: 10,
         backgroundColor: '#49ffbd',
-        height: 50,
+        height: 60,
         width: Dimensions.get('window').width * 0.7,
         borderRadius: 25,
         marginLeft: Dimensions.get('window').width * 0.15,

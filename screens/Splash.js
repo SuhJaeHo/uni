@@ -20,12 +20,14 @@ import {
 
 import { CometChat } from '@cometchat-pro/react-native-chat';
 
+import {CHAT_APP_ID_1, CHAT_AUTH_KEY_1} from '@env'
+
 const SplashScreen = ({ navigation }) => {
   //State for ActivityIndicator animation
   const [animating, setAnimating] = useState(true);
 
   //chatting  
-  const appID = '192332ba9a7ee10b';
+  const appID = CHAT_APP_ID_1;
   const region = 'us';
   const appSetting = new CometChat.AppSettingsBuilder()
     .subscribePresenceForAllUsers()
@@ -35,7 +37,7 @@ const SplashScreen = ({ navigation }) => {
   React.useEffect(() => {
     setTimeout(() => {
       navigation.replace(
-        auth().currentUser ? "Auth" : "Auth"        
+        auth().currentUser ? "DrawerNav" : "Auth"        
       );
 
       auth().currentUser ? chatInit() : console.log('Login Please');
@@ -43,7 +45,6 @@ const SplashScreen = ({ navigation }) => {
   }, []);  
 
   const chatInit = async() => {    
-    //임시
     var id = await AsyncStorage.getItem('id');
 
     CometChat.init(appID, appSetting).then(
@@ -54,7 +55,7 @@ const SplashScreen = ({ navigation }) => {
         console.log('Initialization failed with error:', error);
       },
     ).then(
-      CometChat.login(id, '92a48b2397822aea1cbebd8c615115bd3a14d4fa').then (
+      CometChat.login(id, CHAT_AUTH_KEY_1).then (
         User => {
           console.log("Login Successful:", { User });
         },

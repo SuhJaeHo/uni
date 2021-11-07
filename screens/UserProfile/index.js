@@ -23,7 +23,7 @@ export default class Category extends Component {
                     '부적절한 메세지',
                     '부적절한 프로필 사진',
                     '기타',                    
-                    'Cancel',
+                    '취소',
             ]
         }
     }
@@ -33,6 +33,7 @@ export default class Category extends Component {
     }
 
     connect = async() => {
+        console.log(this.props.route.params.uid);
         var uid = this.props.route.params.uid;     
 
         this.setState({
@@ -67,20 +68,21 @@ export default class Category extends Component {
     };
 
     report = async(reason) => {
-        console.log(reason);
-        var uid = this.props.route.params.uid;  
+        if(reason !== '취소') {
+            var uid = this.props.route.params.uid;  
 
-        const URL = `${LOCAL_URL}/reportUser`;
-        fetch(URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type' : 'application/json',
-            },
-            body: JSON.stringify({
-                id: uid,
-                reason: reason,
-            })
-        })        
+            const URL = `${LOCAL_URL}/reportUser`;
+            fetch(URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type' : 'application/json',
+                },
+                body: JSON.stringify({
+                    id: uid,
+                    reason: reason,
+                })
+            })    
+        }    
     }
 
     render() {

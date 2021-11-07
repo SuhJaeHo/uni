@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Pressable, Dimensions, StyleSheet, Alert, BackHandler } from 'react-native';
+import {View, Text, Pressable, Dimensions, StyleSheet, Alert, BackHandler} from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
 import { firebase } from '@react-native-firebase/auth';

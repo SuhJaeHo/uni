@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import {View, Text, ScrollView, Pressable, ImageBackground, Dimensions, SafeAreaView, TextInput, Alert} from 'react-native';
+import {View, Text, ScrollView, Pressable, ImageBackground, Dimensions, SafeAreaView, TextInput, Alert, BackHandler} from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import { LOCAL_URL } from '@env';
+
+import { LogBox } from "react-native";
 
 import styles from './styles';
 
@@ -25,10 +26,24 @@ export default class editHobby extends Component {
         }
     }
 
-    componentDidMount = () => {          
+    componentDidMount = () => {     
+        LogBox.ignoreAllLogs(true);     
+        this.props.navigation.addListener('focus', async () => {
+            BackHandler.addEventListener('hardwareBackPress', this.backButtonClick);  
+        });   
+        
         this.get_Interest();
         this.getUserInterest();
         this.getId();
+    }
+
+    componentWillUnmount = async() => {
+        BackHandler.removeEventListener('hardwareBackPress', this.backButtonClick);
+    }
+
+    backButtonClick = () => {
+        this.props.navigation.navigate('EditProfile');
+        return true;
     }
 
     getUserInterest = () => {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {KeyboardAvoidingView, View, Text, TouchableOpacity, Pressable, Dimensions, Image, TextInput, Alert, SafeAreaView, ImageBackground} from 'react-native';
+import {KeyboardAvoidingView, View, Text, TouchableOpacity, Pressable, Dimensions, Image, TextInput, Alert, SafeAreaView, ImageBackground, BackHandler} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import ImageResizer from 'react-native-image-resizer';
 import { Buffer } from 'buffer';
@@ -13,7 +13,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import { LOCAL_URL, CHAT_API_KEY, CHAT_APP_ID } from '@env'
+import { LOCAL_URL, CHAT_API_KEY, CHAT_APP_ID } from '@env';
+
+import { LogBox } from "react-native";
 
 import styles from './styles';
 
@@ -43,11 +45,25 @@ export default class EditProfile extends Component {
         }
     }
 
-    componentDidMount = () => {                   
+    componentDidMount = () => {      
+        LogBox.ignoreAllLogs(true);     
+        this.props.navigation.addListener('focus', async () => {
+            BackHandler.addEventListener('hardwareBackPress', this.backButtonClick);  
+        });   
+        
         this.props.navigation.addListener('focus', () => {   
             this.getProfile();  
             this.getUserInfo();                                                          
         })                
+    }
+
+    componentWillUnmount = async() => {
+        BackHandler.removeEventListener('hardwareBackPress', this.backButtonClick);
+    }
+
+    backButtonClick = () => {
+        this.props.navigation.navigate('DrawerNav');
+        return true;
     }
 
     getProfile = async () => {                
