@@ -84,7 +84,7 @@ export default class RoomList extends Component {
                          key={key++}
                     >
                          <Pressable
-                              onPress={() => this.props.navigation.push('UserList', 
+                              onPress={() => this.props.navigation.push('Roomctrl', 
                                    {sendd: data}
                               )}
                          >
@@ -201,7 +201,9 @@ export default class RoomList extends Component {
                          key={key++}
                     >                                                
                          <Pressable
-                              onPress={() => this.props.navigation.push('Chat')}                               
+                              onPress={() => this.props.navigation.push('Roomctrl', 
+                                   {sendd: data}
+                              )}                           
                          >
                               <View style={styles.roomCard}>                              
                                    <View style={styles.categoryIcon}>                                        

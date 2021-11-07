@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Text, View, TextInput, Pressable, Alert, Image} from 'react-native';
+import {Text, View, TextInput, Pressable, Alert, Image, ImageBackground, BackHandler} from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -225,9 +225,14 @@ export default class UserList extends Component {
                         <Text>Request User List</Text>                                            
                 </View>
                 */}
-                <View>
-                    {this.showUsersProfile()}
-                </View>
+                <ImageBackground
+                    source={require("../../../assets/imgs/2.png")} resizeMode="cover" 
+                    style={{width:"100%", height:'100%', }}
+                >
+                    <View>
+                        {this.showUsersProfile()}
+                    </View>
+                </ImageBackground>
             </View>
         )
     }

@@ -193,16 +193,10 @@ const Router = ({navigation}) => {
                     component={Roomctrl}
                     options={{
                         headerShown: true,
-                        headerBackImage: ()=>( 
-                            <MaterialIcons name={"arrow-back-ios"} 
-                                size={35} 
-                                color={'black'}
-                                style={{marginLeft:30}}
-                            />
-                        ),
-                        headerBackTitle:' ',
+                        headerTitle: 'Room',
+                        headerBackImage: ()=>(<Ionicons name={"ios-chevron-back"} size={30}/>),
                         headerStyle:{
-                            backgroundColor:"#fff",
+                            backgroundColor:"#49ffbd",
                         },
                         headerBackTitleStyle:{
                             fontSize: 18,
