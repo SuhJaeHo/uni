@@ -34,10 +34,6 @@ import styles from './styles';
 const renderHeight = Dimensions.get('window').height * 0.8;
 
 const region = 'us';
-const appSetting = new CometChat.AppSettingsBuilder()
-.subscribePresenceForAllUsers()
-.setRegion(region)
-.build();    
 
 export default class Main extends Component {
      constructor(props) {
@@ -60,26 +56,58 @@ export default class Main extends Component {
                
                check: false,    
                
+               //trackview controll value
                cnt: 0,
                temp: 0,
+
+               //bottom sheet
+               isOpen: false,
           }
      }
 
-     componentDidMount = async() => {      
+     /*
+     locatePermission = async() => {
+          try {
+               const granted = await PermissionsAndroid.request (
+                    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                    {
+                         'title': 'TEST',
+                         'message': 'TEST',
+                    }
+               )
+
+               if(granted === PermissionsAndroid.RESULTS.GRANTED) {
+                    this.getCurrentLocation();
+                    console.log('Granted')
+               }else {
+                    Alert.alert('Location Permission Not Granted');
+               }
+          } catch(err) {
+               console.log(err);
+          }
+     }
+     */
+
+     componentDidMount = async() => {            
+          if(this.props.route.params.params.params !== undefined) {               
+               this.state.firstLoading = false;         
+          }
+          
           LogBox.ignoreAllLogs(true); 
           BackHandler.addEventListener('hardwareBackPress', this.backButtonClick); 
                                                       
-          if(this.state.firstLoading) {                                             
-               this.state.firstLoading = false;           
-               this.getCurrentLocation();     
+          if(this.state.firstLoading) {   
+               console.log('FIRSTLOADING');                                                         
+               this.state.firstLoading = false;               
+               this.getCurrentLocation();
           }else {
                this.hosted();
           }
 
-          this.props.navigation.addListener('focus', async () => {         
-               this.setState({
+          this.props.navigation.addListener('focus', async () => {                                                                   
+               this.setState({ 
                     temp: 1,
-               })             
+               })   
                this.removeStorage();                                   
           })               
      }
@@ -88,8 +116,14 @@ export default class Main extends Component {
           BackHandler.removeEventListener('hardwareBackPress', this.backButtonClick);
      }
 
-     backButtonClick = () => {
-          BackHandler.exitApp();
+     backButtonClick = () => {         
+          if(this.state.isOpen) {
+               this.bs.current.snapTo(2);
+               this.state.isOpen = false;
+          }else {
+               BackHandler.exitApp();
+          } 
+          
           return true;
      }
 
@@ -207,7 +241,7 @@ export default class Main extends Component {
                                         />
                                    : hobby === '배틀그라운드' ?                                  
                                         <Image  
-                                             style={{width:36, height:30, zIndex:30, backgroundColor:'#fff', borderRadius:10}}   
+                                             style={{width:36, height:36, zIndex:30, backgroundColor:'#fff', borderRadius:18}}   
                                              source={require('../../assets/cateicon/pubg.png')}
                                         />                                                                                                
                                    : hobby === '파티' ?                                                                 
@@ -317,7 +351,7 @@ export default class Main extends Component {
           })
      }
 
-     onMapRegionChange = async(region) => {                  
+     onMapRegionChange = async(region) => {                           
           this.state.cnt = 0;  
           this.state.temp = 0;        
           this.setState({region: region})
@@ -360,10 +394,12 @@ export default class Main extends Component {
                     }                                                  
                }
 
-               this.bs.current.snapTo(0);                          
+               this.bs.current.snapTo(0); 
+               this.state.isOpen = true;                         
           }else {
                this.setState({hostsProfile: null, usersProfile: null})
                this.bs.current.snapTo(2);
+               this.state.isOpen = false;
           }
      }
 
@@ -509,15 +545,17 @@ export default class Main extends Component {
      }
 
      //방 만들었을 때 방 만든 주소를 중심으로 지도를 띄운다.
-     hosted = () => {          
+     hosted = () => {                    
           this.setState({
                region: {
-                    latitude: parseFloat(this.props.route.params.lat),
-                    longitude: parseFloat(this.props.route.params.lng),
+                    latitude: parseFloat(this.props.route.params.params.params.lat),
+                    longitude: parseFloat(this.props.route.params.params.params.lng),
                     latitudeDelta: 0.015,
                     longitudeDelta: 0.0121,
                },
-          });
+          });    
+
+          console.log(this.state.region);
      } 
 
      render() {

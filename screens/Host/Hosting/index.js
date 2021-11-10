@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Text, View, SafeAreaView, TextInput, Pressable, Alert, ImageBackground, BackHandler} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Moment from 'moment';
@@ -8,6 +9,8 @@ import 'moment/locale/ko';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 import { LOCAL_URL } from '@env';
 
@@ -166,8 +169,9 @@ export default class Hosting extends Component {
                 timeInfo: timeInfo,
             })
         })
+        .then(this.props.navigation.push('DrawerNav'));
         
-        this.props.navigation.push('Main', {lat: this.state.room.lat, lng: this.state.room.lng})
+        //this.props.navigation.push('Main', {lat: this.state.room.lat, lng: this.state.room.lng})
     }
 
     hosting = async() => {
@@ -181,8 +185,7 @@ export default class Hosting extends Component {
             Alert.alert('시간을 설정하세요');
         }else {
             this.createRoom();  
-            this.props.navigation.navigate('DrawerNav');
-            //this.props.navigation.push('DrawerNav', {lat: this.state.room.lat, lng: this.state.room.lng})          
+            this.props.navigation.push('DrawerNav', {lat: this.state.room.lat, lng: this.state.room.lng})                                  
         }        
     }  
     
@@ -234,22 +237,23 @@ export default class Hosting extends Component {
                                     onPress={() => this.props.navigation.navigate('DrawerNav')}
                                     style={styles.backIcon}
                                 >
-                                <MaterialIcons name={"arrow-back-ios"} 
-                                    size={35} 
-                                    color={'#000'}
-                                    style={{marginLeft:30}}
-                                />                                
+                                    <TouchableOpacity>
+                                        <Ionicons                        
+                                            name={"ios-chevron-back"}
+                                            size={30}
+                                            color={'black'}
+                                            style={{marginRight: 22, marginLeft: 10}}
+                                            //onPress={() => this.props.navigation.push('Hosting', {time: JSON.stringify(this.state.dateTime), timeInfo: this.state.showTime, Info: 'time'})}
+                                        />
+                                    </TouchableOpacity>                               
                                 </Pressable>
-                            </View>
-                        
-                            <View style={styles.headerTextContainer}>
                                 {this.state.check === 'modify' 
                                 ? 
                                 <Text style={styles.headerText}>수정</Text>
                                 : 
                                 <Text style={styles.headerText}>호스트</Text>
-                                }
-                            </View>                
+                                }    
+                            </View>                                                                  
                         </View>      
                         <View style={styles.contentContainer}>
                             <View style={styles.categoryContainer}>
@@ -259,9 +263,13 @@ export default class Hosting extends Component {
                                     onPress={() => this.props.navigation.push('Category')}
                                 >
                                     {this.state.room.category === null ?
-                                    <Text>카테고리 설정</Text>
+                                    <TouchableOpacity>
+                                        <Text>카테고리 설정</Text>
+                                    </TouchableOpacity>
                                     :
-                                    <Text>{this.state.room.category}</Text>
+                                    <TouchableOpacity>
+                                        <Text>{this.state.room.category}</Text>
+                                    </TouchableOpacity>
                                     }
                                 </Pressable>
                             </View>
@@ -271,7 +279,9 @@ export default class Hosting extends Component {
                                     style={styles.placeInput}
                                     onPress={() => this.props.navigation.navigate('LocationSearch')}
                                 >                            
-                                    <Text>{this.state.room.address}</Text>                            
+                                    <TouchableOpacity>
+                                        <Text>{this.state.room.address}</Text>                            
+                                    </TouchableOpacity>
                                 </Pressable>
                             </View>                    
                             <View style={styles.titleConatiner}>
@@ -289,26 +299,30 @@ export default class Hosting extends Component {
                                     style={styles.timeInput}
                                     onPress={() => this.props.navigation.navigate('Time')}
                                 >                                      
-                                    <View style={styles.timeInfo}>
+                                    <TouchableOpacity style={styles.timeInfo}>
                                         <Text style={styles.timePlaceHolder}>약속시간 설정</Text>
                                         <Text>{this.state.room.timeInfo}</Text>
-                                    </View>                                                                
+                                    </TouchableOpacity>                                                                
                                 </Pressable>                        
                             </View>
                             {this.state.check === 'modify' ?
-                            <Pressable
-                                style={styles.modifyButton}  
-                                onPress={() => this.modifyRoom()}                           
-                            >
-                                <Text style={{color:'#000', fontSize:25, fontWeight:'bold'}}>Complete</Text>
-                            </Pressable>
-                            :        
-                            <Pressable
-                                style={styles.hostButton}
-                                onPress={() => {this.hosting(); this.createGroup();}}                        
-                            >
-                                <Text style={{color:'#000', fontSize:25, fontWeight:'bold'}}>호스팅</Text>
-                            </Pressable>
+                            <TouchableOpacity>
+                                <Pressable
+                                    style={styles.modifyButton}  
+                                    onPress={() => this.modifyRoom()}                           
+                                >
+                                    <Text style={{color:'#000', fontSize:25, fontWeight:'bold'}}>수정</Text>
+                                </Pressable>
+                            </TouchableOpacity>
+                            :   
+                            <TouchableOpacity>     
+                                <Pressable
+                                    style={styles.hostButton}
+                                    onPress={() => {this.hosting(); this.createGroup();}}                        
+                                >                                
+                                    <Text style={{color:'#000', fontSize:25, fontWeight:'bold'}}>호스팅</Text>                                
+                                </Pressable>
+                            </TouchableOpacity>
                             }
                         </View>
                     </SafeAreaView>

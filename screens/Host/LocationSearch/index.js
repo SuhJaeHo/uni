@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {View, Text, SafeAreaView, BackHandler} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { google_place_api_key } from '@env';
 
@@ -29,15 +30,16 @@ export default class LocationSearch extends Component {
         return (
             <SafeAreaView style={{width: '100%', height: '100%', backgroundColor:'#fff'}}>
                 <View style={styles.headerConatiner}>
-                    <MaterialIcons name={"arrow-back-ios"} 
-                        size={35} 
-                        color={'black'}
-                        style={{marginLeft:30}}
-                        onPress={() => this.props.navigation.push('Hosting', {address: null, Info: 'place'})}
-                     />
-                    <View style={styles.headerTextContainer }>
-                    <Text style={styles.headerText }>검색</Text>
-                    </View>                    
+                    <TouchableOpacity>
+                        <Ionicons name={"arrow-back-ios"} 
+                            name={"ios-chevron-back"}
+                            size={30}
+                            color={'black'}
+                            style={{marginRight: 22, marginLeft: 10}}
+                            onPress={() => this.props.navigation.push('Hosting', {address: null, Info: 'place'})}
+                        />                
+                    </TouchableOpacity>    
+                    <Text style={styles.headerText}>검색</Text>                  
                 </View>
                 <GooglePlacesAutocomplete
                     placeholder=' 주소 또는 건물명을 입력하세요'

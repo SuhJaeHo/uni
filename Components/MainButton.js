@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, Pressable, Dimensions, StyleSheet} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import IconBadge from 'react-native-icon-badge';
 
@@ -10,40 +11,45 @@ export default class MainButton extends Component {
     render() {
         return (       
             <View style={styles.btnContainer}>
-                <Pressable
-                    style={styles.Button}
-                    onPress={() => this.props.navigate('Hosting')}
-                >
-                    <Ionicons
-                    color="#fff"
-                    name='golf'
-                    size={30}
-                    />
-                    <Text style={styles.Txt}>Make</Text>
-                </Pressable>
-
-                <Pressable
-                    style={styles.Button}
-                    onPress={() => this.props.navigate('Chat')}
-                >
-                    <Ionicons
-                    color="#fff"
-                    name='chatbubbles-sharp'
-                    size={30}
-                    />
-                    <Text style={styles.Txt}>Chat</Text>
-                </Pressable>
-                <Pressable
-                    style={styles.Button}
-                    onPress={() => this.props.navigate('Room')}
-                >
-                    <Foundation
-                    color="#fff"
-                    name='results-demographics'
-                    size={30}
-                    />
-                    <Text style={styles.Txt}>Room</Text>
-                </Pressable>
+                <TouchableOpacity>
+                    <Pressable
+                        style={styles.Button}
+                        onPress={() => this.props.navigate('Hosting')}
+                    >
+                        <Ionicons
+                            color="#fff"
+                            name='golf'
+                            size={30}
+                        />
+                        <Text style={styles.Txt}>Make</Text>
+                    </Pressable>
+                </TouchableOpacity>
+                <TouchableOpacity>        
+                    <Pressable
+                        style={styles.Button}
+                        onPress={() => this.props.navigate('Chat')}
+                    >
+                        <Ionicons
+                            color="#fff"
+                            name='chatbubbles-sharp'
+                            size={30}
+                        />
+                        <Text style={styles.Txt}>Chat</Text>
+                    </Pressable>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Pressable
+                        style={styles.Button}
+                        onPress={() => this.props.navigate('Room')}
+                    >
+                        <Foundation
+                            color="#fff"
+                            name='results-demographics'
+                            size={30}
+                        />
+                        <Text style={styles.Txt}>Room</Text>
+                    </Pressable>
+                </TouchableOpacity>
             </View>
         )
     }

@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
 import {View, Text, TextInput, Pressable, FlatList, BackHandler} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as Hangul from 'hangul-js';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { LOCAL_URL } from '@env';
 
@@ -63,8 +65,6 @@ export default class Category extends Component {
         })
         .then(response => response.json())
         .then(responseData => {
-            console.log(responseData[0]);
-            console.log(responseData[1]);
             if(responseData[1].length === 0) {
                 this.setState({
                     list: responseData[0]
@@ -119,13 +119,18 @@ export default class Category extends Component {
         return (
             <View style={styles.fullConatiner}>
                 <View style={styles.headerConatiner}>
-                    <AntDesign
-                        name={"arrowleft"}
-                        style={styles.backIcon}
-                        onPress={() => this.props.navigation.push('Hosting', {category: this.state.selectCategory, Info: 'category'})}
-                    />                    
+                    <TouchableOpacity>
+                        <Ionicons
+                            name={"ios-chevron-back"}
+                            size={30}
+                            color={'black'}      
+                            style={{marginRight: 22, marginLeft: 10}}              
+                            onPress={() => this.props.navigation.push('Hosting', {category: this.state.selectCategory, Info: 'category'})}
+                        />                
+                    </TouchableOpacity>    
                     <TextInput
                         placeholder="카테고리를 입력하세요"
+                        style={{fontSize: 16}}
                         onChangeText={text => this.search(text)}
                         value={this.state.category}
                     />
@@ -143,7 +148,9 @@ export default class Category extends Component {
                                         }
                                     }
                                 >
-                                    <Text>{item.category}</Text>
+                                    <TouchableOpacity>
+                                        <Text style={{fontSize: 14}}>{item.category}</Text>
+                                    </TouchableOpacity>
                                 </Pressable>
                             </View>
                         )

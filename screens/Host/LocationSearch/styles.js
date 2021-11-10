@@ -5,7 +5,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#fff',
-        height: 50,        
+        height: 50,       
+        borderBottomWidth: 0.8,
+        borderColor: 'rgba(158, 150, 150, .5)' 
     },
     headerTextContainer:{
         width: Dimensions.get('window').width * 0.2,    

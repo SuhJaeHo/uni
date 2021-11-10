@@ -327,7 +327,7 @@ export default class EditProfile extends Component {
     render() {
         return (
             <View style={styles.editContainer}>                  
-                <TouchableOpacity activeOpacity={1} onPress={() => this.bs.current.snapTo(1)}>                 
+                <TouchableOpacity activeOpacity={1}>                 
                     <ImageBackground
                         source={require("../../assets/imgs/3.png")} resizeMode="cover" 
                         style={{ width: "100%", height: '110%' }}                    
@@ -356,15 +356,15 @@ export default class EditProfile extends Component {
                         <View style={{ flex: 1, justifyContent: 'center', marginTop: 60 }}>  
                             <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', width: Dimensions.get('window').width*0.9, marginHorizontal: Dimensions.get('window').width*0.05}}>                                
                                 {this.state.picker}
-                            </View>                        
-                            <View style={styles.interestContainer}>
+                            </View>                                               
+                            <View style={styles.interestContainer}>                                
                                 <Pressable
                                     style={styles.interestList}
                                     onPress={() => this.props.navigation.push('editHobby', {interest: this.state.userInterest})}
                                 >
                                     <Text>{this.state.interestList}</Text>
-                                </Pressable>                                                     
-                            </View>   
+                                </Pressable>                                                                                    
+                            </View>                               
                             <ActionSheet 
                                 ref={this.bs}
                                 title={'프로필 사진 업로드'}

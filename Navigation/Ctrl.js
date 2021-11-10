@@ -55,7 +55,7 @@ const NavigationDrawerStructure = (props)=> {
     );
 }
 
-function homeScreenStack({ navigation }) {    
+function homeScreenStack({ route, navigation }) {       
     return (
         <Stack.Navigator initialRouteName="HomePage">            
             <Stack.Screen
@@ -65,11 +65,12 @@ function homeScreenStack({ navigation }) {
                     title: '', 
                     headerLeft: ()=>
                     <NavigationDrawerStructure
-                        navigationProps={navigation}
+                        navigationProps={navigation}                        
                     />,
                     headerShown: true,
-                    headerTransparent: true,
-                }}                                                         
+                    headerTransparent: true,                    
+                }}                          
+                initialParams={{params: route.params}}                                           
             >                
             </Stack.Screen>            
             <Stack.Screen
@@ -83,9 +84,9 @@ function homeScreenStack({ navigation }) {
     );
 }
 
-export default function DrawerNav({ navigation }) {  
+export default function DrawerNav({ route, navigation }) {          
     return (                        
-        <Drawer.Navigator      
+        <Drawer.Navigator                  
             drawerContentOptions={{
                 activeTintColor: '#e91e63',
                 itemStyle: { marginVertical: 5 },            
@@ -100,7 +101,8 @@ export default function DrawerNav({ navigation }) {
                 options={{ 
                     drawerLabel: 'Home 🏠' ,
                 }}
-                component={homeScreenStack}        
+                component={homeScreenStack}     
+                initialParams={{params: route.params}}                
             >
             </Drawer.Screen>
             <Drawer.Screen

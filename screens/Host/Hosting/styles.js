@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
         alignItems: 'center', 
         backgroundColor: '#fff',
         justifyContent:'flex-start',
-        backgroundColor:'#49ffbd'
+        backgroundColor:'#49ffbd',
+        height: 50,
     },
     headerText:{
         fontSize:19,
@@ -39,19 +40,21 @@ const styles = StyleSheet.create({
         marginLeft: Dimensions.get('window').width * 0.05,
     },
     placeInput: {
-        paddingLeft: 10,
+        //paddingLeft: 10,
         height: 50,
         height:Dimensions.get('window').height * 0.06,
         width: Dimensions.get('window').width * 0.9,
         marginLeft: Dimensions.get('window').width * 0.05,        
         borderRadius: 25,
-        paddingLeft:20,
+        paddingLeft: 10,
+        paddingRight: 10,
         backgroundColor: '#FFF',
         justifyContent: 'center',
         shadowOpacity: 0.5,
         shadowRadius: 5,
         shadowColor: 'grey',
         shadowOffset: { height: 2, width: 2 },
+        elevation: 30,                                
     },
     categoryContainer: {
         marginVertical:10
@@ -62,12 +65,12 @@ const styles = StyleSheet.create({
         marginLeft: Dimensions.get('window').width * 0.05,
     },
     categoryInput: {
-        paddingLeft: 10,
         height: 50,
         height:Dimensions.get('window').height * 0.06,
         width: Dimensions.get('window').width * 0.9,
         marginLeft: Dimensions.get('window').width * 0.05,        
-        paddingLeft:20,
+        paddingLeft: 10,
+        paddingRight: 10,
         borderRadius: 25,
         backgroundColor: '#FFF',
         justifyContent: 'center',
@@ -75,6 +78,7 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         shadowColor: 'grey',
         shadowOffset: { height: 2, width: 2 },
+        elevation: 30,
     },
     titleConatiner: {
         marginVertical:10
@@ -89,12 +93,14 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width * 0.9,
         marginLeft: Dimensions.get('window').width * 0.05,        
         backgroundColor: '#FFF',
-        borderRadius:25,
-        paddingLeft:20,
+        borderRadius: 25,
+        paddingLeft: 10,
+        paddingRight: 10,
         shadowOpacity: 0.5,
         shadowRadius: 5,
         shadowColor: 'grey',
-        shadowOffset: { height: 2, width: 2 },        
+        shadowOffset: { height: 2, width: 2 },   
+        elevation: 30,     
     },
     timeConatiner: {
         marginVertical:10
@@ -109,7 +115,8 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width * 0.9,
         height:Dimensions.get('window').height * 0.06,
         marginLeft: Dimensions.get('window').width * 0.05,        
-        paddingLeft:20,
+        paddingLeft: 10,
+        paddingRight: 10,
         borderRadius: 25,
         backgroundColor: '#FFF',
         justifyContent: 'center',
@@ -117,6 +124,7 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         shadowColor: 'grey',
         shadowOffset: { height: 2, width: 2 },
+        elevation: 30,
     },
     timePlaceHolder: {
         justifyContent: 'flex-start',
@@ -140,12 +148,13 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         shadowColor: 'grey',
         shadowOffset: { height: 2, width: 2 },
+        elevation: 30,
         borderRadius:25,
     },
     modifyButton: {
         padding: 10,
         backgroundColor: '#49ffbd',
-        height: 50,
+        height: 60,
         width: Dimensions.get('window').width * 0.7,
         borderRadius: 25,
         marginLeft: Dimensions.get('window').width * 0.15,
@@ -156,6 +165,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 5,
         shadowColor: 'grey',
+        elevation: 30,
         shadowOffset: { height: 2, width: 2 },        
     }
 });

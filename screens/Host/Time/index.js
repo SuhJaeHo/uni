@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import {Text, View, TextInput, Pressable, Alert, BackHandler} from 'react-native';
+import {Text, View, TextInput, Pressable, Alert, BackHandler, Dimensions} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import DatePicker from 'react-native-date-picker';
 import Moment from 'moment';
 import 'moment/locale/ko';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { LogBox } from "react-native";
 
@@ -82,25 +84,30 @@ export default class Time extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{backgroundColor: '#fff', width: Dimensions.get('screen').width, height: Dimensions.get('screen').height}}>
                 <View style={styles.headerContainer}>
-                    <AntDesign                        
-                        name={"arrowleft"}
-                        style={styles.backIcon}
-                        onPress={() => this.props.navigation.push('Hosting', {time: JSON.stringify(this.state.dateTime), timeInfo: this.state.showTime, Info: 'time'})}
-                    />
-                    <Text>약속시간</Text>
+                    <TouchableOpacity>
+                        <Ionicons                        
+                            name={"ios-chevron-back"}
+                            size={30}
+                            color={'black'}
+                            style={{marginRight: 22, marginLeft: 10}}
+                            onPress={() => this.props.navigation.push('Hosting', {time: JSON.stringify(this.state.dateTime), timeInfo: this.state.showTime, Info: 'time'})}
+                        />
+                    </TouchableOpacity>
+                    <Text style={{fontSize: 18}}>약속시간</Text>
                 </View>                
                 <View style={styles.contentContainer}>                    
                     {this.datePicker()}                    
                 </View>
                 <Pressable
                     onPress={() => this.props.navigation.push('Hosting', {time: JSON.stringify(this.state.dateTime), timeInfo: this.state.showTime, Info: 'time'})}
-                    style={styles.setBtn}
                 >
-                    <Text style={{color:'#fff', fontSize:25, fontWeight:'bold'}}>
-                        SET
-                    </Text>
+                    <TouchableOpacity style={styles.setBtn}>
+                        <Text style={{color:'#fff', fontSize:25, fontWeight:'bold'}}>
+                            SET
+                        </Text>
+                    </TouchableOpacity>
                 </Pressable>
             </View>
         )

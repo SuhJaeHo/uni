@@ -6,15 +6,15 @@ const styles = StyleSheet.create({
     },
     headerConatiner: {
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'center',        
     },
     backIcon: {
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: 'bold',
         marginRight: 10,
     },
     listContainer: {
-        paddingVertical: 15,
+        paddingVertical: 20,
         paddingLeft: 10,
         borderBottomWidth: 1,
         borderColor: 'lightgrey',

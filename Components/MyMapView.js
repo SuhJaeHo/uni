@@ -61,18 +61,14 @@ export default class MyMapView extends Component {
 
     createMarker = () => {        
         let marker = []
-        var key = 0;         
-
-        console.log(this.props.temp);
+        var key = 0;                 
 
         if(this.props.hobby !== '' && this.props.cnt === 1) {         
             this.state.trackView = true;
         }else if(this.state.firstLoading) {
             this.state.firstLoading = false;
-        }else if(this.props.temp === 1) {
+        }else if(this.props.temp === 1) {            
             this.state.trackView = true;
-        }else {        
-            this.state.trackView = false;
         }
 
         if(this.props.roomData.length === 0) {

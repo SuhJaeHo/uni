@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Text, View, TextInput, Pressable, ScrollView, Image, BackHandler, Dimensions} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -27,10 +28,9 @@ export default class RoomList extends Component {
      componentDidMount = async() => {
           LogBox.ignoreAllLogs(true); 
           this.props.navigation.addListener('focus', async () => {
+               this.connect();
                BackHandler.addEventListener('hardwareBackPress', this.backButtonClick);  
-          });   
-
-          this.connect();
+          });             
      }
 
      componentWillUnmount = async() => {
@@ -56,16 +56,16 @@ export default class RoomList extends Component {
 
           const URL = `${LOCAL_URL}/roomList`;
           fetch(URL, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                id: this.state.id,
-              }),
+               method: 'POST',
+               headers: {
+                    'Content-Type': 'application/json',
+               },
+               body: JSON.stringify({
+                    id: this.state.id,
+               }),
           })
           .then(response => response.json())
-          .then(responseData => {
+          .then(responseData => {               
                this.setState({
                     hostRoomInfo: responseData[0],
                     joinRoomInfo: responseData[1],
@@ -83,6 +83,7 @@ export default class RoomList extends Component {
                          style={styles.cardContainer}
                          key={key++}
                     >
+                         <TouchableOpacity>
                          <Pressable
                               onPress={() => this.props.navigation.push('Roomctrl', 
                                    {sendd: data}
@@ -148,7 +149,7 @@ export default class RoomList extends Component {
                                              />                                                                       
                                              : data.category === '배틀그라운드' ?
                                              <Image  
-                                                  style={{ width:50, height:50, zIndex:10 }}   
+                                                  style={{ width:50, height:50, zIndex:10, borderRadius: 25 }}   
                                                   source={require('../../../assets/cateicon/pubg.png')}
                                              />
                                              : data.category === '파티' ?
@@ -173,6 +174,7 @@ export default class RoomList extends Component {
                                    </View>                                                              
                               </View>
                          </Pressable>  
+                         </TouchableOpacity>
                     </View>
                ))
           }else {
@@ -199,7 +201,8 @@ export default class RoomList extends Component {
                     <View
                          style={styles.cardContainer}
                          key={key++}
-                    >                                                
+                    >        
+                         <TouchableOpacity>                                        
                          <Pressable
                               onPress={() => this.props.navigation.push('Roomctrl', 
                                    {sendd: data}
@@ -290,11 +293,12 @@ export default class RoomList extends Component {
                                    </View>                                                              
                               </View>
                          </Pressable>
+                         </TouchableOpacity>
                     </View>
                ))               
           }else {
-               roomList.push (
-                    <View style={styles.noneCard}>
+               roomList.push (                                        
+                    <View style={styles.noneCard}>                         
                          <View style={styles.infoContainer}>                              
                               <View style={{width: Dimensions.get('window').width}}>
                                    <Text numberOfLines={1} style={styles.titleText}>참가중인 방이 없습니다.</Text>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, Text, View, Pressable, ScrollView, Image, Alert } from 'react-native';
-import styles from './styles';
+import { ImageBackground, Text, View, Pressable, ScrollView, Image, Alert, BackHandler } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { CometChat } from '@cometchat-pro/react-native-chat';
@@ -9,13 +10,25 @@ import { LOCAL_URL } from '@env';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import styles from './styles';
+
 function Roominfo({ route, navigation }) {
     const [id, setId] = useState('');
     const { sendd } = route.params;
 
     useEffect(() => {   
         getId();
+
+        BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+        };
     }, []);
+
+    const handleBackButtonClick = () => {
+        navigation.navigate('RoomList');
+        return true;
+    }
 
     const getId = async() => {
         var id = await AsyncStorage.getItem('id');
@@ -39,8 +52,10 @@ function Roominfo({ route, navigation }) {
             },
             body: JSON.stringify({
                 id: id,
+                GUID: sendd.GUID,
             })
-        })
+        })        
+        .then(() => navigation.push('DrawerNav'))
     }
 
     const leaveGroup = async() => {
@@ -175,7 +190,7 @@ function Roominfo({ route, navigation }) {
                                             />                                    
                                             : sendd.category === '배틀그라운드' ?    
                                             <Image  
-                                                style={{ width:50, height:50, zIndex:10 }}   
+                                                style={{ width:50, height:50, zIndex:10, borderRadius: 25 }}   
                                                 source={require('../../../assets/cateicon/pubg.png')}
                                             />                                    
                                             : sendd.category === '술 한잔' ?    
@@ -228,32 +243,38 @@ function Roominfo({ route, navigation }) {
                                 </View>
                         </View>
                         <View style={styles.btnContainer}>
-                            <Pressable 
-                                style={styles.chatBtn}
-                                onPress={() => navigation.navigate('Chat')}
-                            >
-                                <Text style={styles.chatBtnText}>
-                                    Chat
-                                </Text>
-                            </Pressable> 
+                            <TouchableOpacity>
+                                <Pressable 
+                                    style={styles.chatBtn}
+                                    onPress={() => navigation.navigate('Chat')}
+                                >
+                                    <Text style={styles.chatBtnText}>
+                                        Chat
+                                    </Text>
+                                </Pressable>
+                            </TouchableOpacity> 
                             {id === sendd.id ?
+                            <TouchableOpacity>
                                 <Pressable 
                                     style={styles.delBtn}
                                     onPress={() => deleteAlert()}
                                 >
-                                <Text style={styles.chatBtnText}>
-                                    Delete
-                                </Text>
+                                    <Text style={styles.chatBtnText}>
+                                        Delete
+                                    </Text>
                                 </Pressable>
+                            </TouchableOpacity>
                             :
+                            <TouchableOpacity>
                                 <Pressable 
                                     style={styles.delBtn} 
                                     onPress={() => leaveAlert()}                                   
                                 >
-                                <Text style={styles.chatBtnText}>
-                                    Leave
-                                </Text>
+                                    <Text style={styles.chatBtnText}>
+                                        Leave
+                                    </Text>
                                 </Pressable>
+                            </TouchableOpacity>
                             }                                                       
                         </View>
                     </ScrollView>

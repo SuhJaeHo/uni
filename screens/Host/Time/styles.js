@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
         height: 50,
-        borderBottomWidth: 0.5,
+        borderBottomWidth: 0.8,
+        borderColor: 'rgba(158, 150, 150, .5)',                        
     },
     backIcon: {
         fontSize: 22,

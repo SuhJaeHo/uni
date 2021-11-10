@@ -147,8 +147,7 @@ const styles = StyleSheet.create({
         fontFamily:'Jost-Bold'        
     },
     dateText:{
-        fontSize:22,
-        //marginBottom:-5,
+        fontSize:22,        
         fontFamily:'Jost-Medium'
     },
     timeText:{
@@ -157,7 +156,6 @@ const styles = StyleSheet.create({
     },
     titleText:{
         fontSize:18,
-        marginLeft:5,
         fontFamily:'Jost-Medium'
     },
     locationText:{
