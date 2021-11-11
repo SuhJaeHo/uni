@@ -11,7 +11,6 @@ import { CometChat } from '@cometchat-pro/react-native-chat';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-
 import { LOCAL_URL } from '@env';
 
 import { LogBox } from "react-native";
@@ -242,8 +241,7 @@ export default class Hosting extends Component {
                                             name={"ios-chevron-back"}
                                             size={30}
                                             color={'black'}
-                                            style={{marginRight: 22, marginLeft: 10}}
-                                            //onPress={() => this.props.navigation.push('Hosting', {time: JSON.stringify(this.state.dateTime), timeInfo: this.state.showTime, Info: 'time'})}
+                                            style={{marginRight: 22, marginLeft: 10}}                                            
                                         />
                                     </TouchableOpacity>                               
                                 </Pressable>

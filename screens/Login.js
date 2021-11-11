@@ -13,7 +13,8 @@ import {
   Pressable,
   Linking,
   Dimensions,
-  Platform
+  Platform,
+  BackHandler,
 } from 'react-native';
 
 import auth from '@react-native-firebase/auth';
@@ -31,9 +32,9 @@ import {CometChat} from '@cometchat-pro/react-native-chat';
 import messaging from '@react-native-firebase/messaging';
 
 import {
-  CHAT_APP_ID_1,
-  CHAT_API_KEY_2,
-  CHAT_AUTH_KEY_1,
+  CHAT_APPID,
+  CHAT_APIKEY,
+  CHAT_AUTHKEY,
   LOCAL_URL,
   GOOGLE_WEB_CLIENT_ID,
 } from '@env';
@@ -56,7 +57,7 @@ const LoginScreen = ({navigation}) => {
   const passwordInputRef = createRef();
 
   //chatting
-  const appID = CHAT_APP_ID_1;
+  const appID = CHAT_APPID;
   const region = 'us';
   const appSetting = new CometChat.AppSettingsBuilder()
     .subscribePresenceForAllUsers()
@@ -78,8 +79,18 @@ const LoginScreen = ({navigation}) => {
       // Generated from Firebase console
       webClientId: GOOGLE_WEB_CLIENT_ID,
     });
+
+    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+    };
     // Check if user is already signed in
   }, []);
+
+  const handleBackButtonClick = () => {
+    BackHandler.exitApp();
+    return true;
+  }
 
   const getFcmToken = async () => {
     const authStatus = await messaging().requestPermission();
@@ -118,17 +129,7 @@ const LoginScreen = ({navigation}) => {
     })
     .then(response => response.json())
     .then(responseData => {
-      if (responseData) {
-      /*
-        const url = 'https://api-us.cometchat.io/v3.0/users/110917783035367947415';
-        fetch(url, {
-          method: 'DELETE',
-          headers: {Accept: 'application/json', 'Content-Type': 'application/json', appId: CHAT_APP_ID_1, apiKey: CHAT_API_KEY_1},
-          body: JSON.stringify({permanent: true})
-        })
-        .then(response => response.json())
-        .then(responseData => console.log(responseData))            
-      */
+      if (responseData) {              
       CometChat.init(appID, appSetting)
         .then(
           () => {
@@ -139,7 +140,7 @@ const LoginScreen = ({navigation}) => {
           },
         )
         .then(
-          CometChat.login(id, CHAT_AUTH_KEY_1).then(
+          CometChat.login(id, CHAT_AUTHKEY).then(
             User => {
               console.log('Login Successful:', {User});
             },

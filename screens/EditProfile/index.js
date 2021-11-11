@@ -13,7 +13,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import { LOCAL_URL, CHAT_API_KEY, CHAT_APP_ID } from '@env';
+import { LOCAL_URL, CHAT_APIKEY, CHAT_APPID } from '@env';
 
 import { LogBox } from "react-native";
 
@@ -239,13 +239,13 @@ export default class EditProfile extends Component {
     updateChatUser = async() => {                
         fetch(`${LOCAL_URL}/firstProfile/?id=` + this.state.id  + "&time=" + new Date())
         .then(responseData => {
-            const URL = "https://" + CHAT_APP_ID + ".api-us.cometchat.io/v3.0/users/" + this.state.id;
+            const URL = "https://" + CHAT_APPID + ".api-us.cometchat.io/v3.0/users/" + this.state.id;
             fetch(URL, {
                 method: "PUT",
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    apiKey: CHAT_API_KEY,
+                    apiKey: CHAT_APIKEY,
                 },
                 body: JSON.stringify({ 
                     avatar: responseData.url,             

@@ -102,7 +102,7 @@ export default class MyMapView extends Component {
                     <View style={{ justifyContent: 'center', alignItems: 'center', height: 100, width: 55 }}>
                         <Image style={{resizeMode: 'contain', width: 50, position: 'absolute'}} source={require('../assets/pin/ping.png')} onLoadStart={() => this.state.trackView = false}/>
                         <Image  
-                            style={{ width:38, height:38, zIndex:10, marginBottom:8, borderRadius:19 }}   
+                            style={{ width:40, height:40, zIndex:10, marginBottom:8, borderRadius:19 }}   
                             source={require('../assets/cateicon/basketball.png')}
                             onLoadStart={() => this.state.trackView = false} 
                         />

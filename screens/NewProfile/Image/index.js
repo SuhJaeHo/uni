@@ -17,7 +17,9 @@ import { CometChat } from '@cometchat-pro/react-native-chat';
 
 import messaging from '@react-native-firebase/messaging';
 
-import { CHAT_APP_ID_1, CHAT_API_KEY_2, CHAT_AUTH_KEY_1, LOCAL_URL  } from '@env';
+import { CHAT_APPID, CHAT_APIKEY, CHAT_AUTHKEY, LOCAL_URL  } from '@env';
+
+import { LogBox } from "react-native";
 
 import styles from './styles';
 
@@ -49,6 +51,7 @@ export default class NewProfileImg extends Component {
     }
 
     componentDidMount = async() => {
+        LogBox.ignoreAllLogs(true); 
         this.getProfile();        
     }
 
@@ -259,7 +262,7 @@ export default class NewProfileImg extends Component {
         .setRegion('us')
         .build();
 
-        CometChat.init(CHAT_APP_ID_1, appSetting).then(
+        CometChat.init(CHAT_APPID, appSetting).then(
             () => {
                 console.log('Initialization completed successfully');
             },
@@ -278,8 +281,8 @@ export default class NewProfileImg extends Component {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    appId: CHAT_APP_ID_1,
-                    apiKey: CHAT_API_KEY_2,
+                    appId: CHAT_APPID,
+                    apiKey: CHAT_APIKEY,
                 },
                 body: JSON.stringify({
                     uid: this.state.id,
@@ -290,7 +293,7 @@ export default class NewProfileImg extends Component {
             .then(response => response.json())
             .then(responseData => console.log(responseData))   
             .then(() => {
-                CometChat.login(this.state.id, CHAT_AUTH_KEY_1).then (
+                CometChat.login(this.state.id, CHAT_AUTHKEY).then (
                     User => {
                       console.log("Login Successful:", { User });
                     },

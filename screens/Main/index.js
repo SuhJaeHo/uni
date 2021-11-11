@@ -25,7 +25,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { CometChat } from '@cometchat-pro/react-native-chat';
 
-import { geo, LOCAL_URL, CHAT_APP_ID_1, CHAT_API_KEY_2, CHAT_AUTH_KEY_1} from '@env';
+import { geo, LOCAL_URL } from '@env';
 
 import { LogBox } from "react-native";
 

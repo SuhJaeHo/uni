@@ -27,6 +27,7 @@ import { CometChatConversationListWithMessages } from "../lib/chat/cometchat-pro
 import RoomList from "../screens/Room/RoomList";
 import Roomctrl from "../screens/Room/Roomctrl";
 import UserList from "../screens/Room/UserList";
+import RequestList from "../screens/Room/RequestList";
 
 import UserProfile from "../screens/UserProfile";
 
@@ -207,6 +208,23 @@ const Router = ({navigation}) => {
                 <Stack.Screen
                     name={"UserList"}
                     component={UserList}
+                    options={{
+                        headerShown: true,
+                        title: '참가 요청 유저',
+                        headerTitleStyle:{
+                            fontSize:19
+                        },
+                        headerBackImage: ()=>(<Ionicons name={"ios-chevron-back"} size={30}/>),
+                        headerBackTitle:' ',
+                        headerBackTitleStyle:{
+                            fontSize: 18,
+                            color: 'black'
+                        }
+                    }}
+                />
+                <Stack.Screen
+                    name={"RequestList"}
+                    component={RequestList}
                     options={{
                         headerShown: true,
                         title: '참가 요청 유저',

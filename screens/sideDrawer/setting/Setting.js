@@ -21,7 +21,7 @@ export default class Setting extends Component {
     backButtonClick = () => {
         this.props.navigation.navigate('HomePage');
         return true;
-    }
+    }    
 
     render () {
         return(
