@@ -51,7 +51,7 @@ function Roomctrl (props) {
                 })}            
                 initialRouteName="Chatting"
                 tabBarOptions={{
-                    activeTintColor: '#1e90ff',
+                    activeTintColor: '#fb009e',
                     inactiveTintColor: 'gray',
                     labelStyle: { fontSize: 16 , fontWeight: 'bold' },
                 }}

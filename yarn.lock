@@ -5636,6 +5636,16 @@
   "resolved" "https://registry.npmjs.org/lodash.isequal/-/lodash.isequal-4.5.0.tgz"
   "version" "4.5.0"
 
+"lodash.isfunction@^3.0.9":
+  "integrity" "sha512-AirXNj15uRIMMPihnkInB4i3NHeb4iBtNg9WRWuK2o31S+ePwwNmDPaTL3o7dTJ+VXNZim7rFs4rxN4YU1oUJw=="
+  "resolved" "https://registry.npmjs.org/lodash.isfunction/-/lodash.isfunction-3.0.9.tgz"
+  "version" "3.0.9"
+
+"lodash.isnil@^4.0.0":
+  "integrity" "sha1-SeKM1VkBNFjIFMVHnTxmOiG/qmw="
+  "resolved" "https://registry.npmjs.org/lodash.isnil/-/lodash.isnil-4.0.0.tgz"
+  "version" "4.0.0"
+
 "lodash.isstring@^4.0.1":
   "integrity" "sha1-1SfftUVuynzJu5XV2ur4i6VKVFE="
   "resolved" "https://registry.npmjs.org/lodash.isstring/-/lodash.isstring-4.0.1.tgz"
@@ -7184,6 +7194,11 @@
     "mockdate" "^3.0.2"
     "string-hash-64" "^1.0.3"
 
+"react-native-restart@0.0.22":
+  "integrity" "sha512-XwCqAMAKsO8yCM3xACPFKvkDQZe41lcavOuO0gUEu803IuTLtciualCq/qs83ryRDCDh1jkXYRqFjsGjLMCN3Q=="
+  "resolved" "https://registry.npmjs.org/react-native-restart/-/react-native-restart-0.0.22.tgz"
+  "version" "0.0.22"
+
 "react-native-root-siblings@^3.2.1":
   "integrity" "sha512-wOCCtKJteaSIW3K++hzhkfdWRikTqjrG34DnhNDVSzKatuNQyFY1fPBD1YFT/3+kxOIUmNsJdiaPMao9QgoZMA=="
   "resolved" "https://registry.npmjs.org/react-native-root-siblings/-/react-native-root-siblings-3.2.3.tgz"
@@ -7251,6 +7266,16 @@
     "prop-types" "^15.7.2"
     "yargs" "^16.1.1"
 
+"react-native-version-check@3.4.2":
+  "integrity" "sha512-f2eHI6p60UlBzlcxuy4pQaGqCEmR5cNvRQuyG/pFydLdutYpa05zeg4KkTfHWdVmGHhiawyaAfto9QsnBZ70Ew=="
+  "resolved" "https://registry.npmjs.org/react-native-version-check/-/react-native-version-check-3.4.2.tgz"
+  "version" "3.4.2"
+  dependencies:
+    "lodash.isfunction" "^3.0.9"
+    "lodash.isnil" "^4.0.0"
+    "lodash.pick" "^4.4.0"
+    "semver" "^6.1.1"
+
 "react-native-video-controls@2.8.1":
   "integrity" "sha512-dBmrE3TAKaR1gYMfbukjAM6Xo8OMZyRrxPzZtnaUgWcvGo11PQwzaI/j8HPD5fLgO+rlweP2pDpEJyIBsJvJkw=="
   "resolved" "https://registry.npmjs.org/react-native-video-controls/-/react-native-video-controls-2.8.1.tgz"
@@ -7275,7 +7300,7 @@
     "escape-string-regexp" "2.0.0"
     "invariant" "2.2.4"
 
-"react-native@*", "react-native@^0.0.0-0 || ^0.60.6 || ^0.61.5 || ^0.62.2 || ^0.63.2 || ^0.64.0 || ^0.65.0 || 1000.0.0", "react-native@^0.61.5", "react-native@>= 0.51", "react-native@>= 0.59", "react-native@>=0.11", "react-native@>=0.23.1", "react-native@>=0.25.0", "react-native@>=0.33", "react-native@>=0.40.0", "react-native@>=0.42.0", "react-native@>=0.46.0", "react-native@>=0.50.0", "react-native@>=0.55", "react-native@>=0.57", "react-native@>=0.57.0", "react-native@>=0.60", "react-native@>=0.60.0", "react-native@>=0.60.0-rc.0 <1.0.x", "react-native@>=0.63.3", "react-native@>=0.64.0-rc.0 || 0.0.0-*", "react-native@>=0.8.0", "react-native@>=v0.40.0", "react-native@0.64.2":
+"react-native@*", "react-native@^0.0.0-0 || ^0.60.6 || ^0.61.5 || ^0.62.2 || ^0.63.2 || ^0.64.0 || ^0.65.0 || 1000.0.0", "react-native@^0.61.5", "react-native@>= 0.51", "react-native@>= 0.59", "react-native@>=0.11", "react-native@>=0.23.1", "react-native@>=0.25.0", "react-native@>=0.33", "react-native@>=0.40.0", "react-native@>=0.42.0", "react-native@>=0.46.0", "react-native@>=0.48.0", "react-native@>=0.50.0", "react-native@>=0.55", "react-native@>=0.57", "react-native@>=0.57.0", "react-native@>=0.60", "react-native@>=0.60.0", "react-native@>=0.60.0-rc.0 <1.0.x", "react-native@>=0.63.3", "react-native@>=0.64.0-rc.0 || 0.0.0-*", "react-native@>=0.8.0", "react-native@>=v0.40.0", "react-native@0.64.2":
   "integrity" "sha512-Ty/fFHld9DcYsFZujXYdeVjEhvSeQcwuTGXezyoOkxfiGEGrpL/uwUZvMzwShnU4zbbTKDu2PAm/uwuOittRGA=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.64.2.tgz"
   "version" "0.64.2"

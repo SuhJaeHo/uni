@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState, useRef} from 'react';
 import { Alert, Platform, PermissionsAndroid, Permission, ToastAndroid } from 'react-native';
 import Router from './Navigation/Router';
 
@@ -37,75 +37,83 @@ PushNotification.configure({
     alert: true,
     badge: true,
     sound: true,
-  },
+  },  
   popInitialNotification: true,
   requestPermissions: true,
 });
 
-  PushNotification.createChannel(
-  {
-    channelId: "TEST", // (required)
-    channelName: "TEST", // (required)
-    channelDescription: "TEST", // (optional) default: undefined.
-    playSound: true, // (optional) default: true
-    soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
-    importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-    vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-  },
-    (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
-  );
+PushNotification.createChannel(
+{
+  channelId: "TEST", // (required)
+  channelName: "TEST", // (required)
+  channelDescription: "TEST", // (optional) default: undefined.
+  playSound: true, // (optional) default: true
+  soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+  importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+  vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+},
+  (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+);
 
-  PushNotification.createChannel(
-  {
-    channelId: "Default Channel", // (required)
-    channelName: "Default Channel", // (required)
-    channelDescription: "Default Channel", // (optional) default: undefined.
-    playSound: true, // (optional) default: true
-    soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
-  },
-    (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
-  );  
+PushNotification.createChannel(
+{
+  channelId: "Default Channel", // (required)
+  channelName: "Default Channel", // (required)
+  channelDescription: "Default Channel", // (optional) default: undefined.
+  playSound: true, // (optional) default: true
+  soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+},
+  (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+);  
 
-export default class App extends Component {
-  componentDidMount = () => {         
-    this.foreground();   
-    this.background();    
+var count = 0;
+
+const App = () => {      
+  useEffect(() => {             
+    Test();
+
+    if(count === 1) {
+      foreground();
+      background();
+    }
+  }, []);
+
+  const Test = () => {
+    count += 1;
+    console.log(count);
+  }
+  
+  const foreground = () => {         
+    messaging().onMessage(async remoteMessage => {                          
+      showNotification(remoteMessage.data.title, remoteMessage.data.body);      
+    });        
   }
 
-  foreground = () => {
-    messaging().onMessage(async remoteMessage => {                  
-      //this.showNotification(payload.data.title, payload.data.body);
-      console.log(remoteMessage);
-      this.showNotification(remoteMessage.data.title, remoteMessage.data.body);
-    });    
+  const background = () => {
+    messaging().setBackgroundMessageHandler(async remoteMessage => {     
+      showNotification(remoteMessage.data.title, remoteMessage.data.body);
+    })     
   }
 
-  background = () => {
-    messaging().setBackgroundMessageHandler(async remoteMessage => {
-      //this.showNotification(remoteMessage.data.title, remoteMessage.data.body);
-      console.log(remoteMessage);
-      this.showNotification(remoteMessage.data.title, remoteMessage.data.body);
-    })    
-  }
-
-  showNotification = (title, message) => {
+  const showNotification = (title, message) => {    
     PushNotification.localNotification({
       title: title,
       message: message,
       playSound: true,
       vibrate: true,
-      channelId: 'TEST',      
+      channelId: 'TEST',
+      onlyAlertOnce: 'false',            
       //channelId: 'Default Channel',      
     })    
   }  
 
-  render() {
-    return (
-      <>
-        <Provider store = { store }>          
-          <Router/>
-        </Provider>
-      </>
-    )
-  }
+  return (
+    <>
+      <Provider store = { store }>          
+        <Router/>
+      </Provider>
+    </>
+  )
 }
+
+export default App;

@@ -235,7 +235,7 @@ export default class MyMapView extends Component {
                 {this.state.dragCount === 0 ?                                                 
                 <View>                                                            
                     <MapView                  
-                        style={{width: '100%', height: '100%'}}                                            
+                        style={{width: Dimensions.get('screen').width * 1, height: Dimensions.get('screen').height * 1}}                                            
                         showsUserLocation={true}   
                         showsMyLocationButton={false}                                                                                                                   
                         region={this.props.region}                                                       
@@ -260,11 +260,11 @@ export default class MyMapView extends Component {
                 <View>                                                            
                     <MapView
                         ref={ref => {this.map = ref}}
-                        style={{width: '100%', height: '100%'}}                    
+                        style={{width: Dimensions.get('screen').width * 1, height: Dimensions.get('screen').height * 1}}                    
                         showsUserLocation={true}    
                         showsMyLocationButton={false}                                                                                            
                         region={this.state.pressedCurrentBtn === true ? this.props.region : region}                            
-                        onRegionChangeComplete={(reg) => {   
+                        onRegionChangeComplete={(reg) => {                               
                             this.setState({pressedCurrentBtn: false})                            
                             this.props.onRegionChange(reg);
                             region = reg;
@@ -299,13 +299,7 @@ export default class MyMapView extends Component {
 }
 
 const styles = StyleSheet.create({
-    actionButtonIcon: {
-        fontSize: 20,
-        position: 'absolute',
-        top: -20,
-        right: -10     
-    },
-    locationBtn:{
+    locationBtn: {
         position: 'absolute', 
         justifyContent: 'center', 
         alignItems: 'center', 
@@ -313,7 +307,7 @@ const styles = StyleSheet.create({
         height: 40, 
         backgroundColor: 'white', 
         right: 25,
-        bottom: 120, 
+        bottom: Dimensions.get('screen').height * 0.2,  
         borderRadius: 20,
         shadowOpacity: 0.5,
         shadowRadius: 5,

@@ -19,6 +19,8 @@ import {
 
 import auth from '@react-native-firebase/auth';
 
+import PushNotification, {Importance} from 'react-native-push-notification';
+
 import {
   GoogleSignin,
   statusCodes,
@@ -27,6 +29,7 @@ import {
 import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {CometChat} from '@cometchat-pro/react-native-chat';
 
 import messaging from '@react-native-firebase/messaging';
@@ -107,7 +110,6 @@ const LoginScreen = ({navigation}) => {
     }
   };
 
-  // BACK
   const connect = async (id, email) => {
     try {
       await AsyncStorage.setItem('id', id);
@@ -129,8 +131,8 @@ const LoginScreen = ({navigation}) => {
     })
     .then(response => response.json())
     .then(responseData => {
-      if (responseData) {              
-      CometChat.init(appID, appSetting)
+      if(responseData) { 
+        CometChat.init(appID, appSetting)
         .then(
           () => {
             console.log('Initialization completed successfully');
@@ -160,8 +162,7 @@ const LoginScreen = ({navigation}) => {
           ),
         );
         navigation.navigate('DrawerNav');
-      } else {
-        console.log(responseData);
+      }else {      
         navigation.navigate('Nickname');
       }
     });
@@ -199,7 +200,6 @@ const LoginScreen = ({navigation}) => {
   };
 
   // GOOGLE
-
   const g_signIn = async () => {
     // It will prompt google Signin Widget
     try {
@@ -282,7 +282,7 @@ const LoginScreen = ({navigation}) => {
         connect(id, email);
       });
   };
-
+  
   return (
     <View style={styles.mainBody}>
       <View keyboardShouldPersistTaps="handled">

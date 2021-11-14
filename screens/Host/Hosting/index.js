@@ -197,18 +197,33 @@ export default class Hosting extends Component {
         var icon;
 
         if(this.state.room.category === '축구') {            
-            icon = 'https://cdn.pixabay.com/photo/2014/10/14/20/24/soccer-488700_960_720.jpg';
+            icon = 'https://cdn-icons-png.flaticon.com/512/3379/3379077.png';
         }else if(this.state.room.category === '농구') {
-            icon = 'https://cdn.pixabay.com/photo/2015/05/15/14/49/basketball-768713_960_720.jpg';
-        }else if(this.state.room.category === '테니스') {
-            icon = 'https://cdn.pixabay.com/photo/2016/11/29/01/14/athletes-1866487_960_720.jpg';
+            icon = 'https://cdn-icons-png.flaticon.com/512/2527/2527948.png';
         }else if(this.state.room.category === '탁구') {
-            icon = 'https://cdn.pixabay.com/photo/2019/03/07/16/40/table-tennis-4040584_960_720.jpg';
-        }else if(this.state.room.category === '풋살') {
-            icon = 'https://t4.ftcdn.net/jpg/02/51/90/51/240_F_251905127_onmn1GR6Gmq7WXzIsA0WRWQ7atoQEgkt.jpg';
+            icon = 'https://cdn-icons-png.flaticon.com/512/4500/4500081.png';
         }else if(this.state.room.category === '볼링') {
-            icon = 'https://cdn.pixabay.com/photo/2014/01/03/02/48/bowling-237905_960_720.jpg';
+            icon = 'https://cdn-icons-png.flaticon.com/512/3523/3523431.png';
+        }else if(this.state.room.category === '등산') {
+            icon = 'https://cdn-icons-png.flaticon.com/512/1028/1028346.png';
+        }else if(this.state.room.category === '골프') {
+            icon = 'https://cdn-icons-png.flaticon.com/512/1039/1039403.png';               
+        }else if(this.state.room.category === '런닝') {
+            icon = 'https://cdn-icons-png.flaticon.com/512/1869/1869509.png';
+        }else if(this.state.room.category === '웨이트') {
+            icon = 'https://cdn-icons-png.flaticon.com/512/502/502128.png';   
+        }else if(this.state.room.category === '술 한잔') {
+            icon = 'https://cdn-icons-png.flaticon.com/512/4516/4516609.png';
+        }else if(this.state.room.category === '리그오브레전드') {
+            icon = '롤';   
+        }else if(this.state.room.category === '배틀그라운드') {
+            icon = '배그';   
+        }else if(this.state.room.category === '보드게임') {
+            icon = 'https://cdn-icons-png.flaticon.com/512/3909/3909075.png';
+        }else if(this.state.room.category === '언어교환') {
+            icon = 'https://cdn-icons-png.flaticon.com/512/3898/3898150.png';  
         }
+        
         
         var group = new CometChat.Group(GUID, groupName, groupType, password, icon);
 
@@ -230,29 +245,28 @@ export default class Hosting extends Component {
                     style={{ width:"100%", height:'100%' }}
                 >
                     <SafeAreaView >
-                        <View style={styles.headerConatiner}>
+                    <View style={styles.headerConatiner}>
                             <View style={styles.backIcon}>
                                 <Pressable
                                     onPress={() => this.props.navigation.navigate('DrawerNav')}
                                     style={styles.backIcon}
                                 >
-                                    <TouchableOpacity>
-                                        <Ionicons                        
-                                            name={"ios-chevron-back"}
-                                            size={30}
-                                            color={'black'}
-                                            style={{marginRight: 22, marginLeft: 10}}                                            
-                                        />
-                                    </TouchableOpacity>                               
+                                <MaterialIcons name={"arrow-back-ios"} 
+                                    size={35} 
+                                    color={'#000'}
+                                    style={{marginLeft:30}}
+                                />                                
                                 </Pressable>
+                            </View>                    
+                            <View style={styles.headerTextContainer}>
                                 {this.state.check === 'modify' 
                                 ? 
-                                <Text style={styles.headerText}>수정</Text>
+                                <Text style={styles.headerText}>Modify</Text>
                                 : 
-                                <Text style={styles.headerText}>호스트</Text>
-                                }    
-                            </View>                                                                  
-                        </View>      
+                                <Text style={styles.headerText}>Hosting</Text>
+                                }
+                            </View>                    
+                        </View>       
                         <View style={styles.contentContainer}>
                             <View style={styles.categoryContainer}>
                                 <Text style={styles.categoryText}>Category</Text>
@@ -309,7 +323,7 @@ export default class Hosting extends Component {
                                     style={styles.modifyButton}  
                                     onPress={() => this.modifyRoom()}                           
                                 >
-                                    <Text style={{color:'#000', fontSize:25, fontWeight:'bold'}}>수정</Text>
+                                    <Text style={{color:'#000', fontSize:25, fontWeight:'bold'}}>Modify</Text>
                                 </Pressable>
                             </TouchableOpacity>
                             :   
@@ -318,7 +332,7 @@ export default class Hosting extends Component {
                                     style={styles.hostButton}
                                     onPress={() => {this.hosting(); this.createGroup();}}                        
                                 >                                
-                                    <Text style={{color:'#000', fontSize:25, fontWeight:'bold'}}>호스팅</Text>                                
+                                    <Text style={{color:'#000', fontSize:25, fontWeight:'bold'}}>Hosting</Text>                                
                                 </Pressable>
                             </TouchableOpacity>
                             }

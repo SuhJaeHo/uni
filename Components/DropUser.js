@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, Pressable, Dimensions, StyleSheet, Alert, BackHandler} from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 
 import auth from "@react-native-firebase/auth";
 
@@ -77,7 +77,7 @@ export default class DropUser extends Component {
 
     dropFunc = async() => {
         const user = auth().currentUser;
-        var id = await AsyncStorage.getItem('id');
+        var id = await AsyncStorage.getItem('id');    
 
         const URL = `${LOCAL_URL}/dropUser`;
 
@@ -103,9 +103,7 @@ export default class DropUser extends Component {
             .then(response => response.json())
             .then(responseData => console.log(responseData))  
         })
-        .then(() => {
-            console.log(this.state.GUID);
-            console.log(this.state.GUID.length);
+        .then(() => {            
             for(let i = 0; i < this.state.GUID.length; i++) {
                 //탈퇴하는 회원이 방의 호스트 일 경우
                 if(this.state.GUID[i].hostUser.length === 1 && this.state.GUID[i].hostUser.indexOf(id) > -1) {
@@ -159,13 +157,13 @@ export default class DropUser extends Component {
 
     render() {
         return (       
-            <View >
-                <TouchableHighlight 
+            <View>
+                <TouchableOpacity 
                     onPress={() => this.dropUser()}
-                    style={styles.buttonStyle}
+                    //style={styles.buttonStyle}
                 >
-                    <Text style={styles.textStyle}>회원탈퇴</Text>                    
-                </TouchableHighlight>
+                    <Text>회원탈퇴</Text>                    
+                </TouchableOpacity>
             </View>
         )
     }
@@ -173,22 +171,19 @@ export default class DropUser extends Component {
 
 const styles = StyleSheet.create({
     buttonStyle: {
-        minWidth: 300,
+        minWidth: Dimensions.get('screen').width * 0.3,
+        height: Dimensions.get('screen').height * 0.06,
         backgroundColor: "#1212",
         borderWidth: 0,
-        color: "red",
-        height: 40,            
+        color: "red",                    
         borderRadius: 30,
-        marginLeft: 35,
-        marginRight: 35,
-        marginTop: 20,
-        marginBottom: 25,
         alignItems: 'center',
         justifyContent: 'center'
     },
     textStyle:{
-        color: 'red',
-        fontSize: 20,
+        color: '#fb009e',
+        paddingVertical: 10,
+        fontSize: Dimensions.get('screen').height * 0.025,
         fontWeight: 'bold'
     }
 }); 

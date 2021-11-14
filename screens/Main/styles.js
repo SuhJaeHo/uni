@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         zIndex: 1,
         fontSize: 20,
         position: 'absolute',
-        top: -25,
+        top: -Dimensions.get('screen').height * 0.025,
         right: -10     
     },
     actionButtonIconClose:{

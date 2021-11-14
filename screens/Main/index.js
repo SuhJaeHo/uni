@@ -96,21 +96,26 @@ export default class Main extends Component {
           LogBox.ignoreAllLogs(true); 
           BackHandler.addEventListener('hardwareBackPress', this.backButtonClick); 
                                                       
-          if(this.state.firstLoading) {   
-               console.log('FIRSTLOADING');                                                         
+          if(this.state.firstLoading) {                                                                        
                this.state.firstLoading = false;               
                this.getCurrentLocation();
+               setTimeout(() => {
+                    this.setState({temp: 0});
+               }, 1000);
           }else {
                this.hosted();
           }
 
-          this.props.navigation.addListener('focus', async () => {                                                                   
+          this.props.navigation.addListener('focus', async () => {                    
                this.setState({ 
                     temp: 1,
-               })   
+               })                  
+               setTimeout(() => {
+                    this.setState({temp: 0});
+               }, 1000);              
                this.removeStorage();                                   
           })               
-     }
+     }     
 
      componentWillUnmount = async() => {
           BackHandler.removeEventListener('hardwareBackPress', this.backButtonClick);
@@ -121,7 +126,7 @@ export default class Main extends Component {
                this.bs.current.snapTo(2);
                this.state.isOpen = false;
           }else {
-               BackHandler.exitApp();
+               BackHandler.exitApp();               
           } 
           
           return true;

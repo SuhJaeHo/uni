@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     },
     headerText:{
         fontSize:19,
-        fontWeight:'500'
+        fontWeight:'500',        
     },
     headerTextContainer:{
         justifyContent: 'center',        

@@ -308,7 +308,7 @@ export default class NewProfileImg extends Component {
         })            
     }
 
-    check = () => {
+    check = async() => {
         var cnt = 0;
         this.state.image.map((data, index) => {
             console.log(data);

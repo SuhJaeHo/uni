@@ -1,10 +1,11 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({    
-    headerContainer: {
+    headerConatiner: {
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'center', 
         backgroundColor: '#fff',
+        justifyContent:'flex-start',        
         height: 50,
     },
     headerTextContainer:{
@@ -14,8 +15,9 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
     },
-    headerText:{
-        fontSize:18                   
+    headerText:{        
+        fontSize:19,
+        fontWeight:'500',                                  
     },
     backIcon: {
         fontWeight: 'bold',

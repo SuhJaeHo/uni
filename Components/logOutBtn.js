@@ -7,11 +7,14 @@ import {
   TouchableOpacity,
   Alert,
   Pressable,
+  Dimensions,
 } from "react-native";
 
 import { useNavigation } from '@react-navigation/native';
 
 import auth from "@react-native-firebase/auth";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
   GoogleSignin,
@@ -23,10 +26,9 @@ const LogoutBtn = () => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged((user) => {
-      console.log("user", JSON.stringify(user));
+    const subscriber = auth().onAuthStateChanged((user) => {      
       setUser(user);
-    });
+  });
 
     return subscriber;
   }, []);
@@ -35,20 +37,20 @@ const LogoutBtn = () => {
 
   const logout = async() => {
     Alert.alert(
-      "Logout",
-      "Are you sure? You want to logout?",
+      "로그아웃",
+      "로그아웃 하시겠습니까?",
       [
         {
-          text: "Cancel",
+          text: "아니요",
           onPress: () => {
             return null;
           },
         },
         {
-          text: "Confirm",
+          text: "네",
           onPress: () => {
-            GoogleSignin.signOut();
-            auth()
+              GoogleSignin.signOut();
+              auth()
               .signOut()
               .then(() => navigation.replace("Auth"))
               .catch((error) => {
@@ -56,13 +58,14 @@ const LogoutBtn = () => {
                 if (error.code === "auth/no-current-user")
                   navigation.replace("Auth");
                 else alert(error);
-              });
+              });                             
           },
         },
       ],
       { cancelable: false }
     );
   };
+
 
   const signOut = async() => {
     try {
@@ -74,16 +77,25 @@ const LogoutBtn = () => {
   }
 
   return (  
-    <View style={{width:100, height:39, justifyContent:'center', alignItems:'center', zIndex:200}}>
-        <Pressable
+    <View>
+        <TouchableOpacity
+          onPress={logout}
+        >        
+          <Text>
+              로그아웃
+          </Text>
+        </TouchableOpacity>
+        {/*
+        <TouchableOpacity
             style={styles.buttonStyle}
             activeOpacity={0.5}
             onPress={logout}
         >
             <Text style={styles.buttonTextStyle}>
-                Logout
+                로그아웃
             </Text>
-        </Pressable>
+        </TouchableOpacity>
+        */}
     </View>
   );
 };
@@ -92,21 +104,20 @@ export default LogoutBtn;
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    minWidth: 300,
+    minWidth: Dimensions.get('screen').width * 0.3,
+    height: Dimensions.get('screen').height * 0.06,
     backgroundColor: "grey",
     borderWidth: 0,
     color: "red",    
-    height: 50,
     alignItems: "center",
+    justifyContent: 'center',
     borderRadius: 30,
-    marginLeft: 35,
-    marginRight: 35,
-    marginTop: 20,
-    marginBottom: 25,
+    marginBottom: Dimensions.get('screen').height * 0.05,
   },
   buttonTextStyle: {
-    color: "red",
+    color: "#fb009e",
     paddingVertical: 10,
-    fontSize: 20,    
+    fontSize: Dimensions.get('screen').height * 0.025, 
+    fontWeight: 'bold'
   },
 });

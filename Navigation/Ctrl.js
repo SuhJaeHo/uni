@@ -126,7 +126,7 @@ export default function DrawerNav({ route, navigation }) {
                 options={{ 
                     drawerLabel: 'Setting ⚙️',
                     headerShown: false,                    
-                }}
+                }}                              
                 component={Setting} 
             />
         </Drawer.Navigator>
