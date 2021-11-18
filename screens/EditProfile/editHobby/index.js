@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, ScrollView, Pressable, ImageBackground, Dimensions, SafeAreaView, TextInput, Alert, BackHandler} from 'react-native';
+import {View, Text, ScrollView, Pressable, ImageBackground, Dimensions, SafeAreaView, TextInput, Alert, BackHandler, PermissionsAndroid} from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -26,9 +26,10 @@ export default class editHobby extends Component {
         }
     }
 
-    componentDidMount = () => {     
-        LogBox.ignoreAllLogs(true);     
-        this.props.navigation.addListener('focus', async () => {
+    componentDidMount = () => {            
+        LogBox.ignoreAllLogs(true);   
+
+        this.props.navigation.addListener('focus', async () => {            
             BackHandler.addEventListener('hardwareBackPress', this.backButtonClick);  
         });   
         

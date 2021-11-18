@@ -6,11 +6,14 @@ import {
   View,
   StyleSheet,
   Image,
+  PermissionsAndroid
 } from "react-native";
 
 import auth from "@react-native-firebase/auth";
 import RNBootSplash from "react-native-bootsplash";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 
 import {
   GoogleSignin,
@@ -34,15 +37,48 @@ const SplashScreen = ({ navigation }) => {
     .setRegion(region)
     .build();
 
-  React.useEffect(() => {
-    setTimeout(() => {
-      navigation.replace(
-        auth().currentUser ? "DrawerNav" : "Auth"        
-      );
+  React.useEffect(() => {   
+    checkPermission();
+  }, []);
+  
+  const checkPermission = async() => {
+    var count = 0;
 
-      auth().currentUser ? chatInit() : console.log('Login Please');
-    }, 1);
-  }, []);  
+    await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then((result) => {
+      if(result !== 'granted') {
+        console.log(result);
+        count += 1;
+      }
+    })
+
+    await check(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE).then((result) => {
+      if(result !== 'granted') {
+        console.log(result);
+        count += 1;     
+      }
+    })
+
+    await navigator(count)
+  }
+
+  const navigator = async(count) => {
+    console.log('카운트 : ' + count);
+    if(count === 0) {
+      setTimeout(() => {
+        navigation.replace (
+          auth().currentUser ? "DrawerNav" : "Auth"
+        );
+
+        auth().currentUser ? chatInit() : console.log('Login Please');
+      }, 1);
+    }else {
+      setTimeout(() => {
+        navigation.replace (
+          "PermissionScreen"  
+        );    
+      }, 1);
+    }  
+  }
 
   const chatInit = async() => {    
     var id = await AsyncStorage.getItem('id');

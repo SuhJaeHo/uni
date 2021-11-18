@@ -72,14 +72,7 @@ function homeScreenStack({ route, navigation }) {
                 }}                          
                 initialParams={{params: route.params}}                                           
             >                
-            </Stack.Screen>            
-            <Stack.Screen
-                name={"EditProfile"}
-                component={EditProfile}
-                options={{
-                    headerShown: true,    
-                }}
-            />          
+            </Stack.Screen>                                           
         </Stack.Navigator>
     );
 }
@@ -120,15 +113,7 @@ export default function DrawerNav({ route, navigation }) {
                     headerShown: false,        
                 }}
                 component={Cs} 
-            />
-            <Drawer.Screen
-                name="SetPage"
-                options={{ 
-                    drawerLabel: 'Setting ⚙️',
-                    headerShown: false,                    
-                }}                              
-                component={Setting} 
-            />
+            />            
         </Drawer.Navigator>
     );
 }

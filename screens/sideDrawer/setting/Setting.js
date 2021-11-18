@@ -10,6 +10,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypov from 'react-native-vector-icons/Entypo';
 
+import { LogBox } from "react-native";
+
 import { LOCAL_URL } from '@env';
 
 import styles from './styles';
@@ -25,6 +27,8 @@ export default class Setting extends Component {
     }
 
     componentDidMount = async() => {
+        LogBox.ignoreAllLogs(true); 
+
         this.getPush();
         this.props.navigation.addListener('focus', async () => {
             BackHandler.addEventListener('hardwareBackPress', this.backButtonClick);  
@@ -36,7 +40,7 @@ export default class Setting extends Component {
     }
 
     backButtonClick = () => {
-        this.props.navigation.navigate('HomePage');
+        this.props.navigation.navigate('DrawerNav');
         return true;
     }    
 
@@ -83,7 +87,7 @@ export default class Setting extends Component {
                 <View style={styles.headerConatiner}>
                     <View style={styles.backIcon}>
                         <Pressable
-                            onPress={() => this.props.navigation.navigate('HomePage')}
+                            onPress={() => this.props.navigation.navigate('DrawerNav')}                            
                             style={styles.backIcon}
                         >
                             <MaterialIcons name={"arrow-back-ios"} 
@@ -97,23 +101,7 @@ export default class Setting extends Component {
                         <Text style={styles.headerText}>설정</Text>
                     </View>
                 </View>                
-                <View style={{}}>
-                    {/*
-                    <View style={{justifyContent:'center', alignItems:'center', backgroundColor:'#fff', }}>
-                        <TouchableOpacity 
-                            style={{justifyContent:'center', alignItems:'center', backgroundColor:'#fff', paddingVertical:10}}
-                            onPress={() => alert ('서비스 준비중')}
-                        >
-                            <Image
-                                style={{width:80, height:80}}
-                                source={require('../../../assets/imgs/invitation.png')}
-                            />
-                            <Text style={{marginTop:10, fontWeight:'bold', fontSize:18}}>
-                                친구 초대하기
-                            </Text>
-                        </TouchableOpacity>                    
-                    </View>
-                    */}
+                <View style={{}}>                    
                     <View>
                         <View style={{paddingVertical: 25, flexDirection: 'row', borderBottomColor: 'lightgrey', borderBottomWidth: 1}}>                                                    
                             <View style={{marginLeft: 10}}> 
@@ -202,13 +190,7 @@ export default class Setting extends Component {
                         size={24}
                         color={'#fb009e'}
                     />  
-                </View>                
-                {/*
-                <View style={{justifyContent:'center', alignItems:'center', marginTop: Dimensions.get('screen').height * 0.07}}>
-                    <LogoutBtn/>
-                    <DropUser/>
-                </View>            
-                */}
+                </View>                                
             </View>
         );
     }    

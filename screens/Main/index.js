@@ -29,6 +29,8 @@ import { geo, LOCAL_URL } from '@env';
 
 import { LogBox } from "react-native";
 
+import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+
 import styles from './styles';
 
 const renderHeight = Dimensions.get('window').height * 0.8;
@@ -63,38 +65,16 @@ export default class Main extends Component {
                //bottom sheet
                isOpen: false,
           }
-     }
-
-     /*
-     locatePermission = async() => {
-          try {
-               const granted = await PermissionsAndroid.request (
-                    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-                    {
-                         'title': 'TEST',
-                         'message': 'TEST',
-                    }
-               )
-
-               if(granted === PermissionsAndroid.RESULTS.GRANTED) {
-                    this.getCurrentLocation();
-                    console.log('Granted')
-               }else {
-                    Alert.alert('Location Permission Not Granted');
-               }
-          } catch(err) {
-               console.log(err);
-          }
-     }
-     */
+     }     
 
      componentDidMount = async() => {            
+          BackHandler.addEventListener('hardwareBackPress', this.backButtonClick);    
+
           if(this.props.route.params.params.params !== undefined) {               
                this.state.firstLoading = false;         
           }
           
-          LogBox.ignoreAllLogs(true); 
-          BackHandler.addEventListener('hardwareBackPress', this.backButtonClick); 
+          LogBox.ignoreAllLogs(true);           
                                                       
           if(this.state.firstLoading) {                                                                        
                this.state.firstLoading = false;               
@@ -106,7 +86,8 @@ export default class Main extends Component {
                this.hosted();
           }
 
-          this.props.navigation.addListener('focus', async () => {                    
+          this.props.navigation.addListener('focus', async () => { 
+               BackHandler.addEventListener('hardwareBackPress', this.backButtonClick);                                   
                this.setState({ 
                     temp: 1,
                })                  

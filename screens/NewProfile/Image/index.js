@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, Pressable, Dimensions, Image, TextInput, Alert, SafeAreaView, ImageBackground} from 'react-native';
+import {View, Text, TouchableOpacity, Pressable, Dimensions, Image, TextInput, Alert, SafeAreaView, ImageBackground, PermissionsAndroid} from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
 import ImagePicker from 'react-native-image-crop-picker';
@@ -18,6 +18,8 @@ import { CometChat } from '@cometchat-pro/react-native-chat';
 import messaging from '@react-native-firebase/messaging';
 
 import { CHAT_APPID, CHAT_APIKEY, CHAT_AUTHKEY, LOCAL_URL  } from '@env';
+
+import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 
 import { LogBox } from "react-native";
 
@@ -54,6 +56,36 @@ export default class NewProfileImg extends Component {
         LogBox.ignoreAllLogs(true); 
         this.getProfile();        
     }
+
+    requestPermission = () => {
+                
+    }
+    
+    /*
+    requestCameraPermission = async() => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.CAMERA,
+                {
+                    title: "TEST",
+                    message: "TEST",
+                    buttonNegative: "아니요",
+                    buttonPositive: "네"
+                }
+            )
+
+            console.log(granted);
+
+            if(granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log("OK");
+            }else {
+                console.log("NO");
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    }
+    */
 
     getProfile = async () => {
         try {

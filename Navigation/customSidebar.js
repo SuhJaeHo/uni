@@ -92,7 +92,7 @@ const CustomSidebarMenu = (props) => {
               </Text>              
             </TouchableOpacity>            
             <Icon name="keyboard-arrow-right" color="grey" size={30} /> 
-          </Pressable>
+          </Pressable>          
         <DrawerContentScrollView {...props}>
           <View style={{width:"100%", height:80, backgroundColor:'grey', justifyContent:'center', alignItems:'center', marginBottom:10}}>
             <Pressable style={{width:"90%", height:70, backgroundColor:'#fff',  alignItems:'center',justifyContent:'center'}}>
@@ -102,6 +102,10 @@ const CustomSidebarMenu = (props) => {
             </Pressable>
           </View>
           <DrawerItemList {...props}/>
+          <DrawerItem
+            label="Setting ⚙️"
+            onPress={() => props.navigation.navigate('Setting')}
+          />
           <DrawerItem
             label="Visit Us 🌐"
             onPress={() => Linking.openURL('https://loof.party/')}

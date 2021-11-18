@@ -179,7 +179,7 @@ export default class RoomList extends Component {
                ))
           }else {
                roomList.push (
-                    <View style={styles.noneCard}>
+                    <View style={styles.noneCard} key={0}>
                          <View style={styles.infoContainer}>                              
                               <View style={{width: Dimensions.get('window').width}}>
                                    <Text numberOfLines={1} style={styles.titleText}>호스팅 한 방이 없습니다.</Text>
@@ -298,7 +298,7 @@ export default class RoomList extends Component {
                ))               
           }else {
                roomList.push (                                        
-                    <View style={styles.noneCard}>                         
+                    <View style={styles.noneCard} key={0}>                         
                          <View style={styles.infoContainer}>                              
                               <View style={{width: Dimensions.get('window').width}}>
                                    <Text numberOfLines={1} style={styles.titleText}>참가중인 방이 없습니다.</Text>

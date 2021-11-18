@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Dimensions,
 } from "react-native";
 import PassMeter from "react-native-passmeter";
 import auth from "@react-native-firebase/auth";
@@ -37,9 +38,6 @@ const RegisterScreen = ({ navigation }) => {
       Alert.alert("비밀번호를 확인해주세요");
       return false;
     } 
-
-    console.log(userPassword);
-    console.log(userPasswordCheck);
 
     auth()
       .createUserWithEmailAndPassword(
@@ -89,7 +87,7 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: "#121212" }}
+      style={{ flex: 1, backgroundColor: "#121212", width: Dimensions.get('screen').width * 1, height: Dimensions.get('screen').height * 1 }}      
     >
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -99,116 +97,116 @@ const RegisterScreen = ({ navigation }) => {
         }}
       >        
         <KeyboardAvoidingView enabled>
-          <View style={styles.sectionStyle}>
-            <View style={{flexDirection: 'row', alignItems: 'center', marginBottom:10}}>
-              <View style={{ height: 1, backgroundColor: '#fff'}} />
-              <View>
-                <Text style={{width: 100, textAlign:'left', color: '#fff', fontWeight:'bold', fontSize:20}}>
-                  Name
-                </Text>
-              </View>              
+          <View style={styles.containerStyle}>
+            <View>              
+              <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 20}}>
+                Name
+              </Text>           
             </View>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(UserName) =>
-                setUserName(UserName)
-              }
-              placeholder="Enter Name"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              onSubmitEditing={() =>
-                emailInputRef.current &&
-                emailInputRef.current.focus()
-              }
-              blurOnSubmit={false}
-            />
-          </View>
-          <View style={styles.sectionStyle}>
-            <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
-              <View style={{height: 1, backgroundColor: '#fff'}}/>
-              <View>
-                <Text style={{width: 100, textAlign:'left', color: '#fff', fontWeight:'bold', fontSize:20}}>
-                  Email
-                </Text>
-              </View>                  
+            <View style={styles.sectionStyle}>
+              <TextInput
+                style={styles.inputStyle}
+                onChangeText={(UserName) =>
+                  setUserName(UserName)
+                }
+                placeholder="Enter Name"
+                placeholderTextColor="#8b9cb5"
+                autoCapitalize="sentences"
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  emailInputRef.current &&
+                  emailInputRef.current.focus()
+                }
+                blurOnSubmit={false}
+              />
             </View>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(UserEmail) =>
-                setUserEmail(UserEmail)
-              }              
-              placeholder="Enter Email"
-              placeholderTextColor="#8b9cb5"
-              keyboardType="email-address"
-              ref={emailInputRef}
-              returnKeyType="next"
-              onSubmitEditing={() =>
-                passwordInputRef.current &&
-                passwordInputRef.current.focus()
-              }
-              blurOnSubmit={false}
-            />
+          </View> 
+          
+          <View style={styles.containerStyle}>
+            <View>
+              <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 20}}>
+                Email
+              </Text>                
+            </View>
+            <View style={styles.sectionStyle}>
+              <TextInput
+                style={styles.inputStyle}
+                onChangeText={(UserEmail) =>
+                  setUserEmail(UserEmail)
+                }              
+                placeholder="Enter Email"
+                placeholderTextColor="#8b9cb5"
+                keyboardType="email-address"
+                ref={emailInputRef}
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  passwordInputRef.current &&
+                  passwordInputRef.current.focus()
+                }
+                blurOnSubmit={false}
+              />
+            </View>
           </View>
           {errortext != "" ? (
             <Text style={styles.errorTextStyle}>
               {errortext}
             </Text>
           ) : null}
-          <View style={styles.sectionStyle}>
-            <View style={{flexDirection: 'row', alignItems: 'center', marginBottom:10}}>
-              <View style={{ height: 1, backgroundColor: '#fff'}} />
-              <View>
-                <Text style={{width: 100, textAlign:'left', color: '#fff', fontWeight:'bold', fontSize:20}}>
-                  Password
-                </Text>
-              </View>              
+
+          <View style={styles.containerStyle}>            
+            <View>
+              <Text style={{width: 100, textAlign:'left', color: '#fff', fontWeight:'bold', fontSize:20}}>
+                Password
+              </Text>
+            </View>   
+            <View style={styles.sectionStyle}>           
+              <TextInput
+                style={styles.inputStyle}
+                onChangeText={(UserPassword) =>
+                  setUserPassword(UserPassword)
+                }
+                placeholder="Enter Password"
+                placeholderTextColor="#8b9cb5"
+                ref={passwordInputRef}
+                returnKeyType="next"
+                secureTextEntry={true}
+                onSubmitEditing={Keyboard.dismiss}
+                blurOnSubmit={false}
+              /> 
             </View>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(UserPassword) =>
-                setUserPassword(UserPassword)
-              }
-              placeholder="Enter Password"
-              placeholderTextColor="#8b9cb5"
-              ref={passwordInputRef}
-              returnKeyType="next"
-              secureTextEntry={true}
-              onSubmitEditing={Keyboard.dismiss}
-              blurOnSubmit={false}
-            /> 
-            <View style={{flexDirection: 'row', alignItems: 'center', marginBottom:10}}>
-              <View style={{ height: 1, backgroundColor: '#fff'}} />
-              <View>
-                <Text style={{width:100, textAlign:'left', color:'#fff', fontWeight:'bold', fontSize:20}}>
-                  Confirm
-                </Text>
-              </View>              
-            </View>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(UserPassword) =>
-                setUserPasswordCheck(UserPassword)
-              }
-              placeholder="Enter Password"
-              placeholderTextColor="#8b9cb5"
-              ref={passwordInputRef}
-              returnKeyType="next"
-              secureTextEntry={true}
-              onSubmitEditing={Keyboard.dismiss}
-              blurOnSubmit={false}
-            />          
-            <View style={{marginTop:10}}>
-              <PassMeter
-                showLabels
-                password={userPassword}
-                maxLength={MAX_LEN}
-                minLength={MIN_LEN}
-                labels={PASS_LABELS}            
-              />
-            </View>            
-          </View>          
-          <View style={{justifyContent:'center', alignItems:'center', marginTop:200}}>
+          </View>
+          <View style={styles.containerStyle}>
+            <View>
+              <Text style={{width:100, textAlign:'left', color:'#fff', fontWeight:'bold', fontSize:20}}>
+                Confirm
+              </Text>
+            </View> 
+            <View style={styles.sectionStyle}>          
+              <TextInput
+                style={styles.inputStyle}
+                onChangeText={(UserPassword) =>
+                  setUserPasswordCheck(UserPassword)
+                }
+                placeholder="Enter Password"
+                placeholderTextColor="#8b9cb5"
+                ref={passwordInputRef}
+                returnKeyType="next"
+                secureTextEntry={true}
+                onSubmitEditing={Keyboard.dismiss}
+                blurOnSubmit={false}
+              />  
+            </View> 
+          </View>                       
+          <View style={{marginTop:10}}>
+            <PassMeter
+              showLabels
+              password={userPassword}
+              maxLength={MAX_LEN}
+              minLength={MIN_LEN}
+              labels={PASS_LABELS}            
+            />
+          </View>                               
+          <View style={{justifyContent:'center', alignItems:'center'}}>
             <TouchableOpacity
               style={styles.buttonStyle}
               activeOpacity={0.5}
@@ -228,22 +226,23 @@ const RegisterScreen = ({ navigation }) => {
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
-  sectionStyle: {    
-    height: 80,
+  containerStyle: {    
+    marginHorizontal: Dimensions.get('screen').width * 0.1,
+    marginBottom: 10,
     marginTop: 20,
-    marginLeft: 35,
-    marginRight: 35,
-    margin: 10,    
+  },
+  sectionStyle: {
+    alignItems: 'center',
   },
   text:{
     color: '#fff'
   },
   buttonStyle: {
     backgroundColor: "#fb009e",    
-    color: "#FFFFFF",    
+    color: "#FFF",    
     height: 50,    
     borderRadius: 30,
-    width: 312,
+    width: Dimensions.get('screen').width * 0.7,
     marginTop: 20,
     marginBottom: 20,
     justifyContent:'center',
@@ -256,9 +255,9 @@ const styles = StyleSheet.create({
     fontWeight:'bold',  
   },
   inputStyle: {
-    paddingLeft:20,
+    paddingLeft: 20,
     color: "#fff",
-    width: 312,
+    width: Dimensions.get('screen').width * 0.8,
     height: 45,
     borderWidth: 1,
     borderRadius: 30,

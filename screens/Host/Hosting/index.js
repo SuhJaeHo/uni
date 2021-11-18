@@ -200,6 +200,7 @@ export default class Hosting extends Component {
             icon = 'https://cdn-icons-png.flaticon.com/512/3379/3379077.png';
         }else if(this.state.room.category === '농구') {
             icon = 'https://cdn-icons-png.flaticon.com/512/2527/2527948.png';
+            
         }else if(this.state.room.category === '탁구') {
             icon = 'https://cdn-icons-png.flaticon.com/512/4500/4500081.png';
         }else if(this.state.room.category === '볼링') {

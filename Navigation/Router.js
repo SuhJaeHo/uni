@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import SplashScreen from '../screens/Splash';
 import LoginScreen from '../screens/Login';
 import RegisterScreen from '../screens/Register';
+import PermissionScreen from "../screens/Permission";
 
 import PhoneAuth from '../Components/phoneAuth/PhoneAuth';
 
@@ -32,6 +33,7 @@ import UserProfile from "../screens/UserProfile";
 import Privacy from "../screens/sideDrawer/privacy";
 import Notify from "../Components/Notify";
 import notifyContent from '../Components/notifyContent';
+import Setting from "../screens/sideDrawer/setting/Setting";
 
 import DrawerNav from './Ctrl';
 import EditProfile from '../screens/EditProfile';
@@ -49,7 +51,7 @@ const Stack = createStackNavigator();
 
 const Auth = () => {
     return (
-        <Stack.Navigator initialRouteName="LoginScreen">
+        <Stack.Navigator initialRouteName="LoginScreen">            
             <Stack.Screen
                 name="LoginScreen"
                 component={LoginScreen}
@@ -61,12 +63,13 @@ const Auth = () => {
                 options={{
                     title: "Register", 
                     headerStyle: {
-                        backgroundColor: "#307ecc", 
+                        backgroundColor: "#fb009e",                         
                     },
                     headerTintColor: "#fff", 
                     headerTitleStyle: {
-                        fontWeight: "bold", 
+                        fontWeight: "bold",                         
                     },
+                    headerTitleAlign: 'center',
                 }}
             />
             <Stack.Screen
@@ -89,6 +92,11 @@ const Router = ({navigation}) => {
                 <Stack.Screen
                     name="Auth"
                     component={Auth}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="PermissionScreen"
+                    component={PermissionScreen}
                     options={{ headerShown: false }}
                 />
                 <Stack.Screen
@@ -299,7 +307,14 @@ const Router = ({navigation}) => {
                             color: 'black'
                         }
                     }}                                      
-                />
+                />     
+                <Stack.Screen
+                    name={"Setting"}
+                    component={Setting}  
+                    options={{
+                        headerShown: false,
+                    }}                                      
+                />                 
                 <Stack.Screen
                     name={"Privacy"}
                     component={Privacy}

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {KeyboardAvoidingView, View, Text, TouchableOpacity, Pressable, Dimensions, Image, TextInput, Alert, SafeAreaView, ImageBackground, BackHandler} from 'react-native';
+import {KeyboardAvoidingView, View, Text, TouchableOpacity, Pressable, Dimensions, Image, TextInput, Alert, SafeAreaView, ImageBackground, BackHandler, PermissionsAndroid} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import ImageResizer from 'react-native-image-resizer';
 import { Buffer } from 'buffer';
@@ -45,7 +45,7 @@ export default class EditProfile extends Component {
         }
     }
 
-    componentDidMount = () => {      
+    componentDidMount = () => {            
         LogBox.ignoreAllLogs(true);     
         this.props.navigation.addListener('focus', async () => {
             BackHandler.addEventListener('hardwareBackPress', this.backButtonClick);  

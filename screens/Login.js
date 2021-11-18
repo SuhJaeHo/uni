@@ -15,6 +15,8 @@ import {
   Dimensions,
   Platform,
   BackHandler,
+  PermissionsAndroid,
+  Alert
 } from 'react-native';
 
 import auth from '@react-native-firebase/auth';
@@ -44,6 +46,8 @@ import {
 
 import { LogBox } from 'react-native';
 
+import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+
 LogBox.ignoreLogs(['Warning: ...']);
 
 const LoginScreen = ({navigation}) => {
@@ -65,11 +69,6 @@ const LoginScreen = ({navigation}) => {
   const appSetting = new CometChat.AppSettingsBuilder()
     .subscribePresenceForAllUsers()
     .setRegion(region)
-    .build();
-
-  const usersRequest = new CometChat.UsersRequestBuilder()
-    .setLimit(100)
-    .friendsOnly(true)
     .build();
 
   useEffect(() => {
