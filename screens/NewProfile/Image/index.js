@@ -17,7 +17,7 @@ import { CometChat } from '@cometchat-pro/react-native-chat';
 
 import messaging from '@react-native-firebase/messaging';
 
-import { CHAT_APPID, CHAT_APIKEY, CHAT_AUTHKEY, LOCAL_URL  } from '@env';
+import { CHAT_APPID, CHAT_APIKEY, CHAT_AUTHKEY, SERVER_URL  } from '@env';
 
 import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 
@@ -102,14 +102,14 @@ export default class NewProfileImg extends Component {
             console.log(e);
         }
 
-        fetch(`${LOCAL_URL}/firstProfile/?id=` + this.state.id + "&time=" + new Date())
+        fetch(`${SERVER_URL}/firstProfile/?id=` + this.state.id + "&time=" + new Date())
         .then(responseData => {
             if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
                 this.state.image[0].uri = responseData.url;     
             }
         })
         .then(() =>
-            fetch(`${LOCAL_URL}/secondProfile/?id=` + this.state.id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/secondProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {  
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {
                     this.state.image[1].uri = responseData.url;                                     
@@ -117,7 +117,7 @@ export default class NewProfileImg extends Component {
             })            
         )
         .then(() =>
-            fetch(`${LOCAL_URL}/thirdProfile/?id=` + this.state.id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/thirdProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[2].uri = responseData.url;                                   
@@ -125,21 +125,21 @@ export default class NewProfileImg extends Component {
             })
         )
         .then(() =>
-            fetch(`${LOCAL_URL}/fourthProfile/?id=` + this.state.id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/fourthProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[3].uri = responseData.url;     
                 }
             })
         ).then(() =>
-            fetch(`${LOCAL_URL}/fifthProfile/?id=` + this.state.id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/fifthProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[4].uri = responseData.url;                                     
                 }
             })
         ).then(() => 
-            fetch(`${LOCAL_URL}/sixthProfile/?id=` + this.state.id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/sixthProfile/?id=` + this.state.id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[5].uri = responseData.url;                                     
@@ -276,7 +276,7 @@ export default class NewProfileImg extends Component {
             type: type,
         })
 
-        const URL = `${LOCAL_URL}/uploadProfile`;
+        const URL = `${SERVER_URL}/uploadProfile`;
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -305,7 +305,7 @@ export default class NewProfileImg extends Component {
 
         const nickname = await AsyncStorage.getItem('nickname'); 
 
-        fetch(`${LOCAL_URL}/firstProfile/?id=` + this.state.id  + "&time=" + new Date())
+        fetch(`${SERVER_URL}/firstProfile/?id=` + this.state.id  + "&time=" + new Date())
         .then(responseData => {           
             const URL = 'https://api-us.cometchat.io/v3.0/users';
             fetch(URL, {
@@ -359,7 +359,7 @@ export default class NewProfileImg extends Component {
     }
 
     setCompleted = () => {
-        const URL = `${LOCAL_URL}/setCompleted`;
+        const URL = `${SERVER_URL}/setCompleted`;
         fetch(URL, {
             method: 'POST',
             headers: {

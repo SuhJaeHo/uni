@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import {StyleSheet, View, Text, Image, Dimensions, TouchableHighlight, TextInput, Pressable, FlatList, BackHandler, Alert} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 import { Avatar } from 'react-native-paper';
 import FastImage from 'react-native-fast-image';
 
 import ActionSheet from 'react-native-actionsheet';
 
-import { LOCAL_URL } from '@env';
-import { TouchableOpacity } from 'react-native';
+import { SERVER_URL } from '@env';
 
 export default class Category extends Component {
     constructor(props) {
@@ -41,7 +41,7 @@ export default class Category extends Component {
             profile: this.props.route.params.image.uri,
         })
 
-        fetch(`${LOCAL_URL}/userProfile/?id=` + uid)    
+        fetch(`${SERVER_URL}/userProfile/?id=` + uid)    
         .then(response => response.json())
         .then(responseData => {
             this.setState({
@@ -71,7 +71,7 @@ export default class Category extends Component {
         if(reason !== '취소') {
             var uid = this.props.route.params.uid;  
 
-            const URL = `${LOCAL_URL}/reportUser`;
+            const URL = `${SERVER_URL}/reportUser`;
             fetch(URL, {
                 method: 'POST',
                 headers: {

@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { LOCAL_URL } from '@env';
+import { SERVER_URL } from '@env';
 
 import * as enums from '../../../lib/chat/cometchat-pro-react-native-ui-kit-3/src/utils/enums';
 
@@ -54,7 +54,7 @@ export default class RoomList extends Component {
                console.log(e);
           }
 
-          const URL = `${LOCAL_URL}/roomList`;
+          const URL = `${SERVER_URL}/roomList`;
           fetch(URL, {
                method: 'POST',
                headers: {

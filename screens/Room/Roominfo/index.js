@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, Text, View, Pressable, ScrollView, Image, Alert, BackHandler } from 'react-native';
+import { ImageBackground, Text, View, Pressable, ScrollView, Image, Alert, BackHandler, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import ActionSheet from 'react-native-actionsheet';
+
 import { CometChat } from '@cometchat-pro/react-native-chat';
 
-import { LOCAL_URL } from '@env';
+import { SERVER_URL } from '@env';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -14,6 +16,13 @@ import styles from './styles';
 
 function Roominfo({ route, navigation }) {
     const [id, setId] = useState('');
+    const [reason, setReason] = useState([
+        '부적절한 메세지',
+        '부적절한 프로필 사진',
+        '기타',                    
+        '취소',
+    ]);
+
     const { sendd } = route.params;
 
     useEffect(() => {   
@@ -45,7 +54,7 @@ function Roominfo({ route, navigation }) {
             }
         )
 
-        fetch(`${LOCAL_URL}/deleteGroup`, {
+        fetch(`${SERVER_URL}/deleteGroup`, {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json',
@@ -68,7 +77,7 @@ function Roominfo({ route, navigation }) {
             }
         )        
 
-        fetch(`${LOCAL_URL}/leaveGroup`, {
+        fetch(`${SERVER_URL}/leaveGroup`, {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json',
@@ -121,13 +130,35 @@ function Roominfo({ route, navigation }) {
             ],            
         );
     }
+
+    const bs = React.createRef();  
+
+    const showActionSheet = () => {        
+        bs.current.show();
+    };
+
+    const report = (reason) => {        
+        if(reason !== '취소') {            
+            var URL = `${SERVER_URL}/reportRoom`;
+            fetch(URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type' : 'application/json',
+                },
+                body: JSON.stringify({
+                    id: sendd.GUID,
+                    reason: reason,
+                })
+            })    
+        }  
+    }
     
      return (
-          <View style={{ flex:1}}>
+          <View style={{flex:1}}>
                 <ImageBackground
                     source={require("../../../assets/imgs/2r.png")} resizeMode="cover" 
-                    style={{width:"100%", height:'100%', }}
-                >               
+                    style={{width: Dimensions.get('screen').width * 1, height: Dimensions.get('screen').height * 1}}
+                >              
                     <ScrollView>
                         <View style={styles.infoContainer}>
                                 <View style={styles.l1Container}>
@@ -202,9 +233,7 @@ function Roominfo({ route, navigation }) {
                                         }
                                     <Text style={{marginTop:5,fontSize:17, fontFamily:'Jost-Medium'}}>{JSON.stringify(sendd.category).replace(/\"/gi, "")}</Text> 
                                     </View>        
-                                    <View style={{flex:2}}>
-                              
-                             
+                                    <View style={{flex:2}}>                                                           
                                     </View>                
                                 </View>
                                 <View style={styles.timeContainer}>
@@ -221,9 +250,9 @@ function Roominfo({ route, navigation }) {
                                 </View>
                                 <View style={styles.l2Container}>
                                     <View style={styles.title}>
-                                    <Text style={styles.sectionName}>
-                                        ROOM NAME
-                                    </Text>
+                                        <Text style={styles.sectionName}>
+                                            ROOM NAME
+                                        </Text>
                                         <Text 
                                             ellipsizeMode='tail' 
                                             numberOfLines={2} 
@@ -235,9 +264,9 @@ function Roominfo({ route, navigation }) {
                                 </View>
                                 <View style={styles.l3Container}>
                                     <View style={styles.location}>
-                                    <Text style={styles.sectionName}>
-                                        LOCATION
-                                    </Text>                              
+                                        <Text style={styles.sectionName}>
+                                            LOCATION
+                                        </Text>                              
                                         <Text numberOfLines={2} ellipsizeMode='tail' style={styles.locationText}>{JSON.stringify(sendd.address).replace(/\"/gi, "")}</Text>                         
                                     </View>
                                 </View>
@@ -249,7 +278,7 @@ function Roominfo({ route, navigation }) {
                                     onPress={() => navigation.navigate('Chat')}
                                 >
                                     <Text style={styles.chatBtnText}>
-                                        Chat
+                                        채팅방
                                     </Text>
                                 </Pressable>
                             </TouchableOpacity> 
@@ -260,23 +289,42 @@ function Roominfo({ route, navigation }) {
                                     onPress={() => deleteAlert()}
                                 >
                                     <Text style={styles.chatBtnText}>
-                                        Delete
+                                        삭제
                                     </Text>
                                 </Pressable>
                             </TouchableOpacity>
                             :
-                            <TouchableOpacity>
-                                <Pressable 
-                                    style={styles.delBtn} 
-                                    onPress={() => leaveAlert()}                                   
-                                >
-                                    <Text style={styles.chatBtnText}>
-                                        Leave
-                                    </Text>
-                                </Pressable>
-                            </TouchableOpacity>
+                            <View>
+                                <TouchableOpacity>
+                                    <Pressable 
+                                        style={styles.delBtn} 
+                                        onPress={() => leaveAlert()}                                   
+                                    >
+                                        <Text style={styles.chatBtnText}>
+                                            나가기
+                                        </Text>
+                                    </Pressable>                                
+                                </TouchableOpacity>
+                                <TouchableOpacity>      
+                                    <Pressable 
+                                        style={styles.reportBtn} 
+                                        onPress={() => showActionSheet()}                                   
+                                    >
+                                        <Text style={styles.reportBtnText}>
+                                            신고하기
+                                        </Text>
+                                    </Pressable> 
+                                </TouchableOpacity>    
+                            </View>                
                             }                                                       
                         </View>
+                        <ActionSheet 
+                            ref={bs}
+                            title={'신고 사유'}
+                            options={reason}
+                            cancelButtonIndex={3} 
+                            onPress={(index) => report(reason[index])}  
+                        />
                     </ScrollView>
                </ImageBackground>
           </View>

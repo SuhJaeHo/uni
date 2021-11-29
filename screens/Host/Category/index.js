@@ -9,7 +9,7 @@ import * as Hangul from 'hangul-js';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { LOCAL_URL } from '@env';
+import { SERVER_URL } from '@env';
 
 import styles from './styles';
 
@@ -53,7 +53,7 @@ export default class Category extends Component {
             console.log(e);
         }
 
-        const URL = `${ LOCAL_URL }/category`;
+        const URL = `${ SERVER_URL }/category`;
         fetch(URL, {
             method: 'POST',
             headers: {

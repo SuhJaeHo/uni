@@ -40,7 +40,7 @@ import {
   CHAT_APPID,
   CHAT_APIKEY,
   CHAT_AUTHKEY,
-  LOCAL_URL,
+  SERVER_URL,
   GOOGLE_WEB_CLIENT_ID,
 } from '@env';
 
@@ -116,7 +116,7 @@ const LoginScreen = ({navigation}) => {
       console.log(e);
     }
 
-    const URL = `${LOCAL_URL}/signIn`;
+    const URL = `${SERVER_URL}/signIn`;
     fetch(URL, {
       method: 'POST',
       headers: {

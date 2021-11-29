@@ -7,7 +7,7 @@ import { CometChat } from '@cometchat-pro/react-native-chat';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import { LOCAL_URL } from '@env';
+import { SERVER_URL } from '@env';
 
 import { LogBox } from "react-native"
 
@@ -58,7 +58,7 @@ export default class RequestList extends Component {
         var usersAge = new Array();
         var usersGender = new Array();
 
-        const URL = `${LOCAL_URL}/userList`
+        const URL = `${SERVER_URL}/userList`
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -93,7 +93,7 @@ export default class RequestList extends Component {
         var usersProfile = new Array();
 
         for(let i = 0; i < this.state.usersId.length; i++) {               
-            fetch(`${LOCAL_URL}/firstProfile/?id=` + this.state.usersId[i] + "&time=" + new Date())
+            fetch(`${SERVER_URL}/firstProfile/?id=` + this.state.usersId[i] + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
                     usersProfile.push(responseData.url);
@@ -172,7 +172,7 @@ export default class RequestList extends Component {
         var usersId = new Array();
         var usersNick = new Array();
 
-        const URL = `${LOCAL_URL}/allowUser`;
+        const URL = `${SERVER_URL}/allowUser`;
         fetch(URL, {
             method: 'POST',
             headers: {

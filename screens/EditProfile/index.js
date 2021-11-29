@@ -13,7 +13,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import { LOCAL_URL, CHAT_APIKEY, CHAT_APPID } from '@env';
+import { SERVER_URL, CHAT_APIKEY, CHAT_APPID } from '@env';
 
 import { LogBox } from "react-native";
 
@@ -72,14 +72,14 @@ export default class EditProfile extends Component {
             id: id,
         })            
 
-        fetch(`${LOCAL_URL}/firstProfile/?id=` + id  + "&time=" + new Date())        
+        fetch(`${SERVER_URL}/firstProfile/?id=` + id  + "&time=" + new Date())        
         .then(responseData => {                      
             if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {              
                 this.state.image[0].uri = responseData.url;    
             }   
         })
         .then(() =>
-            fetch(`${LOCAL_URL}/secondProfile/?id=` + id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/secondProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {  
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {
                     this.state.image[1].uri = responseData.url;                                     
@@ -87,7 +87,7 @@ export default class EditProfile extends Component {
             })
         )
         .then(() =>
-            fetch(`${LOCAL_URL}/thirdProfile/?id=` + id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/thirdProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {
                 console.log(responseData);
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
@@ -96,21 +96,21 @@ export default class EditProfile extends Component {
             })
         )
         .then(() =>
-            fetch(`${LOCAL_URL}/fourthProfile/?id=` + id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/fourthProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[3].uri = responseData.url;     
                 }
             })
         ).then(() =>
-            fetch(`${LOCAL_URL}/fifthProfile/?id=` + id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/fifthProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[4].uri = responseData.url;                                     
                 }
             })
         ).then(() => 
-            fetch(`${LOCAL_URL}/sixthProfile/?id=` + id + "&time=" + new Date())
+            fetch(`${SERVER_URL}/sixthProfile/?id=` + id + "&time=" + new Date())
             .then(responseData => {
                 if(responseData.headers.get('content-type') !== 'text/html; charset=utf-8') {  
                     this.state.image[5].uri = responseData.url;                                     
@@ -237,7 +237,7 @@ export default class EditProfile extends Component {
     }
 
     updateChatUser = async() => {                
-        fetch(`${LOCAL_URL}/firstProfile/?id=` + this.state.id  + "&time=" + new Date())
+        fetch(`${SERVER_URL}/firstProfile/?id=` + this.state.id  + "&time=" + new Date())
         .then(responseData => {
             const URL = "https://" + CHAT_APPID + ".api-us.cometchat.io/v3.0/users/" + this.state.id;
             fetch(URL, {
@@ -278,7 +278,7 @@ export default class EditProfile extends Component {
             type: type,
         })
 
-        const URL = `${LOCAL_URL}/uploadProfile`;
+        const URL = `${SERVER_URL}/uploadProfile`;
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -293,7 +293,7 @@ export default class EditProfile extends Component {
         this.state.interestList = '';
 
         const id = await AsyncStorage.getItem('id');
-        const URL = `${LOCAL_URL}/userInfo`;
+        const URL = `${SERVER_URL}/userInfo`;
         var interest = new Array();
 
         fetch(URL, {

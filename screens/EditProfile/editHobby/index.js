@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import { LOCAL_URL } from '@env';
+import { SERVER_URL } from '@env';
 
 import { LogBox } from "react-native";
 
@@ -72,7 +72,7 @@ export default class editHobby extends Component {
     }
     
     get_Interest = async () => {
-        const URL = `${LOCAL_URL}/setInterest`;
+        const URL = `${SERVER_URL}/setInterest`;
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -90,7 +90,7 @@ export default class editHobby extends Component {
     }
 
     send_Interest = async () => {
-        const URL = `${LOCAL_URL}/setInterest`;        
+        const URL = `${SERVER_URL}/setInterest`;        
         fetch(URL, {
             method: 'POST',
             headers: {

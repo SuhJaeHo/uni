@@ -12,7 +12,7 @@ import Entypov from 'react-native-vector-icons/Entypo';
 
 import { LogBox } from "react-native";
 
-import { LOCAL_URL } from '@env';
+import { SERVER_URL } from '@env';
 
 import styles from './styles';
 
@@ -46,7 +46,7 @@ export default class Setting extends Component {
 
     getPush = async() => {
         const id = await AsyncStorage.getItem('id');
-        const URL = `${LOCAL_URL}/getPush`;
+        const URL = `${SERVER_URL}/getPush`;
 
         fetch(URL, {
             method: 'POST',
@@ -67,7 +67,7 @@ export default class Setting extends Component {
 
     connectPush = async() => {     
         const id = await AsyncStorage.getItem('id');
-        const URL = `${LOCAL_URL}/setPush`;
+        const URL = `${SERVER_URL}/setPush`;
         
         fetch(URL, {
             method: 'POST',

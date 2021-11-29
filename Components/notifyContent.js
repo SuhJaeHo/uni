@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Entypov from 'react-native-vector-icons/Entypo';
 
-import { LOCAL_URL } from '@env';
+import { SERVER_URL } from '@env';
 
 export default class notifyContent extends Component {
     constructor(props) {

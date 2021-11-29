@@ -24,7 +24,7 @@ import ImageModal from 'react-native-image-modal';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { LOCAL_URL } from '@env';
+import { SERVER_URL } from '@env';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const CustomSidebarMenu = (props) => {  
@@ -41,12 +41,12 @@ const CustomSidebarMenu = (props) => {
     const getUserInfo = async() => {
       var id = await AsyncStorage.getItem('id');
 
-      fetch(`${LOCAL_URL}/firstProfile/?id=` + id + "&time=" + new Date())
+      fetch(`${SERVER_URL}/firstProfile/?id=` + id + "&time=" + new Date())
       .then(responseData => {
         setUrl(responseData.url);
       })
       .then(
-          fetch(`${LOCAL_URL}/userInfo`, {
+          fetch(`${SERVER_URL}/userInfo`, {
           method: 'POST',
           headers: {
             'Content-Type' : 'application/json',

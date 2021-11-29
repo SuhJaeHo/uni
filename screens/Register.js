@@ -243,14 +243,14 @@ const styles = StyleSheet.create({
     height: 50,    
     borderRadius: 30,
     width: Dimensions.get('screen').width * 0.7,
-    marginTop: 20,
+    marginTop: Dimensions.get('screen').height * 0.07,
     marginBottom: 20,
     justifyContent:'center',
     alignItems:'center'
   },
   buttonTextStyle: {
     color: "#fff",
-    paddingVertical: 10,
+    paddingVertical: 10,    
     fontSize: 20,
     fontWeight:'bold',  
   },

@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CometChat } from '@cometchat-pro/react-native-chat';
 
-import { LOCAL_URL, CHAT_APPID, CHAT_APIKEY } from '@env';
+import { SERVER_URL, CHAT_APPID, CHAT_APIKEY } from '@env';
 
 export default class DropUser extends Component { 
     constructor(props) {
@@ -35,7 +35,7 @@ export default class DropUser extends Component {
     connect = async() => {
         var id = await AsyncStorage.getItem('id');
 
-        const URL = `${LOCAL_URL}/chatInfo`;
+        const URL = `${SERVER_URL}/chatInfo`;
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -79,7 +79,7 @@ export default class DropUser extends Component {
         const user = auth().currentUser;
         var id = await AsyncStorage.getItem('id');    
 
-        const URL = `${LOCAL_URL}/dropUser`;
+        const URL = `${SERVER_URL}/dropUser`;
 
         user.delete().then(() => {
             fetch(URL, {
